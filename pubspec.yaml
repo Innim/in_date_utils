@@ -9,6 +9,7 @@ environment:
   sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
+  date_utils: ^0.1.0
 
 dev_dependencies:
   test: ^1.14.2
