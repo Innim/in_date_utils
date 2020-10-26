@@ -137,4 +137,28 @@ void main() {
     expect(DateUtils.lastDayOfYear(DateTime(2020, 4, 9, 15, 16)),
         DateTime(2020, 12, 31, 0, 0, 0, 0, 0));
   });
+
+  group('isSameDay', () {
+    test('should return true if in the same day', () {
+      final d1 = DateTime(2020, 10, 26, 18, 02, 59);
+      final d2 = DateTime(2020, 10, 26, 10, 02, 59);
+      final d3 = DateTime(2020, 10, 26, 18, 03, 59);
+      final d4 = DateTime(2020, 10, 26, 18, 02, 10);
+      final d5 = DateTime(2020, 10, 26);
+
+      expect(DateUtils.isSameDay(d1, d2), true);
+      expect(DateUtils.isSameDay(d1, d3), true);
+      expect(DateUtils.isSameDay(d1, d4), true);
+      expect(DateUtils.isSameDay(d1, d5), true);
+    });
+
+    test('should return false if not in the same day', () {
+      final d1 = DateTime(2020, 10, 26, 18, 02, 59);
+      final d2 = DateTime(2021, 10, 26, 18, 02, 59);
+      final d3 = DateTime(2020, 11, 25, 18, 02, 59);
+
+      expect(DateUtils.isSameDay(d1, d2), false);
+      expect(DateUtils.isSameDay(d1, d3), false);
+    });
+  });
 }

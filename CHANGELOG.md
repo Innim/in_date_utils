@@ -1,3 +1,4 @@
+* Method `isSameDay()` - checks if two `DateTime` instances in the same day.
 ## [0.1.0] - 2020-10-22
 
 * Methods to get start of the day, next day, today.

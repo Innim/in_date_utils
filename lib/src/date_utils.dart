@@ -1,9 +1,12 @@
-import 'package:date_utils/date_utils.dart';
-
 /// Утилиты работы с датами.
 ///
 /// См. также [Utils].
 class DateUtils {
+  /// Check if [a] and [b] are on the same day.
+  static bool isSameDay(DateTime a, DateTime b) {
+    return a.year == b.year && a.month == b.month && a.day == b.day;
+  }
+
   /// Возвращает дату, соответствующую началу дня (00:00:00).
   /// (2020, 4, 9, 16, 50) -> (2020, 4, 9, 0, 0)
   static DateTime startOfDay(DateTime dateTime) => dateTime.subtract(Duration(
@@ -78,14 +81,14 @@ class DateUtils {
   ///
   /// За первый день недели берется понедельник.
   static bool isFirstDayOfWeek(DateTime day) {
-    return Utils.isSameDay(firstDayOfWeek(day), day);
+    return isSameDay(firstDayOfWeek(day), day);
   }
 
   /// Проверяет является ли заданная дата последним днём недели.
   ///
   /// За последний день недели берется воскресенье.
   static bool isLastDayOfWeek(DateTime day) {
-    return Utils.isSameDay(lastDayOfWeek(day), day);
+    return isSameDay(lastDayOfWeek(day), day);
   }
 
   /// Возращает начало первого дня недели указанной даты.
@@ -174,7 +177,7 @@ class DateUtils {
   /// Проверяет является ли заданная дата текущей.
   static bool isCurrentDate(DateTime date) {
     final now = DateTime.now();
-    return Utils.isSameDay(date, now);
+    return isSameDay(date, now);
   }
 
   /// Возвращает кол-во дней в месяце
