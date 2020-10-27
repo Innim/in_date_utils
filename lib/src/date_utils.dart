@@ -77,16 +77,16 @@ class DateUtils {
     return duration.inDays;
   }
 
-  /// Проверяет является ли заданная дата первым днём недели.
+  /// Checks if [day] is in the first day of a week.
   ///
-  /// За первый день недели берется понедельник.
+  /// Monday is used as a first day of a week.
   static bool isFirstDayOfWeek(DateTime day) {
     return isSameDay(firstDayOfWeek(day), day);
   }
 
-  /// Проверяет является ли заданная дата последним днём недели.
+  /// Checks if [day] is in the last day of a week.
   ///
-  /// За последний день недели берется воскресенье.
+  /// Sunday is used as a last day of a week.
   static bool isLastDayOfWeek(DateTime day) {
     return isSameDay(lastDayOfWeek(day), day);
   }
