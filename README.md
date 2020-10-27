@@ -38,3 +38,18 @@ void main() {
   // 53
 }
 ```
+
+## Methods classifier
+
+### Comparison
+
+#### Is in same period
+
+* `isSameDay()` - checks if two `DateTime` instances are on the same day.
+
+### Checks
+
+#### Week 
+
+* `isFirstDayOfWeek()` - checks if provided `DateTime` is in the first day of a week (Monday).
+* `isLastDayOfWeek()` - checks if provided `DateTime` is in the last day of a week (Sunday).

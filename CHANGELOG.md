@@ -1,3 +1,8 @@
+## [0.1.1+1] - 2020-10-27
+
+* Some docs translations.
+* Readme: Added methods classifier.
+
 ## [0.1.1] - 2020-10-26
 
 * Method `isSameDay()` - checks if two `DateTime` instances in the same day.
