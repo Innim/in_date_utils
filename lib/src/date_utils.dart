@@ -180,29 +180,29 @@ class DateUtils {
     return isSameDay(date, now);
   }
 
-  /// Возвращает кол-во дней в месяце
+  /// Returns number of days in the [month] of the [year].
   static int getDaysInMonth(int year, int monthNum) {
     assert(monthNum > 0);
     assert(monthNum <= 12);
     return DateTime(year, monthNum, 0).day;
   }
 
-  /// Получить следующий день.
+  /// Returns same time in the next day.
   static DateTime nextDay(DateTime d) {
     return d.add(Duration(days: 1));
   }
 
-  /// Получить предидущий день.
+  /// Returns same time in the previous day.
   static DateTime previousDay(DateTime d) {
     return d.subtract(Duration(days: 1));
   }
 
-  /// Получить следующий год.
+  /// Returns same date in the next year.
   static DateTime nextYear(DateTime d) {
     return DateTime(d.year + 1, d.month, d.day);
   }
 
-  /// Получить предидущий год.
+  /// Returns same date in the previous year.
   static DateTime previousYear(DateTime d) {
     return DateTime(d.year - 1, d.month, d.day);
   }

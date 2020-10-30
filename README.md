@@ -53,3 +53,14 @@ void main() {
 
 * `isFirstDayOfWeek()` - checks if provided `DateTime` is in the first day of a week (Monday).
 * `isLastDayOfWeek()` - checks if provided `DateTime` is in the last day of a week (Sunday).
+
+### Transformation
+
+#### Next/prev
+
+* `nextDay()`/`previousDay()` - returns same time in the next/previous day.
+* `nextYear()`/`previousYear()` - returns same date in the next/previous year.
+
+### Information
+
+* `getDaysInMonth()` - returns number of days in the month of the year.
