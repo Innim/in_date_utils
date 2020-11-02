@@ -1,3 +1,7 @@
+## [0.1.2] - 2020-11-02
+
+* `generateWithDayStep()` - returns an interable of `DateTime` in given range with 1 day step.
+
 ## [0.1.1+1] - 2020-10-27
 
 * Some docs translations.

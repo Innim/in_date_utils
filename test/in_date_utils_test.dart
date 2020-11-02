@@ -161,4 +161,53 @@ void main() {
       expect(DateUtils.isSameDay(d1, d3), false);
     });
   });
+
+  group('generateWithDayStep', () {
+    test('should include start date and exclude end', () {
+      final start = DateTime(2020, 11, 02, 18, 7);
+      final end = DateTime(2020, 11, 03, 17, 3);
+
+      final res = DateUtils.generateWithDayStep(start, end);
+      expect(res, [DateTime(2020, 11, 02, 18, 7)]);
+    });
+
+    test('should return start if end equals start', () {
+      final start = DateTime(2020, 11, 02, 18, 7);
+      final end = start;
+
+      final res = DateUtils.generateWithDayStep(start, end);
+      expect(res, [DateTime(2020, 11, 02, 18, 7)]);
+    });
+
+    test('should include dates with step 1 day', () {
+      final start = DateTime(2020, 11, 02, 18, 7);
+      final end = DateTime(2020, 11, 04, 19, 3);
+
+      final res = DateUtils.generateWithDayStep(start, end);
+      expect(res, [
+        DateTime(2020, 11, 02, 18, 7),
+        DateTime(2020, 11, 03, 18, 7),
+        DateTime(2020, 11, 04, 18, 7),
+      ]);
+    });
+
+    test('should handle timezone', () {
+      final start = DateTime(2020, 11, 02, 18, 7).toUtc();
+      final end = DateTime(2020, 11, 04, 17, 3);
+
+      final res = DateUtils.generateWithDayStep(start, end);
+      expect(res, [
+        DateTime(2020, 11, 02, 18, 7).toUtc(),
+        DateTime(2020, 11, 03, 18, 7).toUtc(),
+      ]);
+    });
+
+    test('should return empty iterable if end less than start', () {
+      final start = DateTime(2020, 11, 02, 18, 7);
+      final end = DateTime(2020, 11, 01, 17, 3);
+
+      final res = DateUtils.generateWithDayStep(start, end);
+      expect(res, []);
+    });
+  });
 }

@@ -207,5 +207,25 @@ class DateUtils {
     return DateTime(d.year - 1, d.month, d.day);
   }
 
+  /// Returns an iterable of [DateTime] with 1 day step in given range.
+  ///
+  /// [start] is the start of the rande, inclusive.
+  /// [end] is the end of the range, exclusive.
+  ///
+  /// If [start] equals [end], than [start] still will be included in interbale.
+  /// If [start] less than [end], than empty interable will be returned.
+  ///
+  /// [DateTime] in result uses [start] timezone.
+  static Iterable<DateTime> generateWithDayStep(
+      DateTime start, DateTime end) sync* {
+    if (end.isBefore(start)) return;
+
+    var date = start;
+    do {
+      yield date;
+      date = date.add(const Duration(days: 1));
+    } while (date.isBefore(end));
+  }
+
   DateUtils._();
 }

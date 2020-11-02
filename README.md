@@ -64,3 +64,7 @@ void main() {
 ### Information
 
 * `getDaysInMonth()` - returns number of days in the month of the year.
+
+### Generation
+
+* `generateWithDayStep()` - returns an iterable of `DateTime` in given range with 1 day step.
