@@ -61,6 +61,12 @@ void main() {
 * `nextDay()`/`previousDay()` - returns same time in the next/previous day.
 * `nextYear()`/`previousYear()` - returns same date in the next/previous year.
 
+#### Start/end
+
+* `startOfDay()` - returns `DateTime` for the beginning of the day (00:00:00).
+* `startOfNextDay()` - returns `DateTime` for the beginning of the next day (00:00:00).
+* `startOfToday()` - returns `DateTime` for the beginning of today (00:00:00).
+
 ### Information
 
 * `getDaysInMonth()` - returns number of days in the month of the year.
