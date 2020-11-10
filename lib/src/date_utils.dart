@@ -7,7 +7,8 @@ class DateUtils {
     return a.year == b.year && a.month == b.month && a.day == b.day;
   }
 
-  /// Возвращает дату, соответствующую началу дня (00:00:00).
+  /// Returns [DateTime] for the beginning of the day (00:00:00).
+  ///
   /// (2020, 4, 9, 16, 50) -> (2020, 4, 9, 0, 0)
   static DateTime startOfDay(DateTime dateTime) => dateTime.subtract(Duration(
       hours: dateTime.hour,
@@ -16,7 +17,8 @@ class DateUtils {
       milliseconds: dateTime.millisecond,
       microseconds: dateTime.microsecond));
 
-  /// Возвращает дату, соответствующую началу следующего дня (00:00:00).
+  /// Returns [DateTime] for the beginning of the next day (00:00:00).
+  ///
   /// (2020, 4, 9, 16, 50) -> (2020, 4, 10, 0, 0)
   static DateTime startOfNextDay(DateTime dateTime) =>
       dateTime.subtract(Duration(
@@ -27,7 +29,7 @@ class DateUtils {
           milliseconds: dateTime.millisecond,
           microseconds: dateTime.microsecond));
 
-  /// Возвращает дату, соответствующую началу сегодняшнего дня (00:00:00).
+  /// Returns [DateTime] for the beginning of today (00:00:00).
   static DateTime startOfToday() => startOfDay(DateTime.now());
 
   /// Возвращает объект даты с установленным временем.
