@@ -87,6 +87,8 @@ class DateUtils {
   ///
   /// By default it's [DateTime.monday].
   static bool isFirstDayOfWeek(DateTime day, {int firstWeekday}) {
+    assert(firstWeekday == null || firstWeekday > 0 && firstWeekday < 8);
+
     return isSameDay(firstDayOfWeek(day, firstWeekday: firstWeekday), day);
   }
 
@@ -99,6 +101,8 @@ class DateUtils {
   /// By default it's [DateTime.monday],
   /// so the last day will be [DateTime.sunday].
   static bool isLastDayOfWeek(DateTime day, {int firstWeekday}) {
+    assert(firstWeekday == null || firstWeekday > 0 && firstWeekday < 8);
+
     return isSameDay(lastDayOfWeek(day, firstWeekday: firstWeekday), day);
   }
 
@@ -135,6 +139,8 @@ class DateUtils {
   /// [DateTime.monday], ..., [DateTime.sunday].
   /// By default it's [DateTime.monday].
   static DateTime firstDayOfNextWeek(DateTime dateTime, {int firstWeekday}) {
+    assert(firstWeekday == null || firstWeekday > 0 && firstWeekday < 8);
+
     var days = dateTime.weekday - (firstWeekday ?? DateTime.monday);
     if (days >= 0) days -= DateTime.daysPerWeek;
     return dateTime.subtract(Duration(
@@ -157,6 +163,8 @@ class DateUtils {
   /// By default it's [DateTime.monday],
   /// so the last day will be [DateTime.sunday].
   static DateTime lastDayOfWeek(DateTime dateTime, {int firstWeekday}) {
+    assert(firstWeekday == null || firstWeekday > 0 && firstWeekday < 8);
+
     var days = (firstWeekday ?? DateTime.monday) - 1 - dateTime.weekday;
     if (days < 0) days += DateTime.daysPerWeek;
 
