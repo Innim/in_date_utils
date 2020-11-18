@@ -67,6 +67,8 @@ void main() {
 * `startOfNextDay()` - returns `DateTime` for the beginning of the next day (00:00:00).
 * `startOfToday()` - returns `DateTime` for the beginning of today (00:00:00).
 * `firstDayOfWeek()` - returns `DateTime` for the beginning of the first day of the week for specified date.
+* `firstDayOfNextWeek()` - returns `DateTime` for the beginning of the first day of the next week for specified date.
+* `lastDayOfWeek()` - returns `DateTime` for the beginning of the last day of the week for specified date.
 
 ### Information
 
