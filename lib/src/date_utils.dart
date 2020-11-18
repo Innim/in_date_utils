@@ -136,13 +136,22 @@ class DateUtils {
         microseconds: dateTime.microsecond));
   }
 
-  /// Возращает начало последнего дня недели указанной даты.
+  /// Returns start of the last day of the week for specified [dateTime].
   ///
-  /// За последний день недели берется воскресенье.
-  /// Например: (2020, 4, 9, 15, 16) -> (2020, 4, 12, 0, 0, 0, 0).
-  static DateTime lastDayOfWeek(DateTime dateTime) {
+  /// For example: (2020, 4, 9, 15, 16) -> (2020, 4, 12, 0, 0, 0, 0).
+  ///
+  /// You can define first weekday (Monday or Sunday) with
+  /// parameter [firstWeekday]. It should be one of the constant values
+  /// [DateTime.monday], ..., [DateTime.sunday].
+  ///
+  /// By default it's [DateTime.monday],
+  /// so the last day will be [DateTime.sunday].
+  static DateTime lastDayOfWeek(DateTime dateTime, {int firstWeekday}) {
+    var days = (firstWeekday ?? DateTime.monday) - 1 - dateTime.weekday;
+    if (days < 0) days += DateTime.daysPerWeek;
+
     return dateTime.add(Duration(
-        days: DateTime.daysPerWeek - dateTime.weekday,
+        days: days,
         hours: -dateTime.hour,
         minutes: -dateTime.minute,
         seconds: -dateTime.second,

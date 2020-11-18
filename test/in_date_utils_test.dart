@@ -254,14 +254,91 @@ void main() {
   });
 
   group('lastDayOfWeek()', () {
+    // monday
+    final date1 = DateTime(2018, 12, 31, 0, 0, 0, 0, 0);
+    // thursday
+    final date2 = DateTime(2020, 4, 9, 15);
+    // sunday
+    final date3 = DateTime(2020, 4, 12, 23, 59, 59, 999, 999);
+    // monday
+    final date4 = DateTime(2020, 11, 16, 11);
+
     test('should return correct date time', () {
-      expect(DateUtils.lastDayOfWeek(DateTime(2018, 12, 31, 0, 0, 0, 0, 0)),
-          DateTime(2019, 1, 06, 0, 0, 0, 0, 0));
-      expect(DateUtils.lastDayOfWeek(DateTime(2020, 4, 9, 15)),
-          DateTime(2020, 4, 12, 0, 0, 0, 0, 0));
       expect(
-          DateUtils.lastDayOfWeek(DateTime(2020, 4, 12, 23, 59, 59, 999, 999)),
-          DateTime(2020, 4, 12, 0, 0, 0, 0, 0));
+        DateUtils.lastDayOfWeek(date1),
+        DateTime(2019, 1, 6),
+      );
+      expect(
+        DateUtils.lastDayOfWeek(date2),
+        DateTime(2020, 4, 12),
+      );
+      expect(
+        DateUtils.lastDayOfWeek(date3),
+        DateTime(2020, 4, 12),
+      );
+      expect(
+        DateUtils.lastDayOfWeek(date4),
+        DateTime(2020, 11, 22),
+      );
+    });
+
+    test('should use Monday as a first week day by default', () {
+      expect(
+        DateUtils.lastDayOfWeek(date1),
+        DateUtils.lastDayOfWeek(date1, firstWeekday: DateTime.monday),
+      );
+      expect(
+        DateUtils.lastDayOfWeek(date2),
+        DateUtils.lastDayOfWeek(date2, firstWeekday: DateTime.monday),
+      );
+      expect(
+        DateUtils.lastDayOfWeek(date3),
+        DateUtils.lastDayOfWeek(date3, firstWeekday: DateTime.monday),
+      );
+      expect(
+        DateUtils.lastDayOfWeek(date4),
+        DateUtils.lastDayOfWeek(date4, firstWeekday: DateTime.monday),
+      );
+    });
+
+    test('should return correct value for a Sunday as a first week day', () {
+      final firstWeekday = DateTime.sunday;
+      expect(
+        DateUtils.lastDayOfWeek(date1, firstWeekday: firstWeekday),
+        DateTime(2019, 1, 5),
+      );
+      expect(
+        DateUtils.lastDayOfWeek(date2, firstWeekday: firstWeekday),
+        DateTime(2020, 4, 11),
+      );
+      expect(
+        DateUtils.lastDayOfWeek(date3, firstWeekday: firstWeekday),
+        DateTime(2020, 4, 18),
+      );
+      expect(
+        DateUtils.lastDayOfWeek(date4, firstWeekday: firstWeekday),
+        DateTime(2020, 11, 21),
+      );
+    });
+
+    test('should return correct value for a Thursday as a first week day', () {
+      final firstWeekday = DateTime.thursday;
+      expect(
+        DateUtils.lastDayOfWeek(date1, firstWeekday: firstWeekday),
+        DateTime(2019, 1, 2),
+      );
+      expect(
+        DateUtils.lastDayOfWeek(date2, firstWeekday: firstWeekday),
+        DateTime(2020, 4, 15),
+      );
+      expect(
+        DateUtils.lastDayOfWeek(date3, firstWeekday: firstWeekday),
+        DateTime(2020, 4, 15),
+      );
+      expect(
+        DateUtils.lastDayOfWeek(date4, firstWeekday: firstWeekday),
+        DateTime(2020, 11, 18),
+      );
     });
   });
 
