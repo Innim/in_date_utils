@@ -2,6 +2,7 @@
 * Method `getDayNumberInWeek()` - returns number of the day in week.
 * Method `firstDayOfFirstWeek()` - returns start of the first day of the first week in year.
 * Method `getWeekNumber()` - returns number of the week in year.
+* Method `getDaysDifference()` - returns count of days between two dates.
 
 ## [0.1.2] - 2020-11-02
 

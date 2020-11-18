@@ -68,8 +68,6 @@ class DateUtils {
 
   /// Returns week number in year.
   ///
-  /// Week number according to the ISO-8601 standard, weeks starting on Monday.
-  ///
   /// The first week of the year is the week that contains
   /// 4 or more days of that year (='First 4-day week').
   ///
@@ -88,8 +86,8 @@ class DateUtils {
     if (isWeekInYear(date, date.year, firstWeekday)) {
       final startOfTheFirstWeek =
           firstDayOfFirstWeek(date.year, firstWeekday: firstWeekday);
-      final diff = date.difference(startOfTheFirstWeek);
-      return (diff.inDays / DateTime.daysPerWeek).floor() + 1;
+      final diffInDays = getDaysDifference(date, startOfTheFirstWeek);
+      return (diffInDays / DateTime.daysPerWeek).floor() + 1;
     } else if (date.month == DateTime.december) {
       // first of the next year
       return 1;
@@ -128,14 +126,30 @@ class DateUtils {
   /// Starting with 1.
   static int getDayNumberInYear(DateTime date) {
     final firstDayOfYear = DateTime(date.year, DateTime.january, 1);
-    final duration = date.difference(firstDayOfYear);
-    return duration.inDays + 1;
+    return getDaysDifference(date, firstDayOfYear) + 1;
   }
 
   /// Возвращает кол-во дней в заданном году.
   static int getDaysInYear(int year) {
     final lastDayOfYear = DateTime(year, DateTime.december, 31);
     return getDayNumberInYear(lastDayOfYear);
+  }
+
+  /// Returns count of days between two dates.
+  ///
+  /// Time will be ignored, so for the dates
+  /// (2020, 11, 18, 16, 50) and (2020, 11, 19, 10, 00)
+  /// result will be 1.
+  ///
+  /// Use this method for count days instead of
+  /// `a.difference(b).inDays`, since it can return
+  /// some unexpected result, because of daylight saving hour.
+  static int getDaysDifference(DateTime a, DateTime b) {
+    final straight = a.isBefore(b);
+    final start = startOfDay(straight ? a : b);
+    final end = startOfDay(straight ? b : a).add(const Duration(hours: 12));
+    final diff = end.difference(start);
+    return diff.inHours ~/ 24;
   }
 
   /// Checks if [day] is in the first day of a week.
@@ -364,12 +378,12 @@ class DateUtils {
       return true;
     } else if (endWeekDate.year == year) {
       final startYearDate = DateTime(year, DateTime.january, 1);
-      final daysInPrevYear = startYearDate.difference(startWeekDate).inDays;
+      final daysInPrevYear = getDaysDifference(startYearDate, startWeekDate);
       return daysInPrevYear < requiredDaysInYear;
     } else if (startWeekDate.year == year) {
       final startNextYearDate = DateTime(year + 1, DateTime.january, 1);
       final daysInNextYear =
-          endWeekDate.difference(startNextYearDate).inDays + 1;
+          getDaysDifference(endWeekDate, startNextYearDate) + 1;
       return daysInNextYear < requiredDaysInYear;
     } else {
       return false;

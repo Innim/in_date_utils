@@ -77,6 +77,7 @@ void main() {
 * `getDayNumberInYear()` - returns number of the day in year.
 * `getDayNumberInWeek()` - returns number of the day in week.
 * `getWeekNumber()` - returns number of the week in year.
+* `getDaysDifference()` - returns count of days between two dates.
 
 ### Generation
 

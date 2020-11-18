@@ -714,7 +714,28 @@ void main() {
     });
   });
 
-  group('getWeekNumber', () {
+  group('getDaysDifference()', () {
+    [
+      Tuple3(DateTime(2020, 11, 18, 16, 50), DateTime(2020, 11, 19, 10, 0), 1),
+      Tuple3(DateTime(2020, 11, 19, 10, 0), DateTime(2020, 11, 18, 16, 50), 1),
+      Tuple3(DateTime(2020, 11, 19),
+          DateTime(2020, 11, 21).subtract(const Duration(microseconds: 1)), 1),
+      Tuple3(DateTime(2010), DateTime(2011), 365),
+      Tuple3(DateTime(2011), DateTime(2012), 365),
+      Tuple3(DateTime(2012), DateTime(2013), 366),
+      Tuple3(DateTime(2013), DateTime(2014), 365),
+      Tuple3(DateTime(2020), DateTime(2021), 366),
+    ].forEach((item) {
+      final a = item.item1;
+      final b = item.item2;
+      final expected = item.item3;
+      test('should return $expected for $a and $b', () {
+        expect(DateUtils.getDaysDifference(a, b), expected);
+      });
+    });
+  });
+
+  group('getWeekNumber()', () {
     [2008, 2009, 2013, 2014, 2015, 2018, 2019, 2020].forEach((year) {
       final jan1 = DateTime(year, 1, 1);
       test('should return 1 weeks for 1 jan $year', () {
