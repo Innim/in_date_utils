@@ -88,7 +88,7 @@ class DateUtils {
 
   /// Checks if [day] is in the first day of a week.
   ///
-  /// You can define first weekday (Monday or Sunday) with
+  /// You can define first weekday (Monday, Sunday or Saturday) with
   /// parameter [firstWeekday]. It should be one of the constant values
   /// [DateTime.monday], ..., [DateTime.sunday].
   ///
@@ -101,7 +101,7 @@ class DateUtils {
 
   /// Checks if [day] is in the last day of a week.
   ///
-  /// You can define first weekday (Monday or Sunday) with
+  /// You can define first weekday (Monday, Sunday or Saturday) with
   /// parameter [firstWeekday]. It should be one of the constant values
   /// [DateTime.monday], ..., [DateTime.sunday].
   ///
@@ -117,7 +117,7 @@ class DateUtils {
   ///
   /// For example: (2020, 4, 9, 15, 16) -> (2020, 4, 6, 0, 0, 0, 0).
   ///
-  /// You can define first weekday (Monday or Sunday) with
+  /// You can define first weekday (Monday, Sunday or Saturday) with
   /// parameter [firstWeekday]. It should be one of the constant values
   /// [DateTime.monday], ..., [DateTime.sunday].
   ///
@@ -141,7 +141,7 @@ class DateUtils {
   ///
   /// For example: (2020, 4, 9, 15, 16) -> (2020, 4, 13, 0, 0, 0, 0).
   ///
-  /// You can define first weekday (Monday or Sunday) with
+  /// You can define first weekday (Monday, Sunday or Saturday) with
   /// parameter [firstWeekday]. It should be one of the constant values
   /// [DateTime.monday], ..., [DateTime.sunday].
   /// By default it's [DateTime.monday].
@@ -163,7 +163,7 @@ class DateUtils {
   ///
   /// For example: (2020, 4, 9, 15, 16) -> (2020, 4, 12, 0, 0, 0, 0).
   ///
-  /// You can define first weekday (Monday or Sunday) with
+  /// You can define first weekday (Monday, Sunday or Saturday) with
   /// parameter [firstWeekday]. It should be one of the constant values
   /// [DateTime.monday], ..., [DateTime.sunday].
   ///
