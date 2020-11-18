@@ -547,6 +547,56 @@ void main() {
     });
   });
 
+  group('getDayNumberInYear()', () {
+    test('should return 1 for the 1 jan', () {
+      expect(DateUtils.getDayNumberInYear(DateTime(2020, 1, 1)), 1);
+      expect(DateUtils.getDayNumberInYear(DateTime(2019, 1, 1, 15)), 1);
+      expect(
+        DateUtils.getDayNumberInYear(
+            DateTime(2008, 1, 2).subtract(const Duration(microseconds: 1))),
+        1,
+      );
+    });
+
+    test('should return 2 for the 2 jan', () {
+      expect(DateUtils.getDayNumberInYear(DateTime(2020, 1, 2)), 2);
+      expect(
+        DateUtils.getDayNumberInYear(
+            DateTime(2020, 1, 2).add(const Duration(microseconds: 1))),
+        2,
+      );
+      expect(
+        DateUtils.getDayNumberInYear(
+            DateTime(2020, 1, 3).subtract(const Duration(microseconds: 1))),
+        2,
+      );
+    });
+
+    test('should return 35 for the 4 feb', () {
+      expect(DateUtils.getDayNumberInYear(DateTime(2020, 2, 4)), 35);
+      expect(DateUtils.getDayNumberInYear(DateTime(2019, 2, 4, 15)), 35);
+    });
+
+    test('should return 62 for the 3 mar of non leap year', () {
+      expect(DateUtils.getDayNumberInYear(DateTime(2019, 3, 3)), 62);
+      expect(DateUtils.getDayNumberInYear(DateTime(2015, 3, 3, 15)), 62);
+    });
+
+    test('should return 63 for the 3 mar of leap year', () {
+      expect(DateUtils.getDayNumberInYear(DateTime(2020, 3, 3)), 63);
+      expect(DateUtils.getDayNumberInYear(DateTime(2008, 3, 3, 15)), 63);
+    });
+
+    test('should return 365 for the 31 dec of non leap year', () {
+      expect(DateUtils.getDayNumberInYear(DateTime(2019, 12, 31)), 365);
+      expect(DateUtils.getDayNumberInYear(DateTime(2015, 12, 31, 15)), 365);
+    });
+
+    test('should return 63 for the 31 dec of leap year', () {
+      expect(DateUtils.getDayNumberInYear(DateTime(2020, 12, 31)), 366);
+      expect(DateUtils.getDayNumberInYear(DateTime(2008, 12, 31, 15)), 366);
+    });
+  });
   group('generateWithDayStep()', () {
     test('should include start date and exclude end', () {
       final start = DateTime(2020, 11, 02, 18, 7);

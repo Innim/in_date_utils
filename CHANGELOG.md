@@ -1,3 +1,5 @@
+* Method `getDayNumberInYear()` - returns number of the day in year.
+
 ## [0.1.2] - 2020-11-02
 
 * `generateWithDayStep()` - returns an interable of `DateTime` in given range with 1 day step.

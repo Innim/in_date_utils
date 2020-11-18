@@ -71,6 +71,15 @@ class DateUtils {
     return ((dayOfYear - lastDayOfYear.weekday + 10) / 7).floor();
   }
 
+  /// Returns number of the day in year.
+  ///
+  /// Starting with 1.
+  static int getDayNumberInYear(DateTime date) {
+    final firstDayOfYear = DateTime(date.year, DateTime.january, 1);
+    final duration = date.difference(firstDayOfYear);
+    return duration.inDays + 1;
+  }
+
   /// Возвращает кол-во дней в заданном году.
   static int getDaysInYear(int year) {
     var lastDayOfYear = DateTime(year, DateTime.december, 31);
