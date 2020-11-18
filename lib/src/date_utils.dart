@@ -82,10 +82,8 @@ class DateUtils {
 
   /// Возвращает кол-во дней в заданном году.
   static int getDaysInYear(int year) {
-    var lastDayOfYear = DateTime(year, DateTime.december, 31);
-    var lastDayOfPrevYear = DateTime(year - 1, DateTime.december, 31);
-    var duration = lastDayOfYear.difference(lastDayOfPrevYear);
-    return duration.inDays;
+    final lastDayOfYear = DateTime(year, DateTime.december, 31);
+    return getDayNumberInYear(lastDayOfYear);
   }
 
   /// Checks if [day] is in the first day of a week.
