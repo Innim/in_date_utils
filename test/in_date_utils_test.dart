@@ -783,6 +783,38 @@ void main() {
       });
     });
   });
+
+  group('getLastWeekNumber()', () {
+    [2009, 2015].forEach((year) {
+      test('should return 53 weeks for $year', () {
+        expect(DateUtils.getLastWeekNumber(year), 53);
+      });
+    });
+
+    [2008, 2012, 2013, 2014, 2016, 2017].forEach((year) {
+      test('should return 52 weeks for $year', () {
+        expect(DateUtils.getLastWeekNumber(year), 52);
+      });
+    });
+
+    [2010, 2011, 2012, 2013, 2015, 2016, 2017, 2018, 2019].forEach((year) {
+      test('should return 52 weeks for $year, week from sunday', () {
+        expect(
+          DateUtils.getLastWeekNumber(year, firstWeekday: DateTime.sunday),
+          52,
+        );
+      });
+    });
+
+    [2008, 2014, 2020].forEach((year) {
+      test('should return 53 weeks for $year, week from sunday', () {
+        expect(
+          DateUtils.getLastWeekNumber(year, firstWeekday: DateTime.sunday),
+          53,
+        );
+      });
+    });
+  });
   group('generateWithDayStep()', () {
     test('should include start date and exclude end', () {
       final start = DateTime(2020, 11, 02, 18, 7);

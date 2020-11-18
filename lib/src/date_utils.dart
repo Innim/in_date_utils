@@ -98,6 +98,27 @@ class DateUtils {
     }
   }
 
+  /// Returns number of the last week in [year].
+  ///
+  /// You can define first weekday (Monday, Sunday or Saturday) with
+  /// parameter [firstWeekday]. It should be one of the constant values
+  /// [DateTime.monday], ..., [DateTime.sunday].
+  ///
+  /// By default it's [DateTime.monday].
+  ///
+  /// See [getWeekNumber].
+  static int getLastWeekNumber(int year, {int firstWeekday}) {
+    assert(firstWeekday == null || firstWeekday > 0 && firstWeekday < 8);
+
+    final start = firstDayOfFirstWeek(year, firstWeekday: firstWeekday);
+    final end = firstDayOfWeek(DateTime(year, DateTime.december, 31),
+        firstWeekday: firstWeekday);
+    final diffInDays = getDaysDifference(end, start);
+    var res = diffInDays ~/ DateTime.daysPerWeek;
+    if (isWeekInYear(end, year, firstWeekday)) res++;
+    return res;
+  }
+
   /// Возвращает кол-во недель в заданном году.
   static int getWeeksInYear(int year) {
     var lastDayOfYear = DateTime(year, DateTime.december, 31);
