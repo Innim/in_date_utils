@@ -89,8 +89,8 @@ class DateUtils {
   /// Checks if [day] is in the last day of a week.
   ///
   /// Sunday is used as a last day of a week.
-  static bool isLastDayOfWeek(DateTime day) {
-    return isSameDay(lastDayOfWeek(day), day);
+  static bool isLastDayOfWeek(DateTime day, {int firstWeekday}) {
+    return isSameDay(lastDayOfWeek(day, firstWeekday: firstWeekday), day);
   }
 
   /// Returns start of the first day of the week for specified [dateTime].

@@ -416,6 +416,71 @@ void main() {
     });
   });
 
+  group('isLastDayOfWeek()', () {
+    // monday
+    final monday = DateTime(2018, 12, 31);
+    // thursday
+    final thursday = DateTime(2020, 4, 9, 15);
+    // saturday
+    final saturday = DateTime(2020, 4, 11);
+    // sunday
+    final sunday = DateTime(2020, 4, 12);
+    final sundayWithTime = DateTime(2020, 4, 12, 23, 59, 59, 999, 999);
+
+    test('should return true if this is a last day of a week', () {
+      expect(
+        DateUtils.isLastDayOfWeek(sunday),
+        true,
+      );
+      expect(
+        DateUtils.isLastDayOfWeek(sunday, firstWeekday: DateTime.monday),
+        true,
+      );
+      expect(
+        DateUtils.isLastDayOfWeek(thursday, firstWeekday: DateTime.friday),
+        true,
+      );
+      expect(
+        DateUtils.isLastDayOfWeek(saturday, firstWeekday: DateTime.sunday),
+        true,
+      );
+    });
+
+    test('should ignore time', () {
+      expect(
+        DateUtils.isLastDayOfWeek(sundayWithTime),
+        true,
+      );
+    });
+
+    test('should return false if this is not a last day of a week', () {
+      expect(
+        DateUtils.isLastDayOfWeek(thursday),
+        false,
+      );
+      expect(
+        DateUtils.isLastDayOfWeek(monday),
+        false,
+      );
+      expect(
+        DateUtils.isLastDayOfWeek(thursday, firstWeekday: DateTime.monday),
+        false,
+      );
+      expect(
+        DateUtils.isLastDayOfWeek(monday, firstWeekday: DateTime.sunday),
+        false,
+      );
+      expect(
+        DateUtils.isLastDayOfWeek(sunday, firstWeekday: DateTime.sunday),
+        false,
+      );
+      expect(
+        DateUtils.isLastDayOfWeek(monday, firstWeekday: DateTime.thursday),
+        false,
+      );
+    });
+  });
+
   group('firstDayOfNextMonth()', () {
     test('should return correct date time', () {
       expect(DateUtils.firstDayOfNextMonth(DateTime(2020, 4, 9, 15, 16)),
