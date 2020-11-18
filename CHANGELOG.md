@@ -1,5 +1,6 @@
 * Method `getDayNumberInYear()` - returns number of the day in year.
 * Method `getDayNumberInWeek()` - returns number of the day in week.
+* Method `firstDayOfFirstWeek()` - returns start of the first day of the first week in year.
 
 ## [0.1.2] - 2020-11-02
 

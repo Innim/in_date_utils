@@ -69,6 +69,7 @@ void main() {
 * `firstDayOfWeek()` - returns `DateTime` for the beginning of the first day of the week for specified date.
 * `firstDayOfNextWeek()` - returns `DateTime` for the beginning of the first day of the next week for specified date.
 * `lastDayOfWeek()` - returns `DateTime` for the beginning of the last day of the week for specified date.
+* `firstDayOfFirstWeek()` - returns start of the first day of the first week in year.
 
 ### Information
 

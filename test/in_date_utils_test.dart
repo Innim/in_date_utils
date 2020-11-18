@@ -356,6 +356,54 @@ void main() {
     });
   });
 
+  group('firstDayOfFirstWeek()', () {
+    final years = [2020, 2018, 2016];
+    final expectedMonday = [
+      DateTime(2019, 12, 30),
+      DateTime(2018, 1, 1),
+      DateTime(2016, 1, 4),
+    ];
+    final expectedSunday = [
+      DateTime(2019, 12, 29),
+      DateTime(2017, 12, 31),
+      DateTime(2016, 1, 3),
+    ];
+    final expectedSaturday = [
+      DateTime(2020, 1, 4),
+      DateTime(2017, 12, 30),
+      DateTime(2016, 1, 2),
+    ];
+    final expectedDefault = expectedMonday;
+
+    for (var i = 0; i < years.length; i++) {
+      final year = years[i];
+      test('should return correct date for $year, default', () {
+        expect(DateUtils.firstDayOfFirstWeek(year), expectedDefault[i]);
+      });
+
+      test('should return correct date for $year, monday', () {
+        expect(
+          DateUtils.firstDayOfFirstWeek(year, firstWeekday: DateTime.monday),
+          expectedMonday[i],
+        );
+      });
+
+      test('should return correct date for $year, sunday', () {
+        expect(
+          DateUtils.firstDayOfFirstWeek(year, firstWeekday: DateTime.sunday),
+          expectedSunday[i],
+        );
+      });
+
+      test('should return correct date for $year, saturday', () {
+        expect(
+          DateUtils.firstDayOfFirstWeek(year, firstWeekday: DateTime.saturday),
+          expectedSaturday[i],
+        );
+      });
+    }
+  });
+
   group('isFirstDayOfWeek()', () {
     // monday
     final monday = DateTime(2018, 12, 31);

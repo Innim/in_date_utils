@@ -155,6 +155,27 @@ class DateUtils {
         microseconds: dateTime.microsecond));
   }
 
+  /// Returns start of the first day of the first week in [year].
+  ///
+  /// For example: (2020, 4, 9, 15, 16) -> (2019, 12, 30, 0, 0, 0, 0).
+  ///
+  /// You can define first weekday (Monday, Sunday or Saturday) with
+  /// parameter [firstWeekday]. It should be one of the constant values
+  /// [DateTime.monday], ..., [DateTime.sunday].
+  ///
+  /// By default it's [DateTime.monday].
+  static DateTime firstDayOfFirstWeek(int year, {int firstWeekday}) {
+    assert(firstWeekday == null || firstWeekday > 0 && firstWeekday < 8);
+
+    final startOfYear = DateTime(year);
+    var res = firstDayOfWeek(startOfYear, firstWeekday: firstWeekday);
+    if (!isWeekInYear(startOfYear, year, firstWeekday)) {
+      res = res.add(const Duration(days: DateTime.daysPerWeek));
+    }
+
+    return res;
+  }
+
   /// Returns start of the first day of the next week for specified [dateTime].
   ///
   /// For example: (2020, 4, 9, 15, 16) -> (2020, 4, 13, 0, 0, 0, 0).
