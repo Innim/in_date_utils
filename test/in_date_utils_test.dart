@@ -356,6 +356,66 @@ void main() {
     });
   });
 
+  group('isFirstDayOfWeek()', () {
+    // monday
+    final monday = DateTime(2018, 12, 31);
+    // monday
+    final mondayWithTime = DateTime(2018, 12, 31, 14, 11);
+    // thursday
+    final thursday = DateTime(2020, 4, 9, 15);
+    // sunday
+    final sunday = DateTime(2020, 4, 12, 23, 59, 59, 999, 999);
+
+    test('should return true if this is a first day of a week', () {
+      expect(
+        DateUtils.isFirstDayOfWeek(monday),
+        true,
+      );
+      expect(
+        DateUtils.isFirstDayOfWeek(monday, firstWeekday: DateTime.monday),
+        true,
+      );
+      expect(
+        DateUtils.isFirstDayOfWeek(thursday, firstWeekday: DateTime.thursday),
+        true,
+      );
+      expect(
+        DateUtils.isFirstDayOfWeek(sunday, firstWeekday: DateTime.sunday),
+        true,
+      );
+    });
+
+    test('should ignore time', () {
+      expect(
+        DateUtils.isFirstDayOfWeek(mondayWithTime),
+        true,
+      );
+    });
+
+    test('should return false if this is not a first day of a week', () {
+      expect(
+        DateUtils.isFirstDayOfWeek(thursday),
+        false,
+      );
+      expect(
+        DateUtils.isFirstDayOfWeek(sunday),
+        false,
+      );
+      expect(
+        DateUtils.isFirstDayOfWeek(thursday, firstWeekday: DateTime.monday),
+        false,
+      );
+      expect(
+        DateUtils.isFirstDayOfWeek(monday, firstWeekday: DateTime.sunday),
+        false,
+      );
+      expect(
+        DateUtils.isFirstDayOfWeek(monday, firstWeekday: DateTime.thursday),
+        false,
+      );
+    });
+  });
+
   group('firstDayOfNextMonth()', () {
     test('should return correct date time', () {
       expect(DateUtils.firstDayOfNextMonth(DateTime(2020, 4, 9, 15, 16)),

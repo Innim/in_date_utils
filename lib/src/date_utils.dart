@@ -82,8 +82,8 @@ class DateUtils {
   /// Checks if [day] is in the first day of a week.
   ///
   /// Monday is used as a first day of a week.
-  static bool isFirstDayOfWeek(DateTime day) {
-    return isSameDay(firstDayOfWeek(day), day);
+  static bool isFirstDayOfWeek(DateTime day, {int firstWeekday}) {
+    return isSameDay(firstDayOfWeek(day, firstWeekday: firstWeekday), day);
   }
 
   /// Checks if [day] is in the last day of a week.
