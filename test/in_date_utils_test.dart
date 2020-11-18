@@ -597,6 +597,20 @@ void main() {
       expect(DateUtils.getDayNumberInYear(DateTime(2008, 12, 31, 15)), 366);
     });
   });
+
+  group('getDaysInYear()', () {
+    [2009, 2015, 2017, 2018, 2019, 2021].forEach((year) {
+      test('should return 365 for $year year', () {
+        expect(DateUtils.getDaysInYear(year), 365);
+      });
+    });
+
+    [2008, 2012, 2016, 2020].forEach((year) {
+      test('should return 366 for the leap year $year', () {
+        expect(DateUtils.getDaysInYear(year), 366);
+      });
+    });
+  });
   group('generateWithDayStep()', () {
     test('should include start date and exclude end', () {
       final start = DateTime(2020, 11, 02, 18, 7);
