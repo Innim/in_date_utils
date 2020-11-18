@@ -1,3 +1,5 @@
+import 'package:meta/meta.dart';
+
 /// Утилиты работы с датами.
 ///
 /// См. также [Utils].
@@ -292,6 +294,29 @@ class DateUtils {
       yield date;
       date = date.add(const Duration(days: 1));
     } while (date.isBefore(end));
+  }
+
+  /// Checks if week, that contains [date] is in [year].
+  @visibleForTesting
+  static bool isWeekInYear(DateTime date, int year, int firstWeekday) {
+    const requiredDaysInYear = 4;
+    final startWeekDate = firstDayOfWeek(date, firstWeekday: firstWeekday);
+    final endWeekDate = lastDayOfWeek(date, firstWeekday: firstWeekday);
+
+    if (startWeekDate.year == year && endWeekDate.year == year) {
+      return true;
+    } else if (endWeekDate.year == year) {
+      final startYearDate = DateTime(year, DateTime.january, 1);
+      final daysInPrevYear = startYearDate.difference(startWeekDate).inDays;
+      return daysInPrevYear < requiredDaysInYear;
+    } else if (startWeekDate.year == year) {
+      final startNextYearDate = DateTime(year + 1, DateTime.january, 1);
+      final daysInNextYear =
+          endWeekDate.difference(startNextYearDate).inDays + 1;
+      return daysInNextYear < requiredDaysInYear;
+    } else {
+      return false;
+    }
   }
 
   DateUtils._();

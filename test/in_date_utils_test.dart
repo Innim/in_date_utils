@@ -712,4 +712,49 @@ void main() {
       expect(res, []);
     });
   });
+
+  group('isWeekInYear()', () {
+    final sunday = DateTime(2019, 12, 29);
+    final monday = DateTime(2019, 12, 30);
+    final tuesday = DateTime(2019, 12, 31);
+    final wednesday = DateTime(2020, 1, 1);
+    final thursday = DateTime(2020, 1, 2);
+    final days = [sunday, monday, tuesday, wednesday, thursday];
+
+    test('should return false for $sunday, 2020, monday', () {
+      expect(DateUtils.isWeekInYear(sunday, 2020, DateTime.monday), false);
+    });
+
+    test('should return false for $sunday, 2019, monday', () {
+      expect(DateUtils.isWeekInYear(sunday, 2019, DateTime.monday), true);
+    });
+
+    days.sublist(1).forEach((date) {
+      test('should return false for $date, 2019, monday', () {
+        expect(DateUtils.isWeekInYear(date, 2019, DateTime.monday), false);
+      });
+
+      test('should return true for $date, 2020, monday', () {
+        expect(DateUtils.isWeekInYear(date, 2020, DateTime.monday), true);
+      });
+    });
+
+    days.forEach((date) {
+      test('should return false for $date, 2019, sunday', () {
+        expect(DateUtils.isWeekInYear(date, 2019, DateTime.sunday), false);
+      });
+
+      test('should return true for $date, 2020, sunday', () {
+        expect(DateUtils.isWeekInYear(date, 2020, DateTime.sunday), true);
+      });
+
+      test('should return false for $date, 2020, saturday', () {
+        expect(DateUtils.isWeekInYear(date, 2020, DateTime.saturday), false);
+      });
+
+      test('should return true for $date, 2019, saturday', () {
+        expect(DateUtils.isWeekInYear(date, 2019, DateTime.saturday), true);
+      });
+    });
+  });
 }
