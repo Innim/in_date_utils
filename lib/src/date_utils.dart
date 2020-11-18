@@ -66,6 +66,40 @@ class DateUtils {
     return month == DateTime.monthsPerYear ? 1 : month + 1;
   }
 
+  /// Returns week number in year.
+  ///
+  /// Week number according to the ISO-8601 standard, weeks starting on Monday.
+  ///
+  /// The first week of the year is the week that contains
+  /// 4 or more days of that year (='First 4-day week').
+  ///
+  /// So if week contains less than 4 days - it's in another year.
+  ///
+  /// The highest week number in a year is either 52 or 53.
+  ///
+  /// You can define first weekday (Monday, Sunday or Saturday) with
+  /// parameter [firstWeekday]. It should be one of the constant values
+  /// [DateTime.monday], ..., [DateTime.sunday].
+  ///
+  /// By default it's [DateTime.monday].
+  static int getWeekNumber(DateTime date, {int firstWeekday}) {
+    assert(firstWeekday == null || firstWeekday > 0 && firstWeekday < 8);
+
+    if (isWeekInYear(date, date.year, firstWeekday)) {
+      final startOfTheFirstWeek =
+          firstDayOfFirstWeek(date.year, firstWeekday: firstWeekday);
+      final diff = date.difference(startOfTheFirstWeek);
+      return (diff.inDays / DateTime.daysPerWeek).floor() + 1;
+    } else if (date.month == DateTime.december) {
+      // first of the next year
+      return 1;
+    } else {
+      // last of the previous year
+      return getWeekNumber(DateTime(date.year - 1, DateTime.december, 31),
+          firstWeekday: firstWeekday);
+    }
+  }
+
   /// Возвращает кол-во недель в заданном году.
   static int getWeeksInYear(int year) {
     var lastDayOfYear = DateTime(year, DateTime.december, 31);
@@ -164,6 +198,8 @@ class DateUtils {
   /// [DateTime.monday], ..., [DateTime.sunday].
   ///
   /// By default it's [DateTime.monday].
+  ///
+  /// See [getWeekNumber].
   static DateTime firstDayOfFirstWeek(int year, {int firstWeekday}) {
     assert(firstWeekday == null || firstWeekday > 0 && firstWeekday < 8);
 

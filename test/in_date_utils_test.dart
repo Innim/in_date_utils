@@ -1,5 +1,6 @@
 import 'package:in_date_utils/in_date_utils.dart';
 import 'package:test/test.dart';
+import 'package:tuple/tuple.dart';
 
 void main() {
   group('startOfDay()', () {
@@ -709,6 +710,55 @@ void main() {
     [2008, 2012, 2016, 2020].forEach((year) {
       test('should return 366 for the leap year $year', () {
         expect(DateUtils.getDaysInYear(year), 366);
+      });
+    });
+  });
+
+  group('getWeekNumber', () {
+    [2008, 2009, 2013, 2014, 2015, 2018, 2019, 2020].forEach((year) {
+      final jan1 = DateTime(year, 1, 1);
+      test('should return 1 weeks for 1 jan $year', () {
+        expect(DateUtils.getWeekNumber(jan1), 1);
+      });
+    });
+
+    [2008, 2013, 2014, 2018, 2019, 2020].forEach((year) {
+      final jan1 = DateTime(year, 1, 1);
+      test('should return 1 weeks for 1 jan $year, sunday start', () {
+        expect(DateUtils.getWeekNumber(jan1, firstWeekday: DateTime.sunday), 1);
+      });
+    });
+
+    [2009, 2015].forEach((year) {
+      final jan1 = DateTime(year, 1, 1);
+      test('should return 53 weeks for 1 jan $year, sunday start', () {
+        expect(
+          DateUtils.getWeekNumber(jan1, firstWeekday: DateTime.sunday),
+          53,
+        );
+      });
+    });
+
+    [2010, 2016].forEach((year) {
+      final jan1 = DateTime(year, 1, 1);
+      test('should return 53 weeks for 1 jan $year', () {
+        expect(DateUtils.getWeekNumber(jan1), 53);
+      });
+    });
+
+    [2011, 2012, 2017].forEach((year) {
+      final jan1 = DateTime(year, 1, 1);
+      test('should return 52 weeks for 1 jan $year', () {
+        expect(DateUtils.getWeekNumber(jan1), 52);
+      });
+    });
+
+    [Tuple2(2016, 9), Tuple2(2020, 10)].forEach((item) {
+      final year = item.item1;
+      final expected = item.item2;
+      final date = DateTime(year, 3, 3);
+      test('should return $expected weeks for $date', () {
+        expect(DateUtils.getWeekNumber(date), expected);
       });
     });
   });
