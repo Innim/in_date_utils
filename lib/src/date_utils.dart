@@ -81,14 +81,23 @@ class DateUtils {
 
   /// Checks if [day] is in the first day of a week.
   ///
-  /// Monday is used as a first day of a week.
+  /// You can define first weekday (Monday or Sunday) with
+  /// parameter [firstWeekday]. It should be one of the constant values
+  /// [DateTime.monday], ..., [DateTime.sunday].
+  ///
+  /// By default it's [DateTime.monday].
   static bool isFirstDayOfWeek(DateTime day, {int firstWeekday}) {
     return isSameDay(firstDayOfWeek(day, firstWeekday: firstWeekday), day);
   }
 
   /// Checks if [day] is in the last day of a week.
   ///
-  /// Sunday is used as a last day of a week.
+  /// You can define first weekday (Monday or Sunday) with
+  /// parameter [firstWeekday]. It should be one of the constant values
+  /// [DateTime.monday], ..., [DateTime.sunday].
+  ///
+  /// By default it's [DateTime.monday],
+  /// so the last day will be [DateTime.sunday].
   static bool isLastDayOfWeek(DateTime day, {int firstWeekday}) {
     return isSameDay(lastDayOfWeek(day, firstWeekday: firstWeekday), day);
   }
@@ -100,6 +109,7 @@ class DateUtils {
   /// You can define first weekday (Monday or Sunday) with
   /// parameter [firstWeekday]. It should be one of the constant values
   /// [DateTime.monday], ..., [DateTime.sunday].
+  ///
   /// By default it's [DateTime.monday].
   static DateTime firstDayOfWeek(DateTime dateTime, {int firstWeekday}) {
     assert(firstWeekday == null || firstWeekday > 0 && firstWeekday < 8);
