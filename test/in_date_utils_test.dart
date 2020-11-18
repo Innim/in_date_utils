@@ -598,6 +598,59 @@ void main() {
     });
   });
 
+  group('getDayNumberInWeek()', () {
+    final monday = DateTime(2020, 11, 2);
+    final tuesday = DateTime(2020, 11, 3);
+    final wednesday = DateTime(2020, 11, 4);
+    final thursday = DateTime(2020, 11, 5);
+    final friday = DateTime(2020, 11, 6);
+    final saturday = DateTime(2020, 11, 7);
+    final sunday = DateTime(2020, 11, 8);
+
+    test('should return week day by default', () {
+      expect(DateUtils.getDayNumberInWeek(monday), 1);
+      expect(DateUtils.getDayNumberInWeek(tuesday), 2);
+      expect(DateUtils.getDayNumberInWeek(wednesday), 3);
+      expect(DateUtils.getDayNumberInWeek(thursday), 4);
+      expect(DateUtils.getDayNumberInWeek(friday), 5);
+      expect(DateUtils.getDayNumberInWeek(saturday), 6);
+      expect(DateUtils.getDayNumberInWeek(sunday), 7);
+    });
+
+    test('should return week day with Monday as a first week day', () {
+      final first = DateTime.monday;
+      expect(DateUtils.getDayNumberInWeek(monday, firstWeekday: first), 1);
+      expect(DateUtils.getDayNumberInWeek(tuesday, firstWeekday: first), 2);
+      expect(DateUtils.getDayNumberInWeek(wednesday, firstWeekday: first), 3);
+      expect(DateUtils.getDayNumberInWeek(thursday, firstWeekday: first), 4);
+      expect(DateUtils.getDayNumberInWeek(friday, firstWeekday: first), 5);
+      expect(DateUtils.getDayNumberInWeek(saturday, firstWeekday: first), 6);
+      expect(DateUtils.getDayNumberInWeek(sunday, firstWeekday: first), 7);
+    });
+
+    test('should return correct value with Sunday as a first week day', () {
+      final first = DateTime.sunday;
+      expect(DateUtils.getDayNumberInWeek(monday, firstWeekday: first), 2);
+      expect(DateUtils.getDayNumberInWeek(tuesday, firstWeekday: first), 3);
+      expect(DateUtils.getDayNumberInWeek(wednesday, firstWeekday: first), 4);
+      expect(DateUtils.getDayNumberInWeek(thursday, firstWeekday: first), 5);
+      expect(DateUtils.getDayNumberInWeek(friday, firstWeekday: first), 6);
+      expect(DateUtils.getDayNumberInWeek(saturday, firstWeekday: first), 7);
+      expect(DateUtils.getDayNumberInWeek(sunday, firstWeekday: first), 1);
+    });
+
+    test('should return correct value with Saturday as a first week day', () {
+      final first = DateTime.saturday;
+      expect(DateUtils.getDayNumberInWeek(monday, firstWeekday: first), 3);
+      expect(DateUtils.getDayNumberInWeek(tuesday, firstWeekday: first), 4);
+      expect(DateUtils.getDayNumberInWeek(wednesday, firstWeekday: first), 5);
+      expect(DateUtils.getDayNumberInWeek(thursday, firstWeekday: first), 6);
+      expect(DateUtils.getDayNumberInWeek(friday, firstWeekday: first), 7);
+      expect(DateUtils.getDayNumberInWeek(saturday, firstWeekday: first), 1);
+      expect(DateUtils.getDayNumberInWeek(sunday, firstWeekday: first), 2);
+    });
+  });
+
   group('getDaysInYear()', () {
     [2009, 2015, 2017, 2018, 2019, 2021].forEach((year) {
       test('should return 365 for $year year', () {

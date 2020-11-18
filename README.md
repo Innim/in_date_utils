@@ -74,6 +74,7 @@ void main() {
 
 * `getDaysInMonth()` - returns number of days in the month of the year.
 * `getDayNumberInYear()` - returns number of the day in year.
+* `getDayNumberInWeek()` - returns number of the day in week.
 
 ### Generation
 

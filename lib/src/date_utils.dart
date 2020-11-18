@@ -71,6 +71,22 @@ class DateUtils {
     return ((dayOfYear - lastDayOfYear.weekday + 10) / 7).floor();
   }
 
+  /// Returns number of the day in week (starting with 1).
+  ///
+  /// Difference from [DateTime.weekday] is that
+  /// you can define first weekday (Monday, Sunday or Saturday) with
+  /// parameter [firstWeekday]. It should be one of the constant values
+  /// [DateTime.monday], ..., [DateTime.sunday].
+  ///
+  /// By default it's [DateTime.monday].
+  ///
+  static int getDayNumberInWeek(DateTime date, {int firstWeekday}) {
+    var res = date.weekday - (firstWeekday ?? DateTime.monday) + 1;
+    if (res <= 0) res += DateTime.daysPerWeek;
+
+    return res;
+  }
+
   /// Returns number of the day in year.
   ///
   /// Starting with 1.

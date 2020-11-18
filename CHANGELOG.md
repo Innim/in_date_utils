@@ -1,4 +1,5 @@
 * Method `getDayNumberInYear()` - returns number of the day in year.
+* Method `getDayNumberInWeek()` - returns number of the day in week.
 
 ## [0.1.2] - 2020-11-02
 
