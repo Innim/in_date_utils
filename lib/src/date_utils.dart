@@ -105,7 +105,7 @@ class DateUtils {
     assert(firstWeekday == null || firstWeekday > 0 && firstWeekday < 8);
 
     var days = dateTime.weekday - (firstWeekday ?? DateTime.monday);
-    if (days < 0) days += 7;
+    if (days < 0) days += DateTime.daysPerWeek;
 
     return dateTime.subtract(Duration(
         days: days,
@@ -116,13 +116,19 @@ class DateUtils {
         microseconds: dateTime.microsecond));
   }
 
-  /// Возращает начало первого дня следующей недели указанной даты.
+  /// Returns start of the first day of the next week for specified [dateTime].
   ///
-  /// За первый день недели берется понедельник.
-  /// Например: (2020, 4, 9, 15, 16) -> (2020, 4, 13, 0, 0, 0, 0).
-  static DateTime firstDayOfNextWeek(DateTime dateTime) {
+  /// For example: (2020, 4, 9, 15, 16) -> (2020, 4, 13, 0, 0, 0, 0).
+  ///
+  /// You can define first weekday (Monday or Sunday) with
+  /// parameter [firstWeekday]. It should be one of the constant values
+  /// [DateTime.monday], ..., [DateTime.sunday].
+  /// By default it's [DateTime.monday].
+  static DateTime firstDayOfNextWeek(DateTime dateTime, {int firstWeekday}) {
+    var days = dateTime.weekday - (firstWeekday ?? DateTime.monday);
+    if (days >= 0) days -= DateTime.daysPerWeek;
     return dateTime.subtract(Duration(
-        days: dateTime.weekday - DateTime.daysPerWeek - 1,
+        days: days,
         hours: dateTime.hour,
         minutes: dateTime.minute,
         seconds: dateTime.second,
