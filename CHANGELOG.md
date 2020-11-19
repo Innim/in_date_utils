@@ -4,6 +4,7 @@
 * Method `getWeekNumber()` - returns number of the week in year.
 * Method `getDaysDifference()` - returns count of days between two dates.
 * Method `getLastWeekNumber()` - returns number of the last week in year.
+* **Deprecation.** Method `getWeeksInYear()` deprecated. It returns confused value.
 
 ## [0.1.2] - 2020-11-02
 
