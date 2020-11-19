@@ -1,3 +1,6 @@
+## [0.2.0] - 2020-11-18
+
+* Support for the defining start of the week in methods, working with weeks.
 * Method `getDayNumberInYear()` - returns number of the day in year.
 * Method `getDayNumberInWeek()` - returns number of the day in week.
 * Method `firstDayOfFirstWeek()` - returns start of the first day of the first week in year.
