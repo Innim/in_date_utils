@@ -530,6 +530,53 @@ void main() {
     });
   });
 
+  group('isFirstDayOfMonth()', () {
+    test('should return true if this is a first day of a month', () {
+      expect(
+        DateUtils.isFirstDayOfMonth(DateTime(2020, 11, 1)),
+        true,
+      );
+      expect(
+        DateUtils.isFirstDayOfMonth(DateTime(2019, 1, 1)),
+        true,
+      );
+      expect(
+        DateUtils.isFirstDayOfMonth(DateTime(2018, 12, 1)),
+        true,
+      );
+      expect(
+        DateUtils.isFirstDayOfMonth(DateTime(2017, 10, 32)),
+        true,
+      );
+    });
+
+    test('should ignore time', () {
+      expect(
+        DateUtils.isFirstDayOfMonth(DateTime(2020, 11, 1, 12, 13, 14)),
+        true,
+      );
+    });
+
+    test('should return false if this is not a first day of a month', () {
+      expect(
+        DateUtils.isFirstDayOfMonth(DateTime(2020, 11, 2)),
+        false,
+      );
+      expect(
+        DateUtils.isFirstDayOfMonth(DateTime(2019, 1, 5)),
+        false,
+      );
+      expect(
+        DateUtils.isFirstDayOfMonth(DateTime(2018, 12, 31)),
+        false,
+      );
+      expect(
+        DateUtils.isFirstDayOfMonth(DateTime(2017, 10, 0)),
+        false,
+      );
+    });
+  });
+
   group('firstDayOfNextMonth()', () {
     test('should return correct date time', () {
       expect(DateUtils.firstDayOfNextMonth(DateTime(2020, 4, 9, 15, 16)),

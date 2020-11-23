@@ -1,3 +1,5 @@
+* Method `isFirstDayOfMonth()` - Checks if `DateTime` is in the first day of a month.
+
 ## [0.2.0] - 2020-11-18
 
 * Support for the defining start of the week in methods, working with weeks.

@@ -54,6 +54,10 @@ void main() {
 * `isFirstDayOfWeek()` - checks if provided `DateTime` is in the first day of a week (Monday).
 * `isLastDayOfWeek()` - checks if provided `DateTime` is in the last day of a week (Sunday).
 
+#### Month
+
+* `isFirstDayOfMonth()` - Checks if `DateTime` is in the first day of a month.
+
 ### Transformation
 
 #### Next/prev

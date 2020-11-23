@@ -202,6 +202,11 @@ class DateUtils {
     return isSameDay(lastDayOfWeek(day, firstWeekday: firstWeekday), day);
   }
 
+  /// Checks if [day] is in the first day of a month.
+  static bool isFirstDayOfMonth(DateTime day) {
+    return day.day == 1;
+  }
+
   /// Returns start of the first day of the week for specified [dateTime].
   ///
   /// For example: (2020, 4, 9, 15, 16) -> (2020, 4, 6, 0, 0, 0, 0).
