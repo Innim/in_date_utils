@@ -531,6 +531,7 @@ void main() {
   });
 
   group('isFirstDayOfMonth()', () {
+    // TODO: refactor this in groups
     test('should return true if this is a first day of a month', () {
       expect(
         DateUtils.isFirstDayOfMonth(DateTime(2020, 11, 1)),
@@ -574,6 +575,52 @@ void main() {
         DateUtils.isFirstDayOfMonth(DateTime(2017, 10, 0)),
         false,
       );
+    });
+  });
+
+  group('isLastDayOfMonth()', () {
+    group('should return true', () {
+      [
+        DateTime(2020, 11, 30),
+        DateTime(2019, 1, 31),
+        DateTime(2018, 12, 31),
+        DateTime(2017, 10, 0),
+        DateTime(2020, 2, 29),
+        DateTime(2019, 2, 28),
+      ].forEach((date) {
+        test('for $date', () {
+          expect(
+            DateUtils.isLastDayOfMonth(date),
+            true,
+          );
+        });
+      });
+    });
+
+    test('should ignore time', () {
+      expect(
+        DateUtils.isLastDayOfMonth(
+            DateTime(2020, 11, 30, 23, 59, 59, 999, 999)),
+        true,
+      );
+    });
+
+    group('should return false', () {
+      [
+        DateTime(2020, 11, 1),
+        DateTime(2019, 1, 5),
+        DateTime(2018, 12, 30),
+        DateTime(2017, 10, 32),
+        DateTime(2020, 2, 28),
+        DateTime(2019, 2, 29),
+      ].forEach((date) {
+        test('for $date', () {
+          expect(
+            DateUtils.isLastDayOfMonth(date),
+            false,
+          );
+        });
+      });
     });
   });
 

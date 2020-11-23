@@ -207,6 +207,11 @@ class DateUtils {
     return day.day == 1;
   }
 
+  /// Checks if [day] is in the last day of a month.
+  static bool isLastDayOfMonth(DateTime day) {
+    return day.add(const Duration(days: 1)).month != day.month;
+  }
+
   /// Returns start of the first day of the week for specified [dateTime].
   ///
   /// For example: (2020, 4, 9, 15, 16) -> (2020, 4, 6, 0, 0, 0, 0).

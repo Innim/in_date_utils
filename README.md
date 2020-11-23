@@ -57,6 +57,7 @@ void main() {
 #### Month
 
 * `isFirstDayOfMonth()` - Checks if `DateTime` is in the first day of a month.
+* `isLastDayOfMonth()` - Checks if `DateTime` is in the last day of a month.
 
 ### Transformation
 
