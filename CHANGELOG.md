@@ -1,3 +1,5 @@
+## [0.2.1] - 2020-11-26
+
 * Method `isFirstDayOfMonth()` - Checks if `DateTime` is in the first day of a month.
 * Method `isLastDayOfMonth()` - Checks if `DateTime` is in the last day of a month.
 
