@@ -119,15 +119,6 @@ class DateUtils {
     return res;
   }
 
-  /// Возвращает кол-во недель в заданном году.
-  @Deprecated('Use getLastWeekNumber(). '
-      'This method will be removed in the next version.')
-  static int getWeeksInYear(int year) {
-    var lastDayOfYear = DateTime(year, DateTime.december, 31);
-    var dayOfYear = getDaysInYear(year);
-    return ((dayOfYear - lastDayOfYear.weekday + 10) / 7).floor();
-  }
-
   /// Returns number of the day in week (starting with 1).
   ///
   /// Difference from [DateTime.weekday] is that
