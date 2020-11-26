@@ -14,4 +14,3 @@ dependencies:
 dev_dependencies:
   test: ^1.16.0-nullsafety.12
   pedantic: ^1.10.0-nullsafety.3
-  tuple: ^1.0.3
