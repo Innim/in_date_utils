@@ -42,14 +42,14 @@ class DateUtils {
 
   /// Возвращает объект даты, с замененными переданными значениями.
   static DateTime copyWith(DateTime date,
-          {int year,
-          int month,
-          int day,
-          int hour,
-          int minute,
-          int second,
-          int millisecond,
-          int microsecond}) =>
+          {int? year,
+          int? month,
+          int? day,
+          int? hour,
+          int? minute,
+          int? second,
+          int? millisecond,
+          int? microsecond}) =>
       DateTime(
           year ?? date.year,
           month ?? date.month,
@@ -80,7 +80,7 @@ class DateUtils {
   /// [DateTime.monday], ..., [DateTime.sunday].
   ///
   /// By default it's [DateTime.monday].
-  static int getWeekNumber(DateTime date, {int firstWeekday}) {
+  static int getWeekNumber(DateTime date, {int? firstWeekday}) {
     assert(firstWeekday == null || firstWeekday > 0 && firstWeekday < 8);
 
     if (isWeekInYear(date, date.year, firstWeekday)) {
@@ -107,7 +107,7 @@ class DateUtils {
   /// By default it's [DateTime.monday].
   ///
   /// See [getWeekNumber].
-  static int getLastWeekNumber(int year, {int firstWeekday}) {
+  static int getLastWeekNumber(int year, {int? firstWeekday}) {
     assert(firstWeekday == null || firstWeekday > 0 && firstWeekday < 8);
 
     final start = firstDayOfFirstWeek(year, firstWeekday: firstWeekday);
@@ -128,7 +128,7 @@ class DateUtils {
   ///
   /// By default it's [DateTime.monday].
   ///
-  static int getDayNumberInWeek(DateTime date, {int firstWeekday}) {
+  static int getDayNumberInWeek(DateTime date, {int? firstWeekday}) {
     var res = date.weekday - (firstWeekday ?? DateTime.monday) + 1;
     if (res <= 0) res += DateTime.daysPerWeek;
 
@@ -173,7 +173,7 @@ class DateUtils {
   /// [DateTime.monday], ..., [DateTime.sunday].
   ///
   /// By default it's [DateTime.monday].
-  static bool isFirstDayOfWeek(DateTime day, {int firstWeekday}) {
+  static bool isFirstDayOfWeek(DateTime day, {int? firstWeekday}) {
     assert(firstWeekday == null || firstWeekday > 0 && firstWeekday < 8);
 
     return isSameDay(firstDayOfWeek(day, firstWeekday: firstWeekday), day);
@@ -187,7 +187,7 @@ class DateUtils {
   ///
   /// By default it's [DateTime.monday],
   /// so the last day will be [DateTime.sunday].
-  static bool isLastDayOfWeek(DateTime day, {int firstWeekday}) {
+  static bool isLastDayOfWeek(DateTime day, {int? firstWeekday}) {
     assert(firstWeekday == null || firstWeekday > 0 && firstWeekday < 8);
 
     return isSameDay(lastDayOfWeek(day, firstWeekday: firstWeekday), day);
@@ -212,7 +212,7 @@ class DateUtils {
   /// [DateTime.monday], ..., [DateTime.sunday].
   ///
   /// By default it's [DateTime.monday].
-  static DateTime firstDayOfWeek(DateTime dateTime, {int firstWeekday}) {
+  static DateTime firstDayOfWeek(DateTime dateTime, {int? firstWeekday}) {
     assert(firstWeekday == null || firstWeekday > 0 && firstWeekday < 8);
 
     var days = dateTime.weekday - (firstWeekday ?? DateTime.monday);
@@ -238,7 +238,7 @@ class DateUtils {
   /// By default it's [DateTime.monday].
   ///
   /// See [getWeekNumber].
-  static DateTime firstDayOfFirstWeek(int year, {int firstWeekday}) {
+  static DateTime firstDayOfFirstWeek(int year, {int? firstWeekday}) {
     assert(firstWeekday == null || firstWeekday > 0 && firstWeekday < 8);
 
     final startOfYear = DateTime(year);
@@ -258,7 +258,7 @@ class DateUtils {
   /// parameter [firstWeekday]. It should be one of the constant values
   /// [DateTime.monday], ..., [DateTime.sunday].
   /// By default it's [DateTime.monday].
-  static DateTime firstDayOfNextWeek(DateTime dateTime, {int firstWeekday}) {
+  static DateTime firstDayOfNextWeek(DateTime dateTime, {int? firstWeekday}) {
     assert(firstWeekday == null || firstWeekday > 0 && firstWeekday < 8);
 
     var days = dateTime.weekday - (firstWeekday ?? DateTime.monday);
@@ -282,7 +282,7 @@ class DateUtils {
   ///
   /// By default it's [DateTime.monday],
   /// so the last day will be [DateTime.sunday].
-  static DateTime lastDayOfWeek(DateTime dateTime, {int firstWeekday}) {
+  static DateTime lastDayOfWeek(DateTime dateTime, {int? firstWeekday}) {
     assert(firstWeekday == null || firstWeekday > 0 && firstWeekday < 8);
 
     var days = (firstWeekday ?? DateTime.monday) - 1 - dateTime.weekday;
@@ -393,7 +393,7 @@ class DateUtils {
 
   /// Checks if week, that contains [date] is in [year].
   @visibleForTesting
-  static bool isWeekInYear(DateTime date, int year, int firstWeekday) {
+  static bool isWeekInYear(DateTime date, int year, int? firstWeekday) {
     const requiredDaysInYear = 4;
     final startWeekDate = firstDayOfWeek(date, firstWeekday: firstWeekday);
     final endWeekDate = lastDayOfWeek(date, firstWeekday: firstWeekday);
