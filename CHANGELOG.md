@@ -1,3 +1,8 @@
+## [1.0.0-nullsafety.0] - 2020-11-26
+
+* Migrated to null safety.
+* **Removed** Deprecated method `getWeeksInYear()`.
+
 ## [0.2.1] - 2020-11-26
 
 * Method `isFirstDayOfMonth()` - Checks if `DateTime` is in the first day of a month.
