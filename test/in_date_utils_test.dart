@@ -32,12 +32,12 @@ void main() {
       Tuple3(DateTime(2020, 2, 29), DateTime(2019, 2, 28), -12),
       Tuple3(DateTime(2020, 2, 29), DateTime(2024, 2, 29), 48)
     ].forEach((item) {
-      final a = item.item1;
-      final b = item.item3;
+      final date = item.item1;
+      final months = item.item3;
       final expected = item.item2;
 
-      test('should return $expected for $a and $b', () {
-        expect(DateUtils.addMonths(a, b), expected);
+      test('should return $expected for $date and $months', () {
+        expect(DateUtils.addMonths(date, months), expected);
       });
     });
   });
