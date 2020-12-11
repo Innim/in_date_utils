@@ -3,6 +3,45 @@ import 'package:test/test.dart';
 import 'package:tuple/tuple.dart';
 
 void main() {
+  group('getDaysInMonth()', () {
+    test('should return correct days', () {
+      expect(DateUtils.getDaysInMonth(2020, 2), 29);
+      expect(DateUtils.getDaysInMonth(2021, 1), 31);
+      expect(DateUtils.getDaysInMonth(2021, 2), 28);
+      expect(DateUtils.getDaysInMonth(2021, 3), 31);
+      expect(DateUtils.getDaysInMonth(2021, 4), 30);
+      expect(DateUtils.getDaysInMonth(2021, 5), 31);
+      expect(DateUtils.getDaysInMonth(2021, 6), 30);
+      expect(DateUtils.getDaysInMonth(2021, 7), 31);
+      expect(DateUtils.getDaysInMonth(2021, 8), 31);
+      expect(DateUtils.getDaysInMonth(2021, 9), 30);
+      expect(DateUtils.getDaysInMonth(2021, 10), 31);
+      expect(DateUtils.getDaysInMonth(2021, 11), 30);
+      expect(DateUtils.getDaysInMonth(2021, 12), 31);
+    });
+  });
+
+  group('addMonths()', () {
+    [
+      Tuple3(DateTime(2020, 12, 31), DateTime(2021, 2, 28), 2),
+      Tuple3(DateTime(2020, 12, 31), DateTime(2021, 1, 31), 1),
+      Tuple3(DateTime(2021, 3, 31), DateTime(2021, 6, 30), 3),
+      Tuple3(DateTime(2021, 3, 31), DateTime(2022, 6, 30), 15),
+      Tuple3(DateTime(2021, 1, 31), DateTime(2020, 12, 31), -1),
+      Tuple3(DateTime(2021, 1, 31), DateTime(2020, 12, 31), -1),
+      Tuple3(DateTime(2020, 2, 29), DateTime(2019, 2, 28), -12),
+      Tuple3(DateTime(2020, 2, 29), DateTime(2024, 2, 29), 48)
+    ].forEach((item) {
+      final date = item.item1;
+      final months = item.item3;
+      final expected = item.item2;
+
+      test('should return $expected for $date and $months', () {
+        expect(DateUtils.addMonths(date, months), expected);
+      });
+    });
+  });
+
   group('startOfDay()', () {
     test('should return correct date', () {
       final date = DateTime(2019, 12, 3, 18, 10, 30);
