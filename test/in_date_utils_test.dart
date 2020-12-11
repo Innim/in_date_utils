@@ -3,6 +3,37 @@ import 'package:test/test.dart';
 import 'package:tuple/tuple.dart';
 
 void main() {
+  group('getDaysInMonth()', () {
+    test('should return correct days', () {
+      expect(DateUtils.getDaysInMonth(2020, 2), 29);
+      expect(DateUtils.getDaysInMonth(2021, 1), 31);
+      expect(DateUtils.getDaysInMonth(2021, 2), 28);
+      expect(DateUtils.getDaysInMonth(2021, 3), 31);
+      expect(DateUtils.getDaysInMonth(2021, 4), 30);
+      expect(DateUtils.getDaysInMonth(2021, 5), 31);
+      expect(DateUtils.getDaysInMonth(2021, 6), 30);
+      expect(DateUtils.getDaysInMonth(2021, 7), 31);
+      expect(DateUtils.getDaysInMonth(2021, 8), 31);
+      expect(DateUtils.getDaysInMonth(2021, 9), 30);
+      expect(DateUtils.getDaysInMonth(2021, 10), 31);
+      expect(DateUtils.getDaysInMonth(2021, 11), 30);
+      expect(DateUtils.getDaysInMonth(2021, 12), 31);
+    });
+  });
+
+  group('addMonths()', () {
+    test('should return correct date', () {
+      final date = DateTime(2021, 2, 28);
+      final res = DateUtils.addMonths(DateTime(2020, 12, 31), 2);
+
+      final date2 = DateTime(2021, 1, 31);
+      final res2 = DateUtils.addMonths(DateTime(2020, 12, 31), 1);
+
+      expect(res, date);
+      expect(res2, date2);
+    });
+  });
+
   group('startOfDay()', () {
     test('should return correct date', () {
       final date = DateTime(2019, 12, 3, 18, 10, 30);
