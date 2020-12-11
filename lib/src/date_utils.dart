@@ -66,6 +66,22 @@ class DateUtils {
     return month == DateTime.monthsPerYear ? 1 : month + 1;
   }
 
+  /// Returns the [DateTime] resulting from adding the given number
+  /// of months to this [DateTime].
+  ///
+  /// The result is computed by incrementing the month parts of this
+  /// [DateTime] by months months, and, if required, adjusting the day part
+  /// of the resulting date downwards to the last day of the resulting month.
+  ///
+  /// For example:
+  /// (2020, 12, 31) -> add 2 months -> (2021, 2, 28).
+  /// (2020, 12, 31) -> add 1 month -> (2021, 1, 31).
+  static DateTime addMonths(DateTime date, int months) {
+    var res = DateUtils.copyWith(date, month: date.month + months);
+    if (date.day != res.day) res = DateUtils.copyWith(res, day: 0);
+    return res;
+  }
+
   /// Returns week number in year.
   ///
   /// The first week of the year is the week that contains
@@ -348,7 +364,7 @@ class DateUtils {
   static int getDaysInMonth(int year, int monthNum) {
     assert(monthNum > 0);
     assert(monthNum <= 12);
-    return DateTime(year, monthNum, 0).day;
+    return DateTime(year, monthNum + 1, 0).day;
   }
 
   /// Returns same time in the next day.
