@@ -22,15 +22,23 @@ void main() {
   });
 
   group('addMonths()', () {
-    test('should return correct date', () {
-      final date = DateTime(2021, 2, 28);
-      final res = DateUtils.addMonths(DateTime(2020, 12, 31), 2);
+    [
+      Tuple3(DateTime(2020, 12, 31), DateTime(2021, 2, 28), 2),
+      Tuple3(DateTime(2020, 12, 31), DateTime(2021, 1, 31), 1),
+      Tuple3(DateTime(2021, 3, 31), DateTime(2021, 6, 30), 3),
+      Tuple3(DateTime(2021, 3, 31), DateTime(2022, 6, 30), 15),
+      Tuple3(DateTime(2021, 1, 31), DateTime(2020, 12, 31), -1),
+      Tuple3(DateTime(2021, 1, 31), DateTime(2020, 12, 31), -1),
+      Tuple3(DateTime(2020, 2, 29), DateTime(2019, 2, 28), -12),
+      Tuple3(DateTime(2020, 2, 29), DateTime(2024, 2, 29), 48)
+    ].forEach((item) {
+      final a = item.item1;
+      final b = item.item3;
+      final expected = item.item2;
 
-      final date2 = DateTime(2021, 1, 31);
-      final res2 = DateUtils.addMonths(DateTime(2020, 12, 31), 1);
-
-      expect(res, date);
-      expect(res2, date2);
+      test('should return $expected for $a and $b', () {
+        expect(DateUtils.addMonths(a, b), expected);
+      });
     });
   });
 
