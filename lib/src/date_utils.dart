@@ -34,13 +34,14 @@ class DateUtils {
   /// Returns [DateTime] for the beginning of today (00:00:00).
   static DateTime startOfToday() => startOfDay(DateTime.now());
 
-  /// Возвращает объект даты с установленным временем.
+  /// Creates a copy of [date] but with time replaced with the new values.
   static DateTime setTime(DateTime date, int hours, int minutes,
           [int seconds = 0, int milliseconds = 0, int microseconds = 0]) =>
       DateTime(date.year, date.month, date.day, hours, minutes, seconds,
           milliseconds, microseconds);
 
-  /// Возвращает объект даты, с замененными переданными значениями.
+  /// Creates a copy of [date] but with the given fields
+  /// replaced with the new values.
   static DateTime copyWith(DateTime date,
           {int year,
           int month,
@@ -60,7 +61,7 @@ class DateUtils {
           millisecond ?? date.millisecond,
           microsecond ?? date.microsecond);
 
-  /// Возвращает номер следующего месяца.
+  /// Returns a number of the next month.
   static int nextMonth(DateTime date) {
     var month = date.month;
     return month == DateTime.monthsPerYear ? 1 : month + 1;
@@ -168,7 +169,7 @@ class DateUtils {
     return getDaysDifference(date, firstDayOfYear) + 1;
   }
 
-  /// Возвращает кол-во дней в заданном году.
+  /// Returns the number of days in a given year.
   static int getDaysInYear(int year) {
     final lastDayOfYear = DateTime(year, DateTime.december, 31);
     return getDayNumberInYear(lastDayOfYear);
@@ -322,14 +323,18 @@ class DateUtils {
         microseconds: -dateTime.microsecond));
   }
 
-  /// Возращает начало первого дня месяца указанной даты.
-  /// Например: (2020, 4, 9, 15, 16) -> (2020, 4, 1, 0, 0, 0, 0).
-  static DateTime firstDayOfMonth(DateTime dateTime) {
-    return DateTime(dateTime.year, dateTime.month);
+  /// Returns [DateTime] that represents a beginning
+  /// of the first day of the month containing [date].
+  ///
+  /// Example: (2020, 4, 9, 15, 16) -> (2020, 4, 1, 0, 0, 0, 0).
+  static DateTime firstDayOfMonth(DateTime date) {
+    return DateTime(date.year, date.month);
   }
 
-  /// Возращает начало первого дня следующего месяца указанной даты.
-  /// Например: (2020, 4, 9, 15, 16) -> (2020, 5, 1, 0, 0, 0, 0).
+  /// Returns [DateTime] that represents a beginning
+  /// of the first day of the next month.
+  ///
+  /// Example: (2020, 4, 9, 15, 16) -> (2020, 5, 1, 0, 0, 0, 0).
   static DateTime firstDayOfNextMonth(DateTime dateTime) {
     final month = dateTime.month;
     final year = dateTime.year;
@@ -339,26 +344,34 @@ class DateUtils {
     return nextMonthStart;
   }
 
-  /// Возращает начало первого дня месяца указанной даты.
-  /// Например: (2020, 4, 9, 15, 16) -> (2020, 4, 30, 0, 0, 0, 0).
+  /// Returns [DateTime] that represents a beginning
+  /// of the last day of the month containing [date].
+  ///
+  /// Example: (2020, 4, 9, 15, 16) -> (2020, 4, 30, 0, 0, 0, 0).
   static DateTime lastDayOfMonth(DateTime dateTime) {
     return firstDayOfNextMonth(dateTime).subtract(Duration(days: 1));
   }
 
-  /// Возвращает начало первого дня года указанной даты.
-  /// Например: (2020, 3, 9, 15, 16) -> (2020, 1, 1, 0, 0, 0, 0).
+  /// Returns [DateTime] that represents a beginning
+  /// of the first day of the year containing [date].
+  ///
+  /// Example: (2020, 3, 9, 15, 16) -> (2020, 1, 1, 0, 0, 0, 0).
   static DateTime firstDayOfYear(DateTime dateTime) {
     return DateTime(dateTime.year, 1, 1);
   }
 
-  /// Возвращает начало первого дня следующего года указанной даты.
-  /// Например: (2020, 3, 9, 15, 16) -> (2021, 1, 1, 0, 0, 0, 0).
+  /// Returns [DateTime] that represents a beginning
+  /// of the first day of the next year.
+  ///
+  /// Example: (2020, 3, 9, 15, 16) -> (2021, 1, 1, 0, 0, 0, 0).
   static DateTime firstDayOfNextYear(DateTime dateTime) {
     return DateTime(dateTime.year + 1, 1, 1);
   }
 
-  /// Возращает начало последнего дня года указанной даты.
-  /// Например: (2020, 4, 9, 15, 16) -> (2020, 12, 31, 0, 0, 0, 0).
+  /// Returns [DateTime] that represents a beginning
+  /// of the last day of the year containing [date].
+  ///
+  /// Example: (2020, 4, 9, 15, 16) -> (2020, 12, 31, 0, 0, 0, 0).
   static DateTime lastDayOfYear(DateTime dateTime) {
     return DateTime(dateTime.year, DateTime.december, 31);
   }
