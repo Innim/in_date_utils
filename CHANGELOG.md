@@ -1,12 +1,12 @@
-## [1.0.1-nullsafety.0] - 2020-12-11
-
-* Method `addMonths()` - Returns the `DateTime` resulting from adding the given number of months to this `DateTime`.
-* Fix `getDaysInMonth()` - For some dates it will return incorrect results, like for `DateTime(2020, 3)`.
-
-## [1.0.0-nullsafety.0] - 2020-11-26
+## [1.0.1] - 2020-03-18
 
 * Migrated to null safety.
 * **Removed** Deprecated method `getWeeksInYear()`.
+
+## [0.2.2] - 2020-12-11
+
+* Method `addMonths()` - Returns the `DateTime` resulting from adding the given number of months to this `DateTime`.
+* Fix `getDaysInMonth()` - For some dates it will return incorrect results, like for `DateTime(2020, 3)`.
 
 ## [0.2.1] - 2020-11-26
 
