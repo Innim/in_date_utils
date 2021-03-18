@@ -2,6 +2,7 @@
 
 * Migrated to null safety.
 * **Removed** Deprecated method `getWeeksInYear()`.
+* Add `innim_lint` dependency. Refactor project.
 
 ## [0.2.2] - 2020-12-11
 

@@ -63,7 +63,7 @@ class DateUtils {
 
   /// Returns a number of the next month.
   static int nextMonth(DateTime date) {
-    var month = date.month;
+    final month = date.month;
     return month == DateTime.monthsPerYear ? 1 : month + 1;
   }
 
@@ -340,7 +340,7 @@ class DateUtils {
   ///
   /// Example: (2020, 4, 9, 15, 16) -> (2020, 4, 30, 0, 0, 0, 0).
   static DateTime lastDayOfMonth(DateTime dateTime) {
-    return firstDayOfNextMonth(dateTime).subtract(Duration(days: 1));
+    return firstDayOfNextMonth(dateTime).subtract(const Duration(days: 1));
   }
 
   /// Returns [DateTime] that represents a beginning
@@ -382,12 +382,12 @@ class DateUtils {
 
   /// Returns same time in the next day.
   static DateTime nextDay(DateTime d) {
-    return d.add(Duration(days: 1));
+    return d.add(const Duration(days: 1));
   }
 
   /// Returns same time in the previous day.
   static DateTime previousDay(DateTime d) {
-    return d.subtract(Duration(days: 1));
+    return d.subtract(const Duration(days: 1));
   }
 
   /// Returns same date in the next year.

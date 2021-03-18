@@ -992,7 +992,7 @@ void main() {
       final end = DateTime(2020, 11, 01, 17, 3);
 
       final res = DateUtils.generateWithDayStep(start, end);
-      expect(res, []);
+      expect(res, <DateTime>[]);
     });
   });
 

@@ -13,4 +13,4 @@ dependencies:
 
 dev_dependencies:
   test: ^1.16.0
-  pedantic: ^1.10.0
+  innim_lint: ^0.1.0
