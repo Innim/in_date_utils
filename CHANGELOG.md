@@ -1,3 +1,5 @@
+* **Fixed:** `firstDayOfWeek()` returns invalid value for daylight saving changeover.
+
 ## [0.2.2] - 2020-12-11
 
 * Method `addMonths()` - Returns the `DateTime` resulting from adding the given number of months to this `DateTime`.

@@ -1,8 +1,12 @@
 import 'package:in_date_utils/in_date_utils.dart';
 import 'package:test/test.dart';
 import 'package:tuple/tuple.dart';
+import 'package:timezone/data/latest.dart' as tz;
+import 'package:timezone/standalone.dart' as tz;
 
 void main() {
+  tz.initializeTimeZones();
+
   group('getDaysInMonth()', () {
     test('should return correct days', () {
       expect(DateUtils.getDaysInMonth(2020, 2), 29);
@@ -27,7 +31,6 @@ void main() {
       Tuple3(DateTime(2020, 12, 31), DateTime(2021, 1, 31), 1),
       Tuple3(DateTime(2021, 3, 31), DateTime(2021, 6, 30), 3),
       Tuple3(DateTime(2021, 3, 31), DateTime(2022, 6, 30), 15),
-      Tuple3(DateTime(2021, 1, 31), DateTime(2020, 12, 31), -1),
       Tuple3(DateTime(2021, 1, 31), DateTime(2020, 12, 31), -1),
       Tuple3(DateTime(2020, 2, 29), DateTime(2019, 2, 28), -12),
       Tuple3(DateTime(2020, 2, 29), DateTime(2024, 2, 29), 48)
@@ -185,6 +188,26 @@ void main() {
         DateUtils.firstDayOfWeek(date4, firstWeekday: firstWeekday),
         DateTime(2020, 11, 15, 0, 0, 0, 0, 0),
       );
+    });
+
+    group('should consider daylight saving', () {
+      const region = 'Europe/Lisbon';
+      const firstWeekday = DateTime.sunday;
+
+      void testDaylight(DateTime date, DateTime expected) {
+        final res = DateUtils.firstDayOfWeek(_createInTimezone(date, region),
+            firstWeekday: firstWeekday);
+        final resTz = _createInTimezone(res, region);
+        final expectedTz = _createInTimezone(expected, region);
+
+        expect(resTz, expectedTz);
+      }
+
+      test('when does not contains changeover',
+          () => testDaylight(DateTime(2021, 3, 1), DateTime(2021, 2, 28)));
+
+      test('when contains changeover',
+          () => testDaylight(DateTime(2021, 4, 1), DateTime(2021, 3, 28)));
     });
 
     test('should return correct value for a Thursday as a first week day', () {
@@ -1041,4 +1064,15 @@ void main() {
       });
     });
   });
+}
+
+/// [locationName] should be value from the database represents
+/// a national region where all clocks keeping local time have agreed since 1970.
+/// TZ database https://www.iana.org/time-zones
+/// You can find a list at https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+DateTime _createInTimezone(DateTime date, String locationName) {
+  final localion = tz.getLocation('Europe/Lisbon');
+  final tzDate = tz.TZDateTime(localion, date.year, date.month, date.day,
+      date.hour, date.minute, date.second, date.millisecond, date.microsecond);
+  return tzDate;
 }

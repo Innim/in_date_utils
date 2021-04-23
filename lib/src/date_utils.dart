@@ -244,13 +244,7 @@ class DateUtils {
     var days = dateTime.weekday - (firstWeekday ?? DateTime.monday);
     if (days < 0) days += DateTime.daysPerWeek;
 
-    return dateTime.subtract(Duration(
-        days: days,
-        hours: dateTime.hour,
-        minutes: dateTime.minute,
-        seconds: dateTime.second,
-        milliseconds: dateTime.millisecond,
-        microseconds: dateTime.microsecond));
+    return DateTime(dateTime.year, dateTime.month, dateTime.day - days);
   }
 
   /// Returns start of the first day of the first week in [year].
