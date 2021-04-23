@@ -1,11 +1,13 @@
 import 'package:in_date_utils/in_date_utils.dart';
 import 'package:test/test.dart';
-import 'package:tuple/tuple.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/standalone.dart' as tz;
+import 'package:tuple/tuple.dart';
 
 void main() {
   tz.initializeTimeZones();
+  const region = 'Europe/Lisbon';
+  const firstWeekday = DateTime.sunday;
 
   group('getDaysInMonth()', () {
     test('should return correct days', () {
@@ -63,6 +65,28 @@ void main() {
     });
   });
 
+  group('startOfNextDay()', () {
+    void testDaylight(DateTime date, DateTime expected) {
+      final res = DateUtils.startOfNextDay(
+        _createInTimezone(date, region),
+      );
+      final resTz = _createInTimezone(res, region);
+      final expectedTz = _createInTimezone(expected, region);
+
+      expect(resTz, expectedTz);
+    }
+
+    test(
+        'when does not contains changeover',
+        () =>
+            testDaylight(DateTime(2021, 3, 28, 00, 30), DateTime(2021, 3, 29)));
+
+    test(
+        'when contains changeover',
+        () => testDaylight(
+            DateTime(2021, 10, 30, 01, 30), DateTime(2021, 10, 31)));
+  });
+
   group('startOfToday()', () {
     test('should return correct date', () {
       final date = DateTime.now();
@@ -70,6 +94,35 @@ void main() {
 
       expect(res, DateTime(date.year, date.month, date.day));
     });
+  });
+
+  group('startOfToday()', () {
+    test('should return correct date', () {
+      final date = DateTime.now();
+      final res = DateUtils.startOfToday();
+
+      expect(res, DateTime(date.year, date.month, date.day));
+    });
+  });
+
+  group('startOfToday()', () {
+    void testDaylight(DateTime date, DateTime expected) {
+      final res = DateUtils.startOfDay(
+        _createInTimezone(date, region),
+      );
+      final resTz = _createInTimezone(res, region);
+      final expectedTz = _createInTimezone(expected, region);
+
+      expect(resTz, expectedTz);
+    }
+
+    test(
+        'when does not contains changeover',
+        () =>
+            testDaylight(DateTime(2021, 3, 28, 10, 20), DateTime(2021, 3, 28)));
+
+    test('when contains changeover',
+        () => testDaylight(DateTime(2021, 4, 1, 10, 20), DateTime(2021, 4, 1)));
   });
 
   group('setTime()', () {
@@ -191,9 +244,6 @@ void main() {
     });
 
     group('should consider daylight saving', () {
-      const region = 'Europe/Lisbon';
-      const firstWeekday = DateTime.sunday;
-
       void testDaylight(DateTime date, DateTime expected) {
         final res = DateUtils.firstDayOfWeek(_createInTimezone(date, region),
             firstWeekday: firstWeekday);
@@ -240,6 +290,25 @@ void main() {
     final date3 = DateTime(2020, 4, 12, 23, 59, 59, 999, 999);
     // monday
     final date4 = DateTime(2020, 11, 16, 11);
+
+    void testDaylight(DateTime date, DateTime expected) {
+      final res = DateUtils.firstDayOfNextWeek(_createInTimezone(date, region),
+          firstWeekday: DateTime.saturday);
+      final resTz = _createInTimezone(res, region);
+      final expectedTz = _createInTimezone(expected, region);
+
+      expect(resTz, expectedTz);
+    }
+
+    test(
+        'when does not contains changeover',
+        () =>
+            testDaylight(DateTime(2021, 3, 27, 10, 20), DateTime(2021, 4, 3)));
+
+    test(
+        'when contains changeover',
+        () => testDaylight(
+            DateTime(2021, 10, 30, 10, 20), DateTime(2021, 11, 6)));
 
     test('should return correct date time', () {
       expect(
@@ -325,6 +394,25 @@ void main() {
     final date3 = DateTime(2020, 4, 12, 23, 59, 59, 999, 999);
     // monday
     final date4 = DateTime(2020, 11, 16, 11);
+
+    void testDaylight(DateTime date, DateTime expected) {
+      final res = DateUtils.lastDayOfWeek(_createInTimezone(date, region),
+          firstWeekday: DateTime.saturday);
+      final resTz = _createInTimezone(res, region);
+      final expectedTz = _createInTimezone(expected, region);
+
+      expect(resTz, expectedTz);
+    }
+
+    test(
+        'when does not contains changeover',
+        () =>
+            testDaylight(DateTime(2020, 3, 28, 10, 20), DateTime(2020, 4, 3)));
+
+    test(
+        'when contains changeover',
+        () => testDaylight(
+            DateTime(2021, 10, 30, 10, 20), DateTime(2021, 11, 5)));
 
     test('should return correct date time', () {
       expect(
