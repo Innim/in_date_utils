@@ -167,7 +167,7 @@ void main() {
     });
 
     test('should return correct value for a Sunday as a first week day', () {
-      final firstWeekday = DateTime.sunday;
+      const firstWeekday = DateTime.sunday;
       expect(
         DateUtils.firstDayOfWeek(date1, firstWeekday: firstWeekday),
         DateTime(2019, 1, 6, 0, 0, 0, 0, 0),
@@ -252,7 +252,7 @@ void main() {
     });
 
     test('should return correct value for a Sunday as a first week day', () {
-      final firstWeekday = DateTime.sunday;
+      const firstWeekday = DateTime.sunday;
       expect(
         DateUtils.firstDayOfNextWeek(date1, firstWeekday: firstWeekday),
         DateTime(2019, 1, 6),
@@ -341,7 +341,7 @@ void main() {
     });
 
     test('should return correct value for a Sunday as a first week day', () {
-      final firstWeekday = DateTime.sunday;
+      const firstWeekday = DateTime.sunday;
       expect(
         DateUtils.lastDayOfWeek(date1, firstWeekday: firstWeekday),
         DateTime(2019, 1, 5),
@@ -799,7 +799,7 @@ void main() {
     });
 
     test('should return week day with Monday as a first week day', () {
-      final first = DateTime.monday;
+      const first = DateTime.monday;
       expect(DateUtils.getDayNumberInWeek(monday, firstWeekday: first), 1);
       expect(DateUtils.getDayNumberInWeek(tuesday, firstWeekday: first), 2);
       expect(DateUtils.getDayNumberInWeek(wednesday, firstWeekday: first), 3);
@@ -810,7 +810,7 @@ void main() {
     });
 
     test('should return correct value with Sunday as a first week day', () {
-      final first = DateTime.sunday;
+      const first = DateTime.sunday;
       expect(DateUtils.getDayNumberInWeek(monday, firstWeekday: first), 2);
       expect(DateUtils.getDayNumberInWeek(tuesday, firstWeekday: first), 3);
       expect(DateUtils.getDayNumberInWeek(wednesday, firstWeekday: first), 4);
