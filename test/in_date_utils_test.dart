@@ -98,12 +98,12 @@ void main() {
     test(
         'when contains changeover',
         () => testDaylight(DateTime(2021, 3, 28, 10, 20), DateTime(2021, 3, 28),
-            DateUtils.startOfDay));
+            (d) => DateUtils.startOfDay(d)));
 
     test(
         'when contains changeover',
         () => testDaylight(DateTime(2021, 4, 1, 10, 20), DateTime(2021, 4, 1),
-            DateUtils.startOfDay));
+            (d) => DateUtils.startOfDay(d)));
   });
 
   group('setTime()', () {
