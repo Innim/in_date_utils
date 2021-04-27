@@ -8,7 +8,9 @@ void main() {
   tz.initializeTimeZones();
   const regionLisbon = 'Europe/Lisbon';
 
-  void testDaylight(DateTime expected, DateTime res) {
+  void testDaylight(
+      DateTime date, DateTime expected, DateTime Function(DateTime date) act) {
+    final res = act(_createInTimezone(date, regionLisbon));
     final resTz = _createInTimezone(res, regionLisbon);
     final expectedTz = _createInTimezone(expected, regionLisbon);
 
@@ -70,19 +72,17 @@ void main() {
       expect(res, DateTime(2019, 12, 4));
     });
 
-    test(
-        'should consider daylight saving when contains changeover',
-        () => testDaylight(
-            DateTime(2021, 3, 29),
-            DateUtils.startOfNextDay(_createInTimezone(
-                DateTime(2021, 3, 28, 00, 30), regionLisbon))));
+    group('should consider daylight saving', () {
+      test(
+          'when contains changeover',
+          () => testDaylight(DateTime(2021, 3, 28, 00, 30),
+              DateTime(2021, 3, 29), (d) => DateUtils.startOfNextDay(d)));
 
-    test(
-        'should consider daylight saving when contains changeover',
-        () => testDaylight(
-            DateTime(2021, 10, 31),
-            DateUtils.startOfNextDay(_createInTimezone(
-                DateTime(2021, 10, 30, 01, 30), regionLisbon))));
+      test(
+          'when contains changeover',
+          () => testDaylight(DateTime(2021, 10, 30, 01, 30),
+              DateTime(2021, 10, 31), (d) => DateUtils.startOfNextDay(d)));
+    });
   });
 
   group('startOfToday()', () {
@@ -94,24 +94,16 @@ void main() {
     });
   });
 
-  group('startOfToday()', () {
-    void testDaylight(DateTime date, DateTime expected) {
-      final res = DateUtils.startOfDay(
-        _createInTimezone(date, regionLisbon),
-      );
-      final resTz = _createInTimezone(res, regionLisbon);
-      final expectedTz = _createInTimezone(expected, regionLisbon);
-
-      expect(resTz, expectedTz);
-    }
+  group('should consider daylight saving', () {
+    test(
+        'when contains changeover',
+        () => testDaylight(DateTime(2021, 3, 28, 10, 20), DateTime(2021, 3, 28),
+            DateUtils.startOfDay));
 
     test(
-        'should consider daylight saving when contains changeover',
-        () =>
-            testDaylight(DateTime(2021, 3, 28, 10, 20), DateTime(2021, 3, 28)));
-
-    test('should consider daylight saving when contains changeover',
-        () => testDaylight(DateTime(2021, 4, 1, 10, 20), DateTime(2021, 4, 1)));
+        'when contains changeover',
+        () => testDaylight(DateTime(2021, 4, 1, 10, 20), DateTime(2021, 4, 1),
+            DateUtils.startOfDay));
   });
 
   group('setTime()', () {
@@ -232,21 +224,23 @@ void main() {
       );
     });
 
-    test(
-        'should consider daylight saving when contains changeover',
-        () => testDaylight(
-            DateTime(2021, 2, 28),
-            DateUtils.firstDayOfWeek(
-                _createInTimezone(DateTime(2021, 3, 1), regionLisbon),
-                firstWeekday: DateTime.sunday)));
+    group('should consider daylight saving', () {
+      test(
+          'when contains changeover',
+          () => testDaylight(
+              DateTime(2021, 3, 1),
+              DateTime(2021, 2, 28),
+              (d) =>
+                  DateUtils.firstDayOfWeek(d, firstWeekday: DateTime.sunday)));
 
-    test(
-        'should consider daylight saving when contains changeover',
-        () => testDaylight(
-            DateTime(2021, 3, 28),
-            DateUtils.firstDayOfWeek(
-                _createInTimezone(DateTime(2021, 4, 1), regionLisbon),
-                firstWeekday: DateTime.sunday)));
+      test(
+          'when contains changeover',
+          () => testDaylight(
+              DateTime(2021, 4, 1),
+              DateTime(2021, 3, 28),
+              (d) =>
+                  DateUtils.firstDayOfWeek(d, firstWeekday: DateTime.sunday)));
+    });
 
     test('should return correct value for a Thursday as a first week day', () {
       final firstWeekday = DateTime.thursday;
@@ -352,22 +346,23 @@ void main() {
         DateTime(2020, 11, 19),
       );
     });
+    group('should consider daylight saving', () {
+      test(
+          'when contains changeover',
+          () => testDaylight(
+              DateTime(2021, 3, 27, 10, 20),
+              DateTime(2021, 4, 3),
+              (d) => DateUtils.firstDayOfNextWeek(d,
+                  firstWeekday: DateTime.saturday)));
 
-    test(
-        'should consider daylight saving when contains changeover',
-        () => testDaylight(
-            DateTime(2021, 4, 3),
-            DateUtils.firstDayOfNextWeek(
-                _createInTimezone(DateTime(2021, 3, 27, 10, 20), regionLisbon),
-                firstWeekday: DateTime.saturday)));
-
-    test(
-        'should consider daylight saving when contains changeover',
-        () => testDaylight(
-            DateTime(2021, 11, 6),
-            DateUtils.firstDayOfNextWeek(
-                _createInTimezone(DateTime(2021, 10, 30, 10, 20), regionLisbon),
-                firstWeekday: DateTime.saturday)));
+      test(
+          'when contains changeover',
+          () => testDaylight(
+              DateTime(2021, 10, 30, 10, 20),
+              DateTime(2021, 11, 6),
+              (d) => DateUtils.firstDayOfNextWeek(d,
+                  firstWeekday: DateTime.saturday)));
+    });
   });
 
   group('lastDayOfWeek()', () {
@@ -458,21 +453,23 @@ void main() {
       );
     });
 
-    test(
-        'should consider daylight saving when contains changeover',
-        () => testDaylight(
-            DateTime(2020, 4, 3),
-            DateUtils.lastDayOfWeek(
-                _createInTimezone(DateTime(2020, 3, 28, 10, 20), regionLisbon),
-                firstWeekday: DateTime.saturday)));
+    group('should consider daylight saving', () {
+      test(
+          'when contains changeover',
+          () => testDaylight(
+              DateTime(2020, 3, 28, 10, 20),
+              DateTime(2020, 4, 3),
+              (d) =>
+                  DateUtils.lastDayOfWeek(d, firstWeekday: DateTime.saturday)));
 
-    test(
-        'should consider daylight saving when contains changeover',
-        () => testDaylight(
-            DateTime(2021, 11, 5),
-            DateUtils.lastDayOfWeek(
-                _createInTimezone(DateTime(2021, 10, 30, 10, 20), regionLisbon),
-                firstWeekday: DateTime.saturday)));
+      test(
+          'when contains changeover',
+          () => testDaylight(
+              DateTime(2021, 10, 30, 10, 20),
+              DateTime(2021, 11, 5),
+              (d) =>
+                  DateUtils.lastDayOfWeek(d, firstWeekday: DateTime.saturday)));
+    });
   });
 
   group('firstDayOfMonth()', () {
