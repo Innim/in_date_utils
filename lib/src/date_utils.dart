@@ -12,24 +12,14 @@ class DateUtils {
   /// Returns [DateTime] for the beginning of the day (00:00:00).
   ///
   /// (2020, 4, 9, 16, 50) -> (2020, 4, 9, 0, 0)
-  static DateTime startOfDay(DateTime dateTime) => dateTime.subtract(Duration(
-      hours: dateTime.hour,
-      minutes: dateTime.minute,
-      seconds: dateTime.second,
-      milliseconds: dateTime.millisecond,
-      microseconds: dateTime.microsecond));
+  static DateTime startOfDay(DateTime dateTime) =>
+      DateTime(dateTime.year, dateTime.month, dateTime.day);
 
   /// Returns [DateTime] for the beginning of the next day (00:00:00).
   ///
   /// (2020, 4, 9, 16, 50) -> (2020, 4, 10, 0, 0)
   static DateTime startOfNextDay(DateTime dateTime) =>
-      dateTime.subtract(Duration(
-          days: -1,
-          hours: dateTime.hour,
-          minutes: dateTime.minute,
-          seconds: dateTime.second,
-          milliseconds: dateTime.millisecond,
-          microseconds: dateTime.microsecond));
+      DateTime(dateTime.year, dateTime.month, dateTime.day + 1);
 
   /// Returns [DateTime] for the beginning of today (00:00:00).
   static DateTime startOfToday() => startOfDay(DateTime.now());
@@ -235,13 +225,7 @@ class DateUtils {
     var days = dateTime.weekday - (firstWeekday ?? DateTime.monday);
     if (days < 0) days += DateTime.daysPerWeek;
 
-    return dateTime.subtract(Duration(
-        days: days,
-        hours: dateTime.hour,
-        minutes: dateTime.minute,
-        seconds: dateTime.second,
-        milliseconds: dateTime.millisecond,
-        microseconds: dateTime.microsecond));
+    return DateTime(dateTime.year, dateTime.month, dateTime.day - days);
   }
 
   /// Returns start of the first day of the first week in [year].
@@ -280,13 +264,7 @@ class DateUtils {
 
     var days = dateTime.weekday - (firstWeekday ?? DateTime.monday);
     if (days >= 0) days -= DateTime.daysPerWeek;
-    return dateTime.subtract(Duration(
-        days: days,
-        hours: dateTime.hour,
-        minutes: dateTime.minute,
-        seconds: dateTime.second,
-        milliseconds: dateTime.millisecond,
-        microseconds: dateTime.microsecond));
+    return DateTime(dateTime.year, dateTime.month, dateTime.day - days);
   }
 
   /// Returns start of the last day of the week for specified [dateTime].
@@ -305,13 +283,7 @@ class DateUtils {
     var days = (firstWeekday ?? DateTime.monday) - 1 - dateTime.weekday;
     if (days < 0) days += DateTime.daysPerWeek;
 
-    return dateTime.add(Duration(
-        days: days,
-        hours: -dateTime.hour,
-        minutes: -dateTime.minute,
-        seconds: -dateTime.second,
-        milliseconds: -dateTime.millisecond,
-        microseconds: -dateTime.microsecond));
+    return DateTime(dateTime.year, dateTime.month, dateTime.day + days);
   }
 
   /// Returns [DateTime] that represents a beginning

@@ -1,7 +1,21 @@
 import 'package:in_date_utils/in_date_utils.dart';
 import 'package:test/test.dart';
+import 'package:timezone/data/latest.dart' as tz;
+import 'package:timezone/standalone.dart' as tz;
 
 void main() {
+  tz.initializeTimeZones();
+  const regionLisbon = 'Europe/Lisbon';
+
+  void testDaylight(
+      DateTime date, DateTime expected, DateTime Function(DateTime date) act) {
+    final res = act(_createInTimezone(date, regionLisbon));
+    final resTz = _createInTimezone(res, regionLisbon);
+    final expectedTz = _createInTimezone(expected, regionLisbon);
+
+    expect(resTz, expectedTz);
+  }
+
   group('getDaysInMonth()', () {
     test('should return correct days', () {
       expect(DateUtils.getDaysInMonth(2020, 2), 29);
@@ -27,7 +41,6 @@ void main() {
       Tuple3(DateTime(2021, 3, 31), DateTime(2021, 6, 30), 3),
       Tuple3(DateTime(2021, 3, 31), DateTime(2022, 6, 30), 15),
       Tuple3(DateTime(2021, 1, 31), DateTime(2020, 12, 31), -1),
-      Tuple3(DateTime(2021, 1, 31), DateTime(2020, 12, 31), -1),
       Tuple3(DateTime(2020, 2, 29), DateTime(2019, 2, 28), -12),
       Tuple3(DateTime(2020, 2, 29), DateTime(2024, 2, 29), 48)
     ].forEach((item) {
@@ -48,6 +61,18 @@ void main() {
 
       expect(res, DateTime(2019, 12, 3));
     });
+
+    group('should consider daylight saving', () {
+      test(
+          'when contains changeover',
+          () => testDaylight(DateTime(2021, 3, 28, 10, 20),
+              DateTime(2021, 3, 28), DateUtils.startOfDay));
+
+      test(
+          'when does not contains changeover',
+          () => testDaylight(DateTime(2021, 4, 1, 10, 20), DateTime(2021, 4, 1),
+              DateUtils.startOfDay));
+    });
   });
 
   group('startOfNextDay()', () {
@@ -56,6 +81,18 @@ void main() {
       final res = DateUtils.startOfNextDay(date);
 
       expect(res, DateTime(2019, 12, 4));
+    });
+
+    group('should consider daylight saving', () {
+      test(
+          'when contains forward changeover',
+          () => testDaylight(DateTime(2021, 3, 28, 00, 30),
+              DateTime(2021, 3, 29), DateUtils.startOfNextDay));
+
+      test(
+          'when contains backward changeover',
+          () => testDaylight(DateTime(2021, 10, 30, 01, 30),
+              DateTime(2021, 10, 31), DateUtils.startOfNextDay));
     });
   });
 
@@ -186,6 +223,24 @@ void main() {
       );
     });
 
+    group('should consider daylight saving', () {
+      test(
+          'when does not contains changeover',
+          () => testDaylight(
+              DateTime(2021, 3, 1),
+              DateTime(2021, 2, 28),
+              (d) =>
+                  DateUtils.firstDayOfWeek(d, firstWeekday: DateTime.sunday)));
+
+      test(
+          'when contains changeover',
+          () => testDaylight(
+              DateTime(2021, 4, 1),
+              DateTime(2021, 3, 28),
+              (d) =>
+                  DateUtils.firstDayOfWeek(d, firstWeekday: DateTime.sunday)));
+    });
+
     test('should return correct value for a Thursday as a first week day', () {
       final firstWeekday = DateTime.thursday;
       expect(
@@ -290,6 +345,23 @@ void main() {
         DateTime(2020, 11, 19),
       );
     });
+    group('should consider daylight saving', () {
+      test(
+          'when contains forward changeover',
+          () => testDaylight(
+              DateTime(2021, 3, 27, 10, 20),
+              DateTime(2021, 4, 3),
+              (d) => DateUtils.firstDayOfNextWeek(d,
+                  firstWeekday: DateTime.saturday)));
+
+      test(
+          'when contains backward changeover',
+          () => testDaylight(
+              DateTime(2021, 10, 30, 10, 20),
+              DateTime(2021, 11, 6),
+              (d) => DateUtils.firstDayOfNextWeek(d,
+                  firstWeekday: DateTime.saturday)));
+    });
   });
 
   group('lastDayOfWeek()', () {
@@ -378,6 +450,24 @@ void main() {
         DateUtils.lastDayOfWeek(date4, firstWeekday: firstWeekday),
         DateTime(2020, 11, 18),
       );
+    });
+
+    group('should consider daylight saving', () {
+      test(
+          'when contains forward changeover',
+          () => testDaylight(
+              DateTime(2020, 3, 28, 10, 20),
+              DateTime(2020, 4, 3),
+              (d) =>
+                  DateUtils.lastDayOfWeek(d, firstWeekday: DateTime.saturday)));
+
+      test(
+          'when contains backward changeover',
+          () => testDaylight(
+              DateTime(2021, 10, 30, 10, 20),
+              DateTime(2021, 11, 5),
+              (d) =>
+                  DateUtils.lastDayOfWeek(d, firstWeekday: DateTime.saturday)));
     });
   });
 
@@ -1040,6 +1130,17 @@ void main() {
       });
     });
   });
+}
+
+/// [locationName] should be value from the database represents
+/// a national region where all clocks keeping local time have agreed since 1970.
+/// TZ database https://www.iana.org/time-zones
+/// You can find a list at https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+DateTime _createInTimezone(DateTime date, String locationName) {
+  final localion = tz.getLocation('Europe/Lisbon');
+  final tzDate = tz.TZDateTime(localion, date.year, date.month, date.day,
+      date.hour, date.minute, date.second, date.millisecond, date.microsecond);
+  return tzDate;
 }
 
 class Tuple2<T1, T2> {

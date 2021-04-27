@@ -1,3 +1,7 @@
+## [1.0.1+1] - 2020-04-27
+
+* **Fixed:** Methods `startOfDay()`, `startOfNextDay()`, `firstDayOfNextWeek()`, `firstDayOfWeek()` and `lastDayOfWeek()` returns invalid value for daylight saving changeover.
+
 ## [1.0.1] - 2020-03-18
 
 * Migrated to null safety.

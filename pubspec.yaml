@@ -1,6 +1,7 @@
 name: in_date_utils
-description: Utils for DateTime. Easily modify, check and copy dates. Get numbers of days in year/month. And many more.
-version: 1.0.1
+description: Utils for DateTime. Easily modify, check and copy dates. Get
+  numbers of days in year/month. And many more.
+version: 1.0.1+1
 homepage: https://github.com/innim/
 repository: https://github.com/Innim/in_date_utils
 issue_tracker: https://github.com/Innim/in_date_utils/issues
@@ -14,3 +15,4 @@ dependencies:
 dev_dependencies:
   innim_lint: ^0.1.0
   test: ^1.16.0
+  timezone: ^0.7.0
