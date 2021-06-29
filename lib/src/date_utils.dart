@@ -354,7 +354,7 @@ class DateUtils {
 
   /// Returns same time in the next day.
   static DateTime nextDay(DateTime d) {
-    return d.add(const Duration(days: 1));
+    return copyWith(d, day: d.day + 1);
   }
 
   /// Returns same time in the previous day.

@@ -155,6 +155,27 @@ void main() {
     });
   });
 
+  group('nextDay()', () {
+    test('should return same time in the next day', () {
+      expect(
+        DateUtils.nextDay(DateTime(2021, 6, 29, 18, 21, 34, 123, 456)),
+        DateTime(2021, 6, 30, 18, 21, 34, 123, 456),
+      );
+    });
+
+    group('should consider daylight saving', () {
+      test(
+          'when contains forward changeover',
+          () => testDaylight(DateTime(2021, 3, 28, 00, 30),
+              DateTime(2021, 3, 29, 00, 30), DateUtils.nextDay));
+
+      test(
+          'when contains backward changeover',
+          () => testDaylight(DateTime(2021, 10, 30, 02, 30),
+              DateTime(2021, 10, 31, 02, 30), DateUtils.nextDay));
+    });
+  });
+
   group('firstDayOfWeek()', () {
     // sunday
     final date1 = DateTime(2019, 1, 6, 23, 59, 59, 999, 999);
