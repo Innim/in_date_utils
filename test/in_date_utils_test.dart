@@ -176,6 +176,27 @@ void main() {
     });
   });
 
+  group('previousDay()', () {
+    test('should return same time in the previous day', () {
+      expect(
+        DateUtils.previousDay(DateTime(2021, 6, 29, 18, 21, 34, 123, 456)),
+        DateTime(2021, 6, 28, 18, 21, 34, 123, 456),
+      );
+    });
+
+    group('should consider daylight saving', () {
+      test(
+          'when contains forward changeover',
+          () => testDaylight(DateTime(2021, 3, 29, 00, 30),
+              DateTime(2021, 3, 28, 00, 30), DateUtils.previousDay));
+
+      test(
+          'when contains backward changeover',
+          () => testDaylight(DateTime(2021, 10, 31, 01, 30),
+              DateTime(2021, 10, 30, 01, 30), DateUtils.previousDay));
+    });
+  });
+
   group('firstDayOfWeek()', () {
     // sunday
     final date1 = DateTime(2019, 1, 6, 23, 59, 59, 999, 999);

@@ -359,7 +359,7 @@ class DateUtils {
 
   /// Returns same time in the previous day.
   static DateTime previousDay(DateTime d) {
-    return d.subtract(const Duration(days: 1));
+    return copyWith(d, day: d.day - 1);
   }
 
   /// Returns same date in the next year.
