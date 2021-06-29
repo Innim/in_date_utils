@@ -1,3 +1,7 @@
+## [1.0.1+2] - 2020-06-29
+
+* **Fixed:** Methods `nextDay()`/`previousDay()` returns invalid value for daylight saving changeover.
+
 ## [1.0.1+1] - 2020-04-27
 
 * **Fixed:** Methods `startOfDay()`, `startOfNextDay()`, `firstDayOfNextWeek()`, `firstDayOfWeek()` and `lastDayOfWeek()` returns invalid value for daylight saving changeover.
