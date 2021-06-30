@@ -312,7 +312,7 @@ class DateUtils {
   ///
   /// Example: (2020, 4, 9, 15, 16) -> (2020, 4, 30, 0, 0, 0, 0).
   static DateTime lastDayOfMonth(DateTime dateTime) {
-    return firstDayOfNextMonth(dateTime).subtract(const Duration(days: 1));
+    return previousDay(firstDayOfNextMonth(dateTime));
   }
 
   /// Returns [DateTime] that represents a beginning

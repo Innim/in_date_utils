@@ -847,6 +847,28 @@ void main() {
               DateTime(2020, 12, 27, 23, 59, 59, 999, 999)),
           DateTime(2020, 12, 31, 0, 0, 0, 0, 0));
     });
+
+    group('should consider daylight saving', () {
+      test(
+          'when contains forward changeover for last month day',
+          () => testDaylight(DateTime(2002, 3, 31, 00, 30),
+              DateTime(2002, 3, 31), DateUtils.lastDayOfMonth));
+
+      test(
+          'when contains forward changeover for not last month day',
+          () => testDaylight(DateTime(2002, 3, 30, 23, 30),
+              DateTime(2002, 3, 31), DateUtils.lastDayOfMonth));
+
+      test(
+          'when contains backward changeover for last month day',
+          () => testDaylight(DateTime(2021, 10, 31, 0, 30),
+              DateTime(2021, 10, 31), DateUtils.lastDayOfMonth));
+
+      test(
+          'when contains backward changeover for not last month day',
+          () => testDaylight(DateTime(2021, 10, 30, 23, 30),
+              DateTime(2021, 10, 31), DateUtils.lastDayOfMonth));
+    });
   });
 
   group('firstDayOfYear()', () {
