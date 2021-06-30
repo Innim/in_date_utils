@@ -207,7 +207,7 @@ class DateUtils {
 
   /// Checks if [day] is in the last day of a month.
   static bool isLastDayOfMonth(DateTime day) {
-    return day.add(const Duration(days: 1)).month != day.month;
+    return nextDay(day).month != day.month;
   }
 
   /// Returns start of the first day of the week for specified [dateTime].

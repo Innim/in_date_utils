@@ -792,6 +792,40 @@ void main() {
         });
       });
     });
+
+    group('should consider daylight saving', () {
+      test('when contains forward changeover for last month day', () {
+        final date =
+            _createInTimezone(DateTime(2002, 3, 31, 00, 30), regionLisbon);
+
+        final res = DateUtils.isLastDayOfMonth(date);
+        expect(res, true);
+      });
+
+      test('when contains forward changeover for not last month day', () {
+        final date =
+            _createInTimezone(DateTime(2002, 3, 30, 23, 30), regionLisbon);
+
+        final res = DateUtils.isLastDayOfMonth(date);
+        expect(res, false);
+      });
+
+      test('when contains backward changeover for last month day', () {
+        final date =
+            _createInTimezone(DateTime(2021, 10, 31, 0, 30), regionLisbon);
+
+        final res = DateUtils.isLastDayOfMonth(date);
+        expect(res, true);
+      });
+
+      test('when contains backward changeover for not last month day', () {
+        final date =
+            _createInTimezone(DateTime(2021, 10, 30, 23, 30), regionLisbon);
+
+        final res = DateUtils.isLastDayOfMonth(date);
+        expect(res, false);
+      });
+    });
   });
 
   group('firstDayOfNextMonth()', () {
