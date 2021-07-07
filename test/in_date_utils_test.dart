@@ -62,6 +62,13 @@ void main() {
       expect(res, DateTime(2019, 12, 3));
     });
 
+    test('should return utc if input is utc', () {
+      final date = DateTime.utc(2019, 12, 3, 18, 10, 30);
+      final res = DateUtils.startOfDay(date);
+
+      expect(res, DateTime.utc(2019, 12, 3));
+    });
+
     group('should consider daylight saving', () {
       test(
           'when contains changeover',
@@ -81,6 +88,13 @@ void main() {
       final res = DateUtils.startOfNextDay(date);
 
       expect(res, DateTime(2019, 12, 4));
+    });
+
+    test('should return utc if input is utc', () {
+      final date = DateTime.utc(2019, 12, 3, 18, 10, 30);
+      final res = DateUtils.startOfNextDay(date);
+
+      expect(res, DateTime.utc(2019, 12, 4));
     });
 
     group('should consider daylight saving', () {
@@ -119,6 +133,13 @@ void main() {
       expect(DateUtils.setTime(date, 12, 10, 30, 13).microsecond, 0);
       expect(DateUtils.setTime(date, 12, 10, 30, 13, 66).microsecond, 66);
     });
+
+    test('should return utc if input is utc', () {
+      final date = DateTime.utc(2019, 12, 3, 18, 10, 30);
+      final res = DateUtils.setTime(date, 12, 45);
+
+      expect(res, DateTime.utc(2019, 12, 3, 12, 45));
+    });
   });
 
   group('copyWith()', () {
@@ -144,6 +165,13 @@ void main() {
       expect(DateUtils.copyWith(date, year: 2018, month: 4, hour: 10),
           DateTime(2018, 4, 3, 10, 10, 30, 55, 66));
     });
+
+    test('should return utc if input is utc', () {
+      final date = DateTime.utc(2019, 12, 3, 18, 10, 30, 55, 66);
+      final res = DateUtils.copyWith(date, day: 12);
+
+      expect(res, DateTime.utc(2019, 12, 12, 18, 10, 30, 55, 66));
+    });
   });
 
   group('nextMonth()', () {
@@ -161,6 +189,13 @@ void main() {
         DateUtils.nextDay(DateTime(2021, 6, 29, 18, 21, 34, 123, 456)),
         DateTime(2021, 6, 30, 18, 21, 34, 123, 456),
       );
+    });
+
+    test('should return utc if input is utc', () {
+      final date = DateTime.utc(2021, 6, 29, 18, 21, 34, 123, 456);
+      final res = DateUtils.nextDay(date);
+
+      expect(res, DateTime.utc(2021, 6, 30, 18, 21, 34, 123, 456));
     });
 
     group('should consider daylight saving', () {
@@ -182,6 +217,13 @@ void main() {
         DateUtils.previousDay(DateTime(2021, 6, 29, 18, 21, 34, 123, 456)),
         DateTime(2021, 6, 28, 18, 21, 34, 123, 456),
       );
+    });
+
+    test('should return utc if input is utc', () {
+      final date = DateTime.utc(2021, 6, 29, 18, 21, 34, 123, 456);
+      final res = DateUtils.previousDay(date);
+
+      expect(res, DateTime.utc(2021, 6, 28, 18, 21, 34, 123, 456));
     });
 
     group('should consider daylight saving', () {
@@ -224,6 +266,13 @@ void main() {
         DateUtils.firstDayOfWeek(date4),
         DateTime(2020, 11, 16, 0, 0, 0, 0, 0),
       );
+    });
+
+    test('should return utc if input is utc', () {
+      final date = DateTime.utc(2019, 1, 6, 23, 59, 59, 999, 999);
+      final res = DateUtils.firstDayOfWeek(date);
+
+      expect(res, DateTime.utc(2018, 12, 31, 0, 0, 0, 0, 0));
     });
 
     test('should use Monday as a first week day by default', () {
@@ -327,6 +376,13 @@ void main() {
         DateUtils.firstDayOfNextWeek(date3),
         DateTime(2020, 4, 13),
       );
+    });
+
+    test('should return utc if input is utc', () {
+      final date = DateTime.utc(2020, 4, 9, 15);
+      final res = DateUtils.firstDayOfNextWeek(date);
+
+      expect(res, DateTime.utc(2020, 4, 13));
     });
 
     test('should use Monday as a first week day by default', () {
@@ -435,6 +491,13 @@ void main() {
       );
     });
 
+    test('should return utc if input is utc', () {
+      final date = DateTime.utc(2020, 4, 9, 15);
+      final res = DateUtils.lastDayOfWeek(date);
+
+      expect(res, DateTime.utc(2020, 4, 12));
+    });
+
     test('should use Monday as a first week day by default', () {
       expect(
         DateUtils.lastDayOfWeek(date1),
@@ -524,6 +587,13 @@ void main() {
           DateUtils.firstDayOfMonth(
               DateTime(2020, 12, 27, 23, 59, 59, 999, 999)),
           DateTime(2020, 12, 1, 0, 0, 0, 0, 0));
+    });
+
+    test('should return utc if input is utc', () {
+      final date = DateTime.utc(2020, 4, 9, 15, 16);
+      final res = DateUtils.firstDayOfMonth(date);
+
+      expect(res, DateTime.utc(2020, 4, 1));
     });
   });
 
@@ -833,6 +903,13 @@ void main() {
       expect(DateUtils.firstDayOfNextMonth(DateTime(2020, 4, 9, 15, 16)),
           DateTime(2020, 5, 1, 0, 0, 0, 0, 0));
     });
+
+    test('should return utc if input is utc', () {
+      final date = DateTime.utc(2020, 4, 9, 15, 16);
+      final res = DateUtils.firstDayOfNextMonth(date);
+
+      expect(res, DateTime.utc(2020, 5, 1));
+    });
   });
 
   group('lastDayOfMonth()', () {
@@ -846,6 +923,13 @@ void main() {
           DateUtils.lastDayOfMonth(
               DateTime(2020, 12, 27, 23, 59, 59, 999, 999)),
           DateTime(2020, 12, 31, 0, 0, 0, 0, 0));
+    });
+
+    test('should return utc if input is utc', () {
+      final date = DateTime.utc(2019, 1, 6, 23, 59);
+      final res = DateUtils.lastDayOfMonth(date);
+
+      expect(res, DateTime.utc(2019, 1, 31));
     });
 
     group('should consider daylight saving', () {
@@ -876,6 +960,13 @@ void main() {
       expect(DateUtils.firstDayOfYear(DateTime(2020, 4, 9, 15, 16)),
           DateTime(2020, 1, 1, 0, 0, 0, 0, 0));
     });
+
+    test('should return utc if input is utc', () {
+      final date = DateTime.utc(2020, 4, 9, 15, 16);
+      final res = DateUtils.firstDayOfYear(date);
+
+      expect(res, DateTime.utc(2020, 1, 1));
+    });
   });
 
   group('firstDayOfNextYear()', () {
@@ -883,12 +974,26 @@ void main() {
       expect(DateUtils.firstDayOfNextYear(DateTime(2020, 4, 9, 15, 16)),
           DateTime(2021, 1, 1, 0, 0, 0, 0, 0));
     });
+
+    test('should return utc if input is utc', () {
+      final date = DateTime.utc(2020, 4, 9, 15, 16);
+      final res = DateUtils.firstDayOfNextYear(date);
+
+      expect(res, DateTime.utc(2021, 1, 1));
+    });
   });
 
   group('lastDayOfYear()', () {
     test('should return correct date time', () {
       expect(DateUtils.lastDayOfYear(DateTime(2020, 4, 9, 15, 16)),
           DateTime(2020, 12, 31, 0, 0, 0, 0, 0));
+    });
+
+    test('should return utc if input is utc', () {
+      final date = DateTime.utc(2020, 4, 9, 15, 16);
+      final res = DateUtils.lastDayOfYear(date);
+
+      expect(res, DateTime.utc(2020, 12, 31));
     });
   });
 
@@ -1135,6 +1240,7 @@ void main() {
       });
     });
   });
+
   group('generateWithDayStep()', () {
     test('should include start date and exclude end', () {
       final start = DateTime(2020, 11, 02, 18, 7);

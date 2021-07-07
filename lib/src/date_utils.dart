@@ -13,13 +13,13 @@ class DateUtils {
   ///
   /// (2020, 4, 9, 16, 50) -> (2020, 4, 9, 0, 0)
   static DateTime startOfDay(DateTime dateTime) =>
-      DateTime(dateTime.year, dateTime.month, dateTime.day);
+      _date(dateTime.isUtc, dateTime.year, dateTime.month, dateTime.day);
 
   /// Returns [DateTime] for the beginning of the next day (00:00:00).
   ///
   /// (2020, 4, 9, 16, 50) -> (2020, 4, 10, 0, 0)
   static DateTime startOfNextDay(DateTime dateTime) =>
-      DateTime(dateTime.year, dateTime.month, dateTime.day + 1);
+      _date(dateTime.isUtc, dateTime.year, dateTime.month, dateTime.day + 1);
 
   /// Returns [DateTime] for the beginning of today (00:00:00).
   static DateTime startOfToday() => startOfDay(DateTime.now());
@@ -27,8 +27,8 @@ class DateUtils {
   /// Creates a copy of [date] but with time replaced with the new values.
   static DateTime setTime(DateTime date, int hours, int minutes,
           [int seconds = 0, int milliseconds = 0, int microseconds = 0]) =>
-      DateTime(date.year, date.month, date.day, hours, minutes, seconds,
-          milliseconds, microseconds);
+      _date(date.isUtc, date.year, date.month, date.day, hours, minutes,
+          seconds, milliseconds, microseconds);
 
   /// Creates a copy of [date] but with the given fields
   /// replaced with the new values.
@@ -41,7 +41,8 @@ class DateUtils {
           int? second,
           int? millisecond,
           int? microsecond}) =>
-      DateTime(
+      _date(
+          date.isUtc,
           year ?? date.year,
           month ?? date.month,
           day ?? date.day,
@@ -225,7 +226,8 @@ class DateUtils {
     var days = dateTime.weekday - (firstWeekday ?? DateTime.monday);
     if (days < 0) days += DateTime.daysPerWeek;
 
-    return DateTime(dateTime.year, dateTime.month, dateTime.day - days);
+    return _date(
+        dateTime.isUtc, dateTime.year, dateTime.month, dateTime.day - days);
   }
 
   /// Returns start of the first day of the first week in [year].
@@ -261,7 +263,8 @@ class DateUtils {
 
     var days = dateTime.weekday - (firstWeekday ?? DateTime.monday);
     if (days >= 0) days -= DateTime.daysPerWeek;
-    return DateTime(dateTime.year, dateTime.month, dateTime.day - days);
+    return _date(
+        dateTime.isUtc, dateTime.year, dateTime.month, dateTime.day - days);
   }
 
   /// Returns start of the last day of the week for specified [dateTime].
@@ -280,7 +283,8 @@ class DateUtils {
     var days = (firstWeekday ?? DateTime.monday) - 1 - dateTime.weekday;
     if (days < 0) days += DateTime.daysPerWeek;
 
-    return DateTime(dateTime.year, dateTime.month, dateTime.day + days);
+    return _date(
+        dateTime.isUtc, dateTime.year, dateTime.month, dateTime.day + days);
   }
 
   /// Returns [DateTime] that represents a beginning
@@ -288,7 +292,7 @@ class DateUtils {
   ///
   /// Example: (2020, 4, 9, 15, 16) -> (2020, 4, 1, 0, 0, 0, 0).
   static DateTime firstDayOfMonth(DateTime date) {
-    return DateTime(date.year, date.month);
+    return _date(date.isUtc, date.year, date.month);
   }
 
   /// Returns [DateTime] that represents a beginning
@@ -299,8 +303,8 @@ class DateUtils {
     final month = dateTime.month;
     final year = dateTime.year;
     final nextMonthStart = (month < DateTime.monthsPerYear)
-        ? DateTime(year, month + 1, 1)
-        : DateTime(year + 1, 1, 1);
+        ? _date(dateTime.isUtc, year, month + 1, 1)
+        : _date(dateTime.isUtc, year + 1, 1, 1);
     return nextMonthStart;
   }
 
@@ -317,7 +321,7 @@ class DateUtils {
   ///
   /// Example: (2020, 3, 9, 15, 16) -> (2020, 1, 1, 0, 0, 0, 0).
   static DateTime firstDayOfYear(DateTime dateTime) {
-    return DateTime(dateTime.year, 1, 1);
+    return _date(dateTime.isUtc, dateTime.year, 1, 1);
   }
 
   /// Returns [DateTime] that represents a beginning
@@ -325,7 +329,7 @@ class DateUtils {
   ///
   /// Example: (2020, 3, 9, 15, 16) -> (2021, 1, 1, 0, 0, 0, 0).
   static DateTime firstDayOfNextYear(DateTime dateTime) {
-    return DateTime(dateTime.year + 1, 1, 1);
+    return _date(dateTime.isUtc, dateTime.year + 1, 1, 1);
   }
 
   /// Returns [DateTime] that represents a beginning
@@ -333,7 +337,7 @@ class DateUtils {
   ///
   /// Example: (2020, 4, 9, 15, 16) -> (2020, 12, 31, 0, 0, 0, 0).
   static DateTime lastDayOfYear(DateTime dateTime) {
-    return DateTime(dateTime.year, DateTime.december, 31);
+    return _date(dateTime.isUtc, dateTime.year, DateTime.december, 31);
   }
 
   /// Проверяет является ли заданная дата текущей.
@@ -361,12 +365,12 @@ class DateUtils {
 
   /// Returns same date in the next year.
   static DateTime nextYear(DateTime d) {
-    return DateTime(d.year + 1, d.month, d.day);
+    return _date(d.isUtc, d.year + 1, d.month, d.day);
   }
 
   /// Returns same date in the previous year.
   static DateTime previousYear(DateTime d) {
-    return DateTime(d.year - 1, d.month, d.day);
+    return _date(d.isUtc, d.year - 1, d.month, d.day);
   }
 
   /// Returns an iterable of [DateTime] with 1 day step in given range.
@@ -411,6 +415,20 @@ class DateUtils {
       return false;
     }
   }
+
+  static DateTime _date(bool utc, int year,
+          [int month = 1,
+          int day = 1,
+          int hour = 0,
+          int minute = 0,
+          int second = 0,
+          int millisecond = 0,
+          int microsecond = 0]) =>
+      utc
+          ? DateTime.utc(
+              year, month, day, hour, minute, second, millisecond, microsecond)
+          : DateTime(
+              year, month, day, hour, minute, second, millisecond, microsecond);
 
   DateUtils._();
 }

@@ -1,3 +1,9 @@
+## [1.0.2] - 2020-07-07
+
+* All methods return result in UTC if input argument was UTC.
+* **Fixed:** Method `generateWithDayStep()` returns invalid value for daylight saving changeover.
+* Changed implemention of `firstDayOfFirstWeek()`. No side effects.
+
 ## [1.0.1+3] - 2020-06-30
 
 * **Fixed:** Methods `isLastDayOfMonth()`/`lastDayOfMonth()` returns invalid value for daylight saving changeover.
