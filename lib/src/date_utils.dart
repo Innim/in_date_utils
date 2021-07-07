@@ -243,12 +243,9 @@ class DateUtils {
     assert(firstWeekday == null || firstWeekday > 0 && firstWeekday < 8);
 
     final startOfYear = DateTime(year);
-    var res = firstDayOfWeek(startOfYear, firstWeekday: firstWeekday);
-    if (!isWeekInYear(startOfYear, year, firstWeekday)) {
-      res = res.add(const Duration(days: DateTime.daysPerWeek));
-    }
-
-    return res;
+    return isWeekInYear(startOfYear, year, firstWeekday)
+        ? firstDayOfWeek(startOfYear, firstWeekday: firstWeekday)
+        : firstDayOfNextWeek(startOfYear, firstWeekday: firstWeekday);
   }
 
   /// Returns start of the first day of the next week for specified [dateTime].
