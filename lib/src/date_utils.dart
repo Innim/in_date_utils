@@ -385,7 +385,7 @@ class DateUtils {
     var date = start;
     do {
       yield date;
-      date = date.add(const Duration(days: 1));
+      date = nextDay(date);
     } while (date.isBefore(end));
   }
 

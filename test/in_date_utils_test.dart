@@ -1182,6 +1182,45 @@ void main() {
       final res = DateUtils.generateWithDayStep(start, end);
       expect(res, <DateTime>[]);
     });
+
+    group('should consider daylight saving', () {
+      void testDaylightSaving(
+          DateTime start, DateTime end, List<DateTime> expected) {
+        DateTime tz(DateTime d) => _createInTimezone(d, regionLisbon);
+        final res = DateUtils.generateWithDayStep(tz(start), tz(end));
+        final resTz = res.map(tz);
+        final expectedTz = expected.map(tz);
+
+        expect(resTz, expectedTz);
+      }
+
+      test(
+          'when contains forward changeover',
+          () => testDaylightSaving(
+                DateTime(2002, 3, 29, 01, 30),
+                DateTime(2002, 4, 2, 02, 30),
+                [
+                  DateTime(2002, 3, 29, 01, 30),
+                  DateTime(2002, 3, 30, 01, 30),
+                  DateTime(2002, 3, 31, 01, 30),
+                  DateTime(2002, 4, 01, 01, 30),
+                  DateTime(2002, 4, 02, 01, 30),
+                ],
+              ));
+
+      test(
+          'when contains backward changeover',
+          () => testDaylightSaving(
+                DateTime(2021, 10, 30, 01, 30),
+                DateTime(2021, 11, 2, 02, 30),
+                [
+                  DateTime(2021, 10, 30, 01, 30),
+                  DateTime(2021, 10, 31, 01, 30),
+                  DateTime(2021, 11, 01, 01, 30),
+                  DateTime(2021, 11, 02, 01, 30),
+                ],
+              ));
+    });
   });
 
   group('isWeekInYear()', () {
