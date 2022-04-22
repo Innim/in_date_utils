@@ -333,7 +333,7 @@ void main() {
     });
 
     test('should return correct value for a Thursday as a first week day', () {
-      final firstWeekday = DateTime.thursday;
+      const firstWeekday = DateTime.thursday;
       expect(
         DateUtils.firstDayOfWeek(date1, firstWeekday: firstWeekday),
         DateTime(2019, 1, 3, 0, 0, 0, 0, 0),
@@ -425,7 +425,7 @@ void main() {
     });
 
     test('should return correct value for a Thursday as a first week day', () {
-      final firstWeekday = DateTime.thursday;
+      const firstWeekday = DateTime.thursday;
       expect(
         DateUtils.firstDayOfNextWeek(date1, firstWeekday: firstWeekday),
         DateTime(2019, 1, 3),
@@ -538,7 +538,7 @@ void main() {
     });
 
     test('should return correct value for a Thursday as a first week day', () {
-      final firstWeekday = DateTime.thursday;
+      const firstWeekday = DateTime.thursday;
       expect(
         DateUtils.lastDayOfWeek(date1, firstWeekday: firstWeekday),
         DateTime(2019, 1, 2),
@@ -1114,7 +1114,7 @@ void main() {
     });
 
     test('should return correct value with Saturday as a first week day', () {
-      final first = DateTime.saturday;
+      const first = DateTime.saturday;
       expect(DateUtils.getDayNumberInWeek(monday, firstWeekday: first), 3);
       expect(DateUtils.getDayNumberInWeek(tuesday, firstWeekday: first), 4);
       expect(DateUtils.getDayNumberInWeek(wednesday, firstWeekday: first), 5);
@@ -1370,6 +1370,26 @@ void main() {
 
       test('should return true for $date, 2019, saturday', () {
         expect(DateUtils.isWeekInYear(date, 2019, DateTime.saturday), true);
+      });
+    });
+  });
+
+  group('addDays()', () {
+    [
+      Tuple3(DateTime(2022, 12, 31), DateTime(2023, 1, 14), 14),
+      Tuple3(DateTime(2022, 12, 31), DateTime(2023, 1, 31), 31),
+      Tuple3(DateTime(2022, 12, 31), DateTime(2023, 2, 1), 32),
+      Tuple3(DateTime(2022, 2, 15), DateTime(2022, 3, 1), 14),
+      Tuple3(DateTime(2022, 1, 31), DateTime(2021, 12, 31), -31),
+      Tuple3(DateTime(2020, 2, 15), DateTime(2020, 2, 29), 14),
+      Tuple3(DateTime(2022, 12, 31), DateTime(2024, 1, 1), 366)
+    ].forEach((item) {
+      final date = item.item1;
+      final days = item.item3;
+      final expected = item.item2;
+
+      test('should return $expected for $date and $days', () {
+        expect(DateUtils.addDays(date, days), expected);
       });
     });
   });

@@ -1,3 +1,7 @@
+## [1.0.3] - 2022-04-22
+
+* Method `addDays()` - Returns the `DateTime` resulting from adding the given number of days to this `DateTime`.
+
 ## [1.0.2] - 2020-07-07
 
 * All methods return result in UTC if input argument was UTC.

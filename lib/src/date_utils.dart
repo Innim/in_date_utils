@@ -59,6 +59,18 @@ class DateUtils {
   }
 
   /// Returns the [DateTime] resulting from adding the given number
+  /// of days to this [DateTime].
+  ///
+  /// The result is computed by incrementing the day parts of this
+  /// [DateTime] by [days] days.
+  ///
+  /// For example:
+  /// (2020, 12, 31) -> add 2 days -> (2021, 01, 2).
+  /// (2020, 12, 31) -> add 14 days -> (2021, 1, 14).
+  static DateTime addDays(DateTime date, int days) =>
+      DateUtils.copyWith(date, day: date.day + days);
+
+  /// Returns the [DateTime] resulting from adding the given number
   /// of months to this [DateTime].
   ///
   /// The result is computed by incrementing the month parts of this
