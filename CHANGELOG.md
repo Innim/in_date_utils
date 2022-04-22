@@ -6,7 +6,7 @@
 
 * All methods return result in UTC if input argument was UTC.
 * **Fixed:** Method `generateWithDayStep()` returns invalid value for daylight saving changeover.
-* Changed implemention of `firstDayOfFirstWeek()`. No side effects.
+* Changed implementation of `firstDayOfFirstWeek()`. No side effects.
 
 ## [1.0.1+3] - 2020-06-30
 
@@ -49,7 +49,7 @@
 
 ## [0.1.2] - 2020-11-02
 
-* `generateWithDayStep()` - returns an interable of `DateTime` in given range with 1 day step.
+* `generateWithDayStep()` - returns an iterable of `DateTime` in given range with 1 day step.
 
 ## [0.1.1+1] - 2020-10-27
 
