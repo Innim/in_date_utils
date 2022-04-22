@@ -62,7 +62,7 @@ class DateUtils {
   /// of days to this [DateTime].
   ///
   /// The result is computed by incrementing the day parts of this
-  /// [DateTime] by days days.
+  /// [DateTime] by [days] days.
   ///
   /// For example:
   /// (2020, 12, 31) -> add 2 days -> (2021, 01, 2).
