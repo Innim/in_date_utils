@@ -76,6 +76,11 @@ void main() {
 * `lastDayOfWeek()` - returns `DateTime` for the beginning of the last day of the week for specified date.
 * `firstDayOfFirstWeek()` - returns start of the first day of the first week in year.
 
+#### Adding
+
+* `addMonth()` - Returns the `DateTime` resulting from adding the given number of days to this `DateTime`.
+* `addDays()`  - Returns the `DateTime` resulting from adding the given number of months to this `DateTime`.
+
 ### Information
 
 * `getDaysInMonth()` - returns number of days in the month of the year.
@@ -88,8 +93,3 @@ void main() {
 ### Generation
 
 * `generateWithDayStep()` - returns an iterable of `DateTime` in given range with 1 day step.
-
-### Adding 
-
-* `addMonth()` - Returns the `DateTime` resulting from adding the given number of days to this `DateTime`.
-* `addDays()`  - Returns the `DateTime` resulting from adding the given number of months to this `DateTime`.
