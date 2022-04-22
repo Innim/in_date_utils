@@ -1373,6 +1373,26 @@ void main() {
       });
     });
   });
+
+  group('addDays()', () {
+    [
+      Tuple3(DateTime(2022, 12, 31), DateTime(2023, 1, 14), 14),
+      Tuple3(DateTime(2022, 12, 31), DateTime(2023, 1, 31), 31),
+      Tuple3(DateTime(2022, 12, 31), DateTime(2023, 2, 1), 32),
+      Tuple3(DateTime(2022, 2, 15), DateTime(2022, 3, 1), 14),
+      Tuple3(DateTime(2022, 1, 31), DateTime(2021, 12, 31), -31),
+      Tuple3(DateTime(2020, 2, 15), DateTime(2020, 2, 29), 14),
+      Tuple3(DateTime(2022, 12, 31), DateTime(2024, 1, 1), 366)
+    ].forEach((item) {
+      final date = item.item1;
+      final days = item.item3;
+      final expected = item.item2;
+
+      test('should return $expected for $date and $days', () {
+        expect(DateUtils.addDays(date, days), expected);
+      });
+    });
+  });
 }
 
 /// [locationName] should be value from the database represents

@@ -88,3 +88,8 @@ void main() {
 ### Generation
 
 * `generateWithDayStep()` - returns an iterable of `DateTime` in given range with 1 day step.
+
+### Adding 
+
+* `addMonth()` - Returns the `DateTime` resulting from adding the given number of days to this `DateTime`.
+* `addDays()`  - Returns the `DateTime` resulting from adding the given number of months to this `DateTime`.
