@@ -397,14 +397,10 @@ class DateTimeUtils {
   }
 
   /// Returns same date in the next year.
-  static DateTime nextYear(DateTime d) {
-    return _date(d.isUtc, d.year + 1, d.month, d.day);
-  }
+  static DateTime nextYear(DateTime d) => addYears(d, 1);
 
   /// Returns same date in the previous year.
-  static DateTime previousYear(DateTime d) {
-    return _date(d.isUtc, d.year - 1, d.month, d.day);
-  }
+  static DateTime previousYear(DateTime d) => addYears(d, -1);
 
   /// Returns an iterable of [DateTime] with 1 day step in given range.
   ///

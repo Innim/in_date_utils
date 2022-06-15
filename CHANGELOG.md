@@ -1,5 +1,6 @@
 * Rename `DateUtils` to `DateTimeUtils` (to avoid conflicts with Flutter [DateUtils](https://api.flutter.dev/flutter/material/DateUtils-class.html)).
 * Min Dart SDK 2.16.
+* **BREAKING**: `nextYear()`/`previousYear()` now saves time and month (!).
 * Method `addYears()` - Returns the `DateTime` resulting from adding the given number of years to this `DateTime`.
 
 ## [1.0.3] - 2022-04-22

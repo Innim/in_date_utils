@@ -969,6 +969,78 @@ void main() {
   });
 
   group('Years', () {
+    group('nextYear()', () {
+      test('should return correct date', () {
+        final date = DateTime(2020, 06, 15);
+        expect(
+          DTU.nextYear(date),
+          DateTime(2021, 06, 15),
+        );
+      });
+
+      test('should save time', () {
+        final date = DateTime(2021, 05, 21, 14, 35, 45, 123, 456);
+        expect(
+          DTU.nextYear(date),
+          DateTime(2022, 05, 21, 14, 35, 45, 123, 456),
+        );
+      });
+
+      test('should save month', () {
+        final date = DateTime(2020, 02, 29);
+        expect(
+          DTU.nextYear(date),
+          DateTime(2021, 02, 28),
+        );
+      });
+
+      test('should return utc if input is utc', () {
+        final date = DateTime.utc(2020, 4, 9, 15, 16);
+        expect(
+          DTU.nextYear(date),
+          DateTime.utc(2021, 4, 9, 15, 16),
+        );
+      });
+
+      // TODO: test for daylight change
+    });
+
+    group('previousYear()', () {
+      test('should return correct date', () {
+        final date = DateTime(2020, 06, 15);
+        expect(
+          DTU.previousYear(date),
+          DateTime(2019, 06, 15),
+        );
+      });
+
+      test('should save time', () {
+        final date = DateTime(2021, 05, 21, 14, 35, 45, 123, 456);
+        expect(
+          DTU.previousYear(date),
+          DateTime(2020, 05, 21, 14, 35, 45, 123, 456),
+        );
+      });
+
+      test('should save month', () {
+        final date = DateTime(2020, 02, 29);
+        expect(
+          DTU.previousYear(date),
+          DateTime(2019, 02, 28),
+        );
+      });
+
+      test('should return utc if input is utc', () {
+        final date = DateTime.utc(2020, 4, 9, 15, 16);
+        expect(
+          DTU.previousYear(date),
+          DateTime.utc(2019, 4, 9, 15, 16),
+        );
+      });
+
+      // TODO: test for daylight change
+    });
+
     group('addYears()', () {
       [
         Tuple3(DateTime(2020, 06, 15), 1, DateTime(2021, 06, 15)),

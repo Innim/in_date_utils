@@ -64,7 +64,7 @@ void main() {
 #### Next/prev
 
 * `nextDay()`/`previousDay()` - returns same time in the next/previous day.
-* `nextYear()`/`previousYear()` - returns same date in the next/previous year.
+* `nextYear()`/`previousYear()` - returns same date and time in the next/previous year.
 
 #### Start/end
 
