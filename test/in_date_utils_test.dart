@@ -968,6 +968,40 @@ void main() {
     });
   });
 
+  group('Years', () {
+    group('addYears()', () {
+      [
+        Tuple3(DateTime(2020, 06, 15), 1, DateTime(2021, 06, 15)),
+        Tuple3(DateTime(2020, 06, 15), 13, DateTime(2033, 06, 15)),
+        Tuple3(DateTime(2020, 06, 15), -5, DateTime(2015, 06, 15)),
+        Tuple3(DateTime(2020, 02, 29), 13, DateTime(2033, 02, 28)),
+        Tuple3(DateTime(2020, 02, 29), -4, DateTime(2016, 02, 29)),
+        Tuple3(DateTime(2020, 02, 29), -5, DateTime(2015, 02, 28)),
+        Tuple3(DateTime(2021, 05, 21, 14, 35, 45, 123, 456), 4,
+            DateTime(2025, 05, 21, 14, 35, 45, 123, 456)),
+        Tuple3(DateTime(2021, 06, 15), 0, DateTime(2021, 06, 15)),
+      ].forEach((data) {
+        final date = data.item1;
+        final count = data.item2;
+        final expected = data.item3;
+
+        test('should return correct date and time ($date, $count)', () {
+          expect(DTU.addYears(date, count), expected);
+        });
+      });
+
+      test('should return utc if input is utc', () {
+        final date = DateTime.utc(2020, 4, 9, 15, 16);
+        expect(
+          DTU.addYears(date, 3),
+          DateTime.utc(2023, 4, 9, 15, 16),
+        );
+      });
+
+      // TODO: test for daylight change
+    });
+  });
+
   group('lastDayOfYear()', () {
     test('should return correct date time', () {
       expect(DTU.lastDayOfYear(DateTime(2020, 4, 9, 15, 16)),

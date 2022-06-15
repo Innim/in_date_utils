@@ -90,6 +90,23 @@ class DateTimeUtils {
     return res;
   }
 
+  /// Returns the [DateTime] resulting from adding the given number
+  /// of years to this [DateTime].
+  ///
+  /// The result is computed by incrementing the year part of this
+  /// [DateTime] by [years] years, and, if required, adjusting the day part
+  /// of the resulting date downwards to the last day of the month
+  /// in resulting year.
+  ///
+  /// For example:
+  /// (2020, 12, 31) -> add 2 years -> (2022, 12, 31).
+  /// (2020, 02, 29) -> add 1 year -> (2021, 02, 28).
+  static DateTime addYears(DateTime date, int years) {
+    var res = copyWith(date, year: date.year + years);
+    if (date.day != res.day) res = copyWith(res, day: 0);
+    return res;
+  }
+
   /// Returns week number in year.
   ///
   /// The first week of the year is the week that contains

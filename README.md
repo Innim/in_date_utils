@@ -80,6 +80,7 @@ void main() {
 
 * `addMonth()` - Returns the `DateTime` resulting from adding the given number of days to this `DateTime`.
 * `addDays()`  - Returns the `DateTime` resulting from adding the given number of months to this `DateTime`.
+* `addYears()`  - Returns the `DateTime` resulting from adding the given number of years to this `DateTime`.
 
 ### Information
 
