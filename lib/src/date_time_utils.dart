@@ -75,10 +75,22 @@ class DateTimeUtils {
       copyWith(date, day: date.day + days);
 
   /// Returns the [DateTime] resulting from adding the given number
+  /// of weeks to this [DateTime].
+  ///
+  /// The result is computed by incrementing the day parts of this
+  /// [DateTime] by [weeks] weeks.
+  ///
+  /// For example:
+  /// (2020, 12, 31) -> add 1 week -> (2021, 01, 7).
+  /// (2020, 12, 31) -> add 14 weeks -> (2021, 04, 08).
+  static DateTime addWeeks(DateTime date, int weeks) =>
+      addDays(date, DateTime.daysPerWeek * weeks);
+
+  /// Returns the [DateTime] resulting from adding the given number
   /// of months to this [DateTime].
   ///
   /// The result is computed by incrementing the month parts of this
-  /// [DateTime] by months months, and, if required, adjusting the day part
+  /// [DateTime] by [months] months, and, if required, adjusting the day part
   /// of the resulting date downwards to the last day of the resulting month.
   ///
   /// For example:

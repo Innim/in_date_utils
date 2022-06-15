@@ -1484,6 +1484,36 @@ void main() {
       });
     });
   });
+
+  group('addWeeks()', () {
+    [
+      Tuple3(DateTime(2020, 12, 31), 1, DateTime(2021, 01, 07)),
+      Tuple3(DateTime(2020, 12, 31), 14, DateTime(2021, 04, 08)),
+      Tuple3(DateTime(2020, 01, 01), 104, DateTime(2021, 12, 29)),
+      Tuple3(DateTime(2020, 06, 15), -5, DateTime(2020, 05, 11)),
+      Tuple3(DateTime(2021, 05, 21, 14, 35, 45, 123, 456), 2,
+          DateTime(2021, 06, 04, 14, 35, 45, 123, 456)),
+      Tuple3(DateTime(2021, 06, 15), 0, DateTime(2021, 06, 15)),
+    ].forEach((data) {
+      final date = data.item1;
+      final count = data.item2;
+      final expected = data.item3;
+
+      test('should return correct date and time ($date, $count)', () {
+        expect(DTU.addWeeks(date, count), expected);
+      });
+    });
+
+    test('should return utc if input is utc', () {
+      final date = DateTime.utc(2020, 4, 9, 15, 16);
+      expect(
+        DTU.addWeeks(date, 3),
+        DateTime.utc(2020, 4, 30, 15, 16),
+      );
+    });
+
+    // TODO: test for daylight change
+  });
 }
 
 /// [locationName] should be value from the database represents
