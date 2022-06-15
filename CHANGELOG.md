@@ -1,3 +1,5 @@
+* Min Dart SDK 2.16.
+
 ## [1.0.3] - 2022-04-22
 
 * Method `addDays()` - Returns the `DateTime` resulting from adding the given number of days to this `DateTime`.
