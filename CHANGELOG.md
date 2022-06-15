@@ -1,3 +1,4 @@
+* Rename `DateUtils` to `DateTimeUtils` (to avoid conflicts with Flutter [DateUtils](https://api.flutter.dev/flutter/material/DateUtils-class.html)).
 * Min Dart SDK 2.16.
 
 ## [1.0.3] - 2022-04-22

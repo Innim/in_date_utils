@@ -18,19 +18,19 @@ void main() {
 
   group('getDaysInMonth()', () {
     test('should return correct days', () {
-      expect(DateUtils.getDaysInMonth(2020, 2), 29);
-      expect(DateUtils.getDaysInMonth(2021, 1), 31);
-      expect(DateUtils.getDaysInMonth(2021, 2), 28);
-      expect(DateUtils.getDaysInMonth(2021, 3), 31);
-      expect(DateUtils.getDaysInMonth(2021, 4), 30);
-      expect(DateUtils.getDaysInMonth(2021, 5), 31);
-      expect(DateUtils.getDaysInMonth(2021, 6), 30);
-      expect(DateUtils.getDaysInMonth(2021, 7), 31);
-      expect(DateUtils.getDaysInMonth(2021, 8), 31);
-      expect(DateUtils.getDaysInMonth(2021, 9), 30);
-      expect(DateUtils.getDaysInMonth(2021, 10), 31);
-      expect(DateUtils.getDaysInMonth(2021, 11), 30);
-      expect(DateUtils.getDaysInMonth(2021, 12), 31);
+      expect(DTU.getDaysInMonth(2020, 2), 29);
+      expect(DTU.getDaysInMonth(2021, 1), 31);
+      expect(DTU.getDaysInMonth(2021, 2), 28);
+      expect(DTU.getDaysInMonth(2021, 3), 31);
+      expect(DTU.getDaysInMonth(2021, 4), 30);
+      expect(DTU.getDaysInMonth(2021, 5), 31);
+      expect(DTU.getDaysInMonth(2021, 6), 30);
+      expect(DTU.getDaysInMonth(2021, 7), 31);
+      expect(DTU.getDaysInMonth(2021, 8), 31);
+      expect(DTU.getDaysInMonth(2021, 9), 30);
+      expect(DTU.getDaysInMonth(2021, 10), 31);
+      expect(DTU.getDaysInMonth(2021, 11), 30);
+      expect(DTU.getDaysInMonth(2021, 12), 31);
     });
   });
 
@@ -49,7 +49,7 @@ void main() {
       final expected = item.item2;
 
       test('should return $expected for $date and $months', () {
-        expect(DateUtils.addMonths(date, months), expected);
+        expect(DTU.addMonths(date, months), expected);
       });
     });
   });
@@ -57,14 +57,14 @@ void main() {
   group('startOfDay()', () {
     test('should return correct date', () {
       final date = DateTime(2019, 12, 3, 18, 10, 30);
-      final res = DateUtils.startOfDay(date);
+      final res = DTU.startOfDay(date);
 
       expect(res, DateTime(2019, 12, 3));
     });
 
     test('should return utc if input is utc', () {
       final date = DateTime.utc(2019, 12, 3, 18, 10, 30);
-      final res = DateUtils.startOfDay(date);
+      final res = DTU.startOfDay(date);
 
       expect(res, DateTime.utc(2019, 12, 3));
     });
@@ -73,26 +73,26 @@ void main() {
       test(
           'when contains changeover',
           () => testDaylight(DateTime(2021, 3, 28, 10, 20),
-              DateTime(2021, 3, 28), DateUtils.startOfDay));
+              DateTime(2021, 3, 28), DTU.startOfDay));
 
       test(
           'when does not contains changeover',
           () => testDaylight(DateTime(2021, 4, 1, 10, 20), DateTime(2021, 4, 1),
-              DateUtils.startOfDay));
+              DTU.startOfDay));
     });
   });
 
   group('startOfNextDay()', () {
     test('should return correct date', () {
       final date = DateTime(2019, 12, 3, 18, 10, 30);
-      final res = DateUtils.startOfNextDay(date);
+      final res = DTU.startOfNextDay(date);
 
       expect(res, DateTime(2019, 12, 4));
     });
 
     test('should return utc if input is utc', () {
       final date = DateTime.utc(2019, 12, 3, 18, 10, 30);
-      final res = DateUtils.startOfNextDay(date);
+      final res = DTU.startOfNextDay(date);
 
       expect(res, DateTime.utc(2019, 12, 4));
     });
@@ -101,19 +101,19 @@ void main() {
       test(
           'when contains forward changeover',
           () => testDaylight(DateTime(2021, 3, 28, 00, 30),
-              DateTime(2021, 3, 29), DateUtils.startOfNextDay));
+              DateTime(2021, 3, 29), DTU.startOfNextDay));
 
       test(
           'when contains backward changeover',
           () => testDaylight(DateTime(2021, 10, 30, 01, 30),
-              DateTime(2021, 10, 31), DateUtils.startOfNextDay));
+              DateTime(2021, 10, 31), DTU.startOfNextDay));
     });
   });
 
   group('startOfToday()', () {
     test('should return correct date', () {
       final date = DateTime.now();
-      final res = DateUtils.startOfToday();
+      final res = DTU.startOfToday();
 
       expect(res, DateTime(date.year, date.month, date.day));
     });
@@ -123,20 +123,20 @@ void main() {
     test('should change time', () {
       final date = DateTime(2019, 12, 3, 18, 10, 30);
 
-      expect(DateUtils.setTime(date, 12, 10).hour, 12);
-      expect(DateUtils.setTime(date, 12, 10).second, 0);
-      expect(DateUtils.setTime(date, 12, 10, 30).minute, 10);
-      expect(DateUtils.setTime(date, 12, 10, 30).second, 30);
-      expect(DateUtils.setTime(date, 12, 10, 30).millisecond, 0);
-      expect(DateUtils.setTime(date, 12, 10, 30, 13).millisecond, 13);
-      expect(DateUtils.setTime(date, 12, 10, 30).microsecond, 0);
-      expect(DateUtils.setTime(date, 12, 10, 30, 13).microsecond, 0);
-      expect(DateUtils.setTime(date, 12, 10, 30, 13, 66).microsecond, 66);
+      expect(DTU.setTime(date, 12, 10).hour, 12);
+      expect(DTU.setTime(date, 12, 10).second, 0);
+      expect(DTU.setTime(date, 12, 10, 30).minute, 10);
+      expect(DTU.setTime(date, 12, 10, 30).second, 30);
+      expect(DTU.setTime(date, 12, 10, 30).millisecond, 0);
+      expect(DTU.setTime(date, 12, 10, 30, 13).millisecond, 13);
+      expect(DTU.setTime(date, 12, 10, 30).microsecond, 0);
+      expect(DTU.setTime(date, 12, 10, 30, 13).microsecond, 0);
+      expect(DTU.setTime(date, 12, 10, 30, 13, 66).microsecond, 66);
     });
 
     test('should return utc if input is utc', () {
       final date = DateTime.utc(2019, 12, 3, 18, 10, 30);
-      final res = DateUtils.setTime(date, 12, 45);
+      final res = DTU.setTime(date, 12, 45);
 
       expect(res, DateTime.utc(2019, 12, 3, 12, 45));
     });
@@ -146,29 +146,29 @@ void main() {
     test('should replace only passed values', () {
       final date = DateTime(2019, 12, 3, 18, 10, 30, 55, 66);
 
-      expect(DateUtils.copyWith(date, year: 2020),
+      expect(DTU.copyWith(date, year: 2020),
           DateTime(2020, 12, 3, 18, 10, 30, 55, 66));
-      expect(DateUtils.copyWith(date, month: 9),
+      expect(DTU.copyWith(date, month: 9),
           DateTime(2019, 9, 3, 18, 10, 30, 55, 66));
-      expect(DateUtils.copyWith(date, day: 12),
+      expect(DTU.copyWith(date, day: 12),
           DateTime(2019, 12, 12, 18, 10, 30, 55, 66));
-      expect(DateUtils.copyWith(date, hour: 23),
+      expect(DTU.copyWith(date, hour: 23),
           DateTime(2019, 12, 3, 23, 10, 30, 55, 66));
-      expect(DateUtils.copyWith(date, minute: 32),
+      expect(DTU.copyWith(date, minute: 32),
           DateTime(2019, 12, 3, 18, 32, 30, 55, 66));
-      expect(DateUtils.copyWith(date, second: 44),
+      expect(DTU.copyWith(date, second: 44),
           DateTime(2019, 12, 3, 18, 10, 44, 55, 66));
-      expect(DateUtils.copyWith(date, millisecond: 99),
+      expect(DTU.copyWith(date, millisecond: 99),
           DateTime(2019, 12, 3, 18, 10, 30, 99, 66));
-      expect(DateUtils.copyWith(date, microsecond: 43),
+      expect(DTU.copyWith(date, microsecond: 43),
           DateTime(2019, 12, 3, 18, 10, 30, 55, 43));
-      expect(DateUtils.copyWith(date, year: 2018, month: 4, hour: 10),
+      expect(DTU.copyWith(date, year: 2018, month: 4, hour: 10),
           DateTime(2018, 4, 3, 10, 10, 30, 55, 66));
     });
 
     test('should return utc if input is utc', () {
       final date = DateTime.utc(2019, 12, 3, 18, 10, 30, 55, 66);
-      final res = DateUtils.copyWith(date, day: 12);
+      final res = DTU.copyWith(date, day: 12);
 
       expect(res, DateTime.utc(2019, 12, 12, 18, 10, 30, 55, 66));
     });
@@ -176,24 +176,24 @@ void main() {
 
   group('nextMonth()', () {
     test('nextMonth should return correct month number', () {
-      expect(DateUtils.nextMonth(DateTime(2019, 1)), 2);
-      expect(DateUtils.nextMonth(DateTime(2019, 12)), 1);
-      expect(DateUtils.nextMonth(DateTime(2019, 13)), 2);
-      expect(DateUtils.nextMonth(DateTime(2018, 6)), 7);
+      expect(DTU.nextMonth(DateTime(2019, 1)), 2);
+      expect(DTU.nextMonth(DateTime(2019, 12)), 1);
+      expect(DTU.nextMonth(DateTime(2019, 13)), 2);
+      expect(DTU.nextMonth(DateTime(2018, 6)), 7);
     });
   });
 
   group('nextDay()', () {
     test('should return same time in the next day', () {
       expect(
-        DateUtils.nextDay(DateTime(2021, 6, 29, 18, 21, 34, 123, 456)),
+        DTU.nextDay(DateTime(2021, 6, 29, 18, 21, 34, 123, 456)),
         DateTime(2021, 6, 30, 18, 21, 34, 123, 456),
       );
     });
 
     test('should return utc if input is utc', () {
       final date = DateTime.utc(2021, 6, 29, 18, 21, 34, 123, 456);
-      final res = DateUtils.nextDay(date);
+      final res = DTU.nextDay(date);
 
       expect(res, DateTime.utc(2021, 6, 30, 18, 21, 34, 123, 456));
     });
@@ -202,26 +202,26 @@ void main() {
       test(
           'when contains forward changeover',
           () => testDaylight(DateTime(2021, 3, 28, 00, 30),
-              DateTime(2021, 3, 29, 00, 30), DateUtils.nextDay));
+              DateTime(2021, 3, 29, 00, 30), DTU.nextDay));
 
       test(
           'when contains backward changeover',
           () => testDaylight(DateTime(2021, 10, 30, 02, 30),
-              DateTime(2021, 10, 31, 02, 30), DateUtils.nextDay));
+              DateTime(2021, 10, 31, 02, 30), DTU.nextDay));
     });
   });
 
   group('previousDay()', () {
     test('should return same time in the previous day', () {
       expect(
-        DateUtils.previousDay(DateTime(2021, 6, 29, 18, 21, 34, 123, 456)),
+        DTU.previousDay(DateTime(2021, 6, 29, 18, 21, 34, 123, 456)),
         DateTime(2021, 6, 28, 18, 21, 34, 123, 456),
       );
     });
 
     test('should return utc if input is utc', () {
       final date = DateTime.utc(2021, 6, 29, 18, 21, 34, 123, 456);
-      final res = DateUtils.previousDay(date);
+      final res = DTU.previousDay(date);
 
       expect(res, DateTime.utc(2021, 6, 28, 18, 21, 34, 123, 456));
     });
@@ -230,12 +230,12 @@ void main() {
       test(
           'when contains forward changeover',
           () => testDaylight(DateTime(2021, 3, 29, 00, 30),
-              DateTime(2021, 3, 28, 00, 30), DateUtils.previousDay));
+              DateTime(2021, 3, 28, 00, 30), DTU.previousDay));
 
       test(
           'when contains backward changeover',
           () => testDaylight(DateTime(2021, 10, 31, 01, 30),
-              DateTime(2021, 10, 30, 01, 30), DateUtils.previousDay));
+              DateTime(2021, 10, 30, 01, 30), DTU.previousDay));
     });
   });
 
@@ -251,65 +251,65 @@ void main() {
 
     test('should return correct date time', () {
       expect(
-        DateUtils.firstDayOfWeek(date1),
+        DTU.firstDayOfWeek(date1),
         DateTime(2018, 12, 31, 0, 0, 0, 0, 0),
       );
       expect(
-        DateUtils.firstDayOfWeek(date2),
+        DTU.firstDayOfWeek(date2),
         DateTime(2020, 4, 6, 0, 0, 0, 0, 0),
       );
       expect(
-        DateUtils.firstDayOfWeek(date3),
+        DTU.firstDayOfWeek(date3),
         DateTime(2020, 12, 21, 0, 0, 0, 0, 0),
       );
       expect(
-        DateUtils.firstDayOfWeek(date4),
+        DTU.firstDayOfWeek(date4),
         DateTime(2020, 11, 16, 0, 0, 0, 0, 0),
       );
     });
 
     test('should return utc if input is utc', () {
       final date = DateTime.utc(2019, 1, 6, 23, 59, 59, 999, 999);
-      final res = DateUtils.firstDayOfWeek(date);
+      final res = DTU.firstDayOfWeek(date);
 
       expect(res, DateTime.utc(2018, 12, 31, 0, 0, 0, 0, 0));
     });
 
     test('should use Monday as a first week day by default', () {
       expect(
-        DateUtils.firstDayOfWeek(date1),
-        DateUtils.firstDayOfWeek(date1, firstWeekday: DateTime.monday),
+        DTU.firstDayOfWeek(date1),
+        DTU.firstDayOfWeek(date1, firstWeekday: DateTime.monday),
       );
       expect(
-        DateUtils.firstDayOfWeek(date2),
-        DateUtils.firstDayOfWeek(date2, firstWeekday: DateTime.monday),
+        DTU.firstDayOfWeek(date2),
+        DTU.firstDayOfWeek(date2, firstWeekday: DateTime.monday),
       );
       expect(
-        DateUtils.firstDayOfWeek(date3),
-        DateUtils.firstDayOfWeek(date3, firstWeekday: DateTime.monday),
+        DTU.firstDayOfWeek(date3),
+        DTU.firstDayOfWeek(date3, firstWeekday: DateTime.monday),
       );
       expect(
-        DateUtils.firstDayOfWeek(date4),
-        DateUtils.firstDayOfWeek(date4, firstWeekday: DateTime.monday),
+        DTU.firstDayOfWeek(date4),
+        DTU.firstDayOfWeek(date4, firstWeekday: DateTime.monday),
       );
     });
 
     test('should return correct value for a Sunday as a first week day', () {
       const firstWeekday = DateTime.sunday;
       expect(
-        DateUtils.firstDayOfWeek(date1, firstWeekday: firstWeekday),
+        DTU.firstDayOfWeek(date1, firstWeekday: firstWeekday),
         DateTime(2019, 1, 6, 0, 0, 0, 0, 0),
       );
       expect(
-        DateUtils.firstDayOfWeek(date2, firstWeekday: firstWeekday),
+        DTU.firstDayOfWeek(date2, firstWeekday: firstWeekday),
         DateTime(2020, 4, 5, 0, 0, 0, 0, 0),
       );
       expect(
-        DateUtils.firstDayOfWeek(date3, firstWeekday: firstWeekday),
+        DTU.firstDayOfWeek(date3, firstWeekday: firstWeekday),
         DateTime(2020, 12, 27, 0, 0, 0, 0, 0),
       );
       expect(
-        DateUtils.firstDayOfWeek(date4, firstWeekday: firstWeekday),
+        DTU.firstDayOfWeek(date4, firstWeekday: firstWeekday),
         DateTime(2020, 11, 15, 0, 0, 0, 0, 0),
       );
     });
@@ -317,37 +317,31 @@ void main() {
     group('should consider daylight saving', () {
       test(
           'when does not contains changeover',
-          () => testDaylight(
-              DateTime(2021, 3, 1),
-              DateTime(2021, 2, 28),
-              (d) =>
-                  DateUtils.firstDayOfWeek(d, firstWeekday: DateTime.sunday)));
+          () => testDaylight(DateTime(2021, 3, 1), DateTime(2021, 2, 28),
+              (d) => DTU.firstDayOfWeek(d, firstWeekday: DateTime.sunday)));
 
       test(
           'when contains changeover',
-          () => testDaylight(
-              DateTime(2021, 4, 1),
-              DateTime(2021, 3, 28),
-              (d) =>
-                  DateUtils.firstDayOfWeek(d, firstWeekday: DateTime.sunday)));
+          () => testDaylight(DateTime(2021, 4, 1), DateTime(2021, 3, 28),
+              (d) => DTU.firstDayOfWeek(d, firstWeekday: DateTime.sunday)));
     });
 
     test('should return correct value for a Thursday as a first week day', () {
       const firstWeekday = DateTime.thursday;
       expect(
-        DateUtils.firstDayOfWeek(date1, firstWeekday: firstWeekday),
+        DTU.firstDayOfWeek(date1, firstWeekday: firstWeekday),
         DateTime(2019, 1, 3, 0, 0, 0, 0, 0),
       );
       expect(
-        DateUtils.firstDayOfWeek(date2, firstWeekday: firstWeekday),
+        DTU.firstDayOfWeek(date2, firstWeekday: firstWeekday),
         DateTime(2020, 4, 9, 0, 0, 0, 0, 0),
       );
       expect(
-        DateUtils.firstDayOfWeek(date3, firstWeekday: firstWeekday),
+        DTU.firstDayOfWeek(date3, firstWeekday: firstWeekday),
         DateTime(2020, 12, 24, 0, 0, 0, 0, 0),
       );
       expect(
-        DateUtils.firstDayOfWeek(date4, firstWeekday: firstWeekday),
+        DTU.firstDayOfWeek(date4, firstWeekday: firstWeekday),
         DateTime(2020, 11, 12, 0, 0, 0, 0, 0),
       );
     });
@@ -365,61 +359,61 @@ void main() {
 
     test('should return correct date time', () {
       expect(
-        DateUtils.firstDayOfNextWeek(date1),
+        DTU.firstDayOfNextWeek(date1),
         DateTime(2019, 1, 07),
       );
       expect(
-        DateUtils.firstDayOfNextWeek(date2),
+        DTU.firstDayOfNextWeek(date2),
         DateTime(2020, 4, 13),
       );
       expect(
-        DateUtils.firstDayOfNextWeek(date3),
+        DTU.firstDayOfNextWeek(date3),
         DateTime(2020, 4, 13),
       );
     });
 
     test('should return utc if input is utc', () {
       final date = DateTime.utc(2020, 4, 9, 15);
-      final res = DateUtils.firstDayOfNextWeek(date);
+      final res = DTU.firstDayOfNextWeek(date);
 
       expect(res, DateTime.utc(2020, 4, 13));
     });
 
     test('should use Monday as a first week day by default', () {
       expect(
-        DateUtils.firstDayOfNextWeek(date1),
-        DateUtils.firstDayOfNextWeek(date1, firstWeekday: DateTime.monday),
+        DTU.firstDayOfNextWeek(date1),
+        DTU.firstDayOfNextWeek(date1, firstWeekday: DateTime.monday),
       );
       expect(
-        DateUtils.firstDayOfNextWeek(date2),
-        DateUtils.firstDayOfNextWeek(date2, firstWeekday: DateTime.monday),
+        DTU.firstDayOfNextWeek(date2),
+        DTU.firstDayOfNextWeek(date2, firstWeekday: DateTime.monday),
       );
       expect(
-        DateUtils.firstDayOfNextWeek(date3),
-        DateUtils.firstDayOfNextWeek(date3, firstWeekday: DateTime.monday),
+        DTU.firstDayOfNextWeek(date3),
+        DTU.firstDayOfNextWeek(date3, firstWeekday: DateTime.monday),
       );
       expect(
-        DateUtils.firstDayOfNextWeek(date4),
-        DateUtils.firstDayOfNextWeek(date4, firstWeekday: DateTime.monday),
+        DTU.firstDayOfNextWeek(date4),
+        DTU.firstDayOfNextWeek(date4, firstWeekday: DateTime.monday),
       );
     });
 
     test('should return correct value for a Sunday as a first week day', () {
       const firstWeekday = DateTime.sunday;
       expect(
-        DateUtils.firstDayOfNextWeek(date1, firstWeekday: firstWeekday),
+        DTU.firstDayOfNextWeek(date1, firstWeekday: firstWeekday),
         DateTime(2019, 1, 6),
       );
       expect(
-        DateUtils.firstDayOfNextWeek(date2, firstWeekday: firstWeekday),
+        DTU.firstDayOfNextWeek(date2, firstWeekday: firstWeekday),
         DateTime(2020, 4, 12),
       );
       expect(
-        DateUtils.firstDayOfNextWeek(date3, firstWeekday: firstWeekday),
+        DTU.firstDayOfNextWeek(date3, firstWeekday: firstWeekday),
         DateTime(2020, 4, 19),
       );
       expect(
-        DateUtils.firstDayOfNextWeek(date4, firstWeekday: firstWeekday),
+        DTU.firstDayOfNextWeek(date4, firstWeekday: firstWeekday),
         DateTime(2020, 11, 22),
       );
     });
@@ -427,19 +421,19 @@ void main() {
     test('should return correct value for a Thursday as a first week day', () {
       const firstWeekday = DateTime.thursday;
       expect(
-        DateUtils.firstDayOfNextWeek(date1, firstWeekday: firstWeekday),
+        DTU.firstDayOfNextWeek(date1, firstWeekday: firstWeekday),
         DateTime(2019, 1, 3),
       );
       expect(
-        DateUtils.firstDayOfNextWeek(date2, firstWeekday: firstWeekday),
+        DTU.firstDayOfNextWeek(date2, firstWeekday: firstWeekday),
         DateTime(2020, 4, 16),
       );
       expect(
-        DateUtils.firstDayOfNextWeek(date3, firstWeekday: firstWeekday),
+        DTU.firstDayOfNextWeek(date3, firstWeekday: firstWeekday),
         DateTime(2020, 4, 16),
       );
       expect(
-        DateUtils.firstDayOfNextWeek(date4, firstWeekday: firstWeekday),
+        DTU.firstDayOfNextWeek(date4, firstWeekday: firstWeekday),
         DateTime(2020, 11, 19),
       );
     });
@@ -449,16 +443,16 @@ void main() {
           () => testDaylight(
               DateTime(2021, 3, 27, 10, 20),
               DateTime(2021, 4, 3),
-              (d) => DateUtils.firstDayOfNextWeek(d,
-                  firstWeekday: DateTime.saturday)));
+              (d) =>
+                  DTU.firstDayOfNextWeek(d, firstWeekday: DateTime.saturday)));
 
       test(
           'when contains backward changeover',
           () => testDaylight(
               DateTime(2021, 10, 30, 10, 20),
               DateTime(2021, 11, 6),
-              (d) => DateUtils.firstDayOfNextWeek(d,
-                  firstWeekday: DateTime.saturday)));
+              (d) =>
+                  DTU.firstDayOfNextWeek(d, firstWeekday: DateTime.saturday)));
     });
   });
 
@@ -474,65 +468,65 @@ void main() {
 
     test('should return correct date time', () {
       expect(
-        DateUtils.lastDayOfWeek(date1),
+        DTU.lastDayOfWeek(date1),
         DateTime(2019, 1, 6),
       );
       expect(
-        DateUtils.lastDayOfWeek(date2),
+        DTU.lastDayOfWeek(date2),
         DateTime(2020, 4, 12),
       );
       expect(
-        DateUtils.lastDayOfWeek(date3),
+        DTU.lastDayOfWeek(date3),
         DateTime(2020, 4, 12),
       );
       expect(
-        DateUtils.lastDayOfWeek(date4),
+        DTU.lastDayOfWeek(date4),
         DateTime(2020, 11, 22),
       );
     });
 
     test('should return utc if input is utc', () {
       final date = DateTime.utc(2020, 4, 9, 15);
-      final res = DateUtils.lastDayOfWeek(date);
+      final res = DTU.lastDayOfWeek(date);
 
       expect(res, DateTime.utc(2020, 4, 12));
     });
 
     test('should use Monday as a first week day by default', () {
       expect(
-        DateUtils.lastDayOfWeek(date1),
-        DateUtils.lastDayOfWeek(date1, firstWeekday: DateTime.monday),
+        DTU.lastDayOfWeek(date1),
+        DTU.lastDayOfWeek(date1, firstWeekday: DateTime.monday),
       );
       expect(
-        DateUtils.lastDayOfWeek(date2),
-        DateUtils.lastDayOfWeek(date2, firstWeekday: DateTime.monday),
+        DTU.lastDayOfWeek(date2),
+        DTU.lastDayOfWeek(date2, firstWeekday: DateTime.monday),
       );
       expect(
-        DateUtils.lastDayOfWeek(date3),
-        DateUtils.lastDayOfWeek(date3, firstWeekday: DateTime.monday),
+        DTU.lastDayOfWeek(date3),
+        DTU.lastDayOfWeek(date3, firstWeekday: DateTime.monday),
       );
       expect(
-        DateUtils.lastDayOfWeek(date4),
-        DateUtils.lastDayOfWeek(date4, firstWeekday: DateTime.monday),
+        DTU.lastDayOfWeek(date4),
+        DTU.lastDayOfWeek(date4, firstWeekday: DateTime.monday),
       );
     });
 
     test('should return correct value for a Sunday as a first week day', () {
       const firstWeekday = DateTime.sunday;
       expect(
-        DateUtils.lastDayOfWeek(date1, firstWeekday: firstWeekday),
+        DTU.lastDayOfWeek(date1, firstWeekday: firstWeekday),
         DateTime(2019, 1, 5),
       );
       expect(
-        DateUtils.lastDayOfWeek(date2, firstWeekday: firstWeekday),
+        DTU.lastDayOfWeek(date2, firstWeekday: firstWeekday),
         DateTime(2020, 4, 11),
       );
       expect(
-        DateUtils.lastDayOfWeek(date3, firstWeekday: firstWeekday),
+        DTU.lastDayOfWeek(date3, firstWeekday: firstWeekday),
         DateTime(2020, 4, 18),
       );
       expect(
-        DateUtils.lastDayOfWeek(date4, firstWeekday: firstWeekday),
+        DTU.lastDayOfWeek(date4, firstWeekday: firstWeekday),
         DateTime(2020, 11, 21),
       );
     });
@@ -540,19 +534,19 @@ void main() {
     test('should return correct value for a Thursday as a first week day', () {
       const firstWeekday = DateTime.thursday;
       expect(
-        DateUtils.lastDayOfWeek(date1, firstWeekday: firstWeekday),
+        DTU.lastDayOfWeek(date1, firstWeekday: firstWeekday),
         DateTime(2019, 1, 2),
       );
       expect(
-        DateUtils.lastDayOfWeek(date2, firstWeekday: firstWeekday),
+        DTU.lastDayOfWeek(date2, firstWeekday: firstWeekday),
         DateTime(2020, 4, 15),
       );
       expect(
-        DateUtils.lastDayOfWeek(date3, firstWeekday: firstWeekday),
+        DTU.lastDayOfWeek(date3, firstWeekday: firstWeekday),
         DateTime(2020, 4, 15),
       );
       expect(
-        DateUtils.lastDayOfWeek(date4, firstWeekday: firstWeekday),
+        DTU.lastDayOfWeek(date4, firstWeekday: firstWeekday),
         DateTime(2020, 11, 18),
       );
     });
@@ -563,35 +557,30 @@ void main() {
           () => testDaylight(
               DateTime(2020, 3, 28, 10, 20),
               DateTime(2020, 4, 3),
-              (d) =>
-                  DateUtils.lastDayOfWeek(d, firstWeekday: DateTime.saturday)));
+              (d) => DTU.lastDayOfWeek(d, firstWeekday: DateTime.saturday)));
 
       test(
           'when contains backward changeover',
           () => testDaylight(
               DateTime(2021, 10, 30, 10, 20),
               DateTime(2021, 11, 5),
-              (d) =>
-                  DateUtils.lastDayOfWeek(d, firstWeekday: DateTime.saturday)));
+              (d) => DTU.lastDayOfWeek(d, firstWeekday: DateTime.saturday)));
     });
   });
 
   group('firstDayOfMonth()', () {
     test('should return correct date time', () {
-      expect(
-          DateUtils.firstDayOfMonth(DateTime(2019, 1, 6, 23, 59, 59, 999, 999)),
+      expect(DTU.firstDayOfMonth(DateTime(2019, 1, 6, 23, 59, 59, 999, 999)),
           DateTime(2019, 1, 1, 0, 0, 0, 0, 0));
-      expect(DateUtils.firstDayOfMonth(DateTime(2020, 4, 9, 15, 16)),
+      expect(DTU.firstDayOfMonth(DateTime(2020, 4, 9, 15, 16)),
           DateTime(2020, 4, 1, 0, 0, 0, 0, 0));
-      expect(
-          DateUtils.firstDayOfMonth(
-              DateTime(2020, 12, 27, 23, 59, 59, 999, 999)),
+      expect(DTU.firstDayOfMonth(DateTime(2020, 12, 27, 23, 59, 59, 999, 999)),
           DateTime(2020, 12, 1, 0, 0, 0, 0, 0));
     });
 
     test('should return utc if input is utc', () {
       final date = DateTime.utc(2020, 4, 9, 15, 16);
-      final res = DateUtils.firstDayOfMonth(date);
+      final res = DTU.firstDayOfMonth(date);
 
       expect(res, DateTime.utc(2020, 4, 1));
     });
@@ -619,26 +608,26 @@ void main() {
     for (var i = 0; i < years.length; i++) {
       final year = years[i];
       test('should return correct date for $year, default', () {
-        expect(DateUtils.firstDayOfFirstWeek(year), expectedDefault[i]);
+        expect(DTU.firstDayOfFirstWeek(year), expectedDefault[i]);
       });
 
       test('should return correct date for $year, monday', () {
         expect(
-          DateUtils.firstDayOfFirstWeek(year, firstWeekday: DateTime.monday),
+          DTU.firstDayOfFirstWeek(year, firstWeekday: DateTime.monday),
           expectedMonday[i],
         );
       });
 
       test('should return correct date for $year, sunday', () {
         expect(
-          DateUtils.firstDayOfFirstWeek(year, firstWeekday: DateTime.sunday),
+          DTU.firstDayOfFirstWeek(year, firstWeekday: DateTime.sunday),
           expectedSunday[i],
         );
       });
 
       test('should return correct date for $year, saturday', () {
         expect(
-          DateUtils.firstDayOfFirstWeek(year, firstWeekday: DateTime.saturday),
+          DTU.firstDayOfFirstWeek(year, firstWeekday: DateTime.saturday),
           expectedSaturday[i],
         );
       });
@@ -657,49 +646,49 @@ void main() {
 
     test('should return true if this is a first day of a week', () {
       expect(
-        DateUtils.isFirstDayOfWeek(monday),
+        DTU.isFirstDayOfWeek(monday),
         true,
       );
       expect(
-        DateUtils.isFirstDayOfWeek(monday, firstWeekday: DateTime.monday),
+        DTU.isFirstDayOfWeek(monday, firstWeekday: DateTime.monday),
         true,
       );
       expect(
-        DateUtils.isFirstDayOfWeek(thursday, firstWeekday: DateTime.thursday),
+        DTU.isFirstDayOfWeek(thursday, firstWeekday: DateTime.thursday),
         true,
       );
       expect(
-        DateUtils.isFirstDayOfWeek(sunday, firstWeekday: DateTime.sunday),
+        DTU.isFirstDayOfWeek(sunday, firstWeekday: DateTime.sunday),
         true,
       );
     });
 
     test('should ignore time', () {
       expect(
-        DateUtils.isFirstDayOfWeek(mondayWithTime),
+        DTU.isFirstDayOfWeek(mondayWithTime),
         true,
       );
     });
 
     test('should return false if this is not a first day of a week', () {
       expect(
-        DateUtils.isFirstDayOfWeek(thursday),
+        DTU.isFirstDayOfWeek(thursday),
         false,
       );
       expect(
-        DateUtils.isFirstDayOfWeek(sunday),
+        DTU.isFirstDayOfWeek(sunday),
         false,
       );
       expect(
-        DateUtils.isFirstDayOfWeek(thursday, firstWeekday: DateTime.monday),
+        DTU.isFirstDayOfWeek(thursday, firstWeekday: DateTime.monday),
         false,
       );
       expect(
-        DateUtils.isFirstDayOfWeek(monday, firstWeekday: DateTime.sunday),
+        DTU.isFirstDayOfWeek(monday, firstWeekday: DateTime.sunday),
         false,
       );
       expect(
-        DateUtils.isFirstDayOfWeek(monday, firstWeekday: DateTime.thursday),
+        DTU.isFirstDayOfWeek(monday, firstWeekday: DateTime.thursday),
         false,
       );
     });
@@ -718,53 +707,53 @@ void main() {
 
     test('should return true if this is a last day of a week', () {
       expect(
-        DateUtils.isLastDayOfWeek(sunday),
+        DTU.isLastDayOfWeek(sunday),
         true,
       );
       expect(
-        DateUtils.isLastDayOfWeek(sunday, firstWeekday: DateTime.monday),
+        DTU.isLastDayOfWeek(sunday, firstWeekday: DateTime.monday),
         true,
       );
       expect(
-        DateUtils.isLastDayOfWeek(thursday, firstWeekday: DateTime.friday),
+        DTU.isLastDayOfWeek(thursday, firstWeekday: DateTime.friday),
         true,
       );
       expect(
-        DateUtils.isLastDayOfWeek(saturday, firstWeekday: DateTime.sunday),
+        DTU.isLastDayOfWeek(saturday, firstWeekday: DateTime.sunday),
         true,
       );
     });
 
     test('should ignore time', () {
       expect(
-        DateUtils.isLastDayOfWeek(sundayWithTime),
+        DTU.isLastDayOfWeek(sundayWithTime),
         true,
       );
     });
 
     test('should return false if this is not a last day of a week', () {
       expect(
-        DateUtils.isLastDayOfWeek(thursday),
+        DTU.isLastDayOfWeek(thursday),
         false,
       );
       expect(
-        DateUtils.isLastDayOfWeek(monday),
+        DTU.isLastDayOfWeek(monday),
         false,
       );
       expect(
-        DateUtils.isLastDayOfWeek(thursday, firstWeekday: DateTime.monday),
+        DTU.isLastDayOfWeek(thursday, firstWeekday: DateTime.monday),
         false,
       );
       expect(
-        DateUtils.isLastDayOfWeek(monday, firstWeekday: DateTime.sunday),
+        DTU.isLastDayOfWeek(monday, firstWeekday: DateTime.sunday),
         false,
       );
       expect(
-        DateUtils.isLastDayOfWeek(sunday, firstWeekday: DateTime.sunday),
+        DTU.isLastDayOfWeek(sunday, firstWeekday: DateTime.sunday),
         false,
       );
       expect(
-        DateUtils.isLastDayOfWeek(monday, firstWeekday: DateTime.thursday),
+        DTU.isLastDayOfWeek(monday, firstWeekday: DateTime.thursday),
         false,
       );
     });
@@ -774,45 +763,45 @@ void main() {
     // TODO: refactor this in groups
     test('should return true if this is a first day of a month', () {
       expect(
-        DateUtils.isFirstDayOfMonth(DateTime(2020, 11, 1)),
+        DTU.isFirstDayOfMonth(DateTime(2020, 11, 1)),
         true,
       );
       expect(
-        DateUtils.isFirstDayOfMonth(DateTime(2019, 1, 1)),
+        DTU.isFirstDayOfMonth(DateTime(2019, 1, 1)),
         true,
       );
       expect(
-        DateUtils.isFirstDayOfMonth(DateTime(2018, 12, 1)),
+        DTU.isFirstDayOfMonth(DateTime(2018, 12, 1)),
         true,
       );
       expect(
-        DateUtils.isFirstDayOfMonth(DateTime(2017, 10, 32)),
+        DTU.isFirstDayOfMonth(DateTime(2017, 10, 32)),
         true,
       );
     });
 
     test('should ignore time', () {
       expect(
-        DateUtils.isFirstDayOfMonth(DateTime(2020, 11, 1, 12, 13, 14)),
+        DTU.isFirstDayOfMonth(DateTime(2020, 11, 1, 12, 13, 14)),
         true,
       );
     });
 
     test('should return false if this is not a first day of a month', () {
       expect(
-        DateUtils.isFirstDayOfMonth(DateTime(2020, 11, 2)),
+        DTU.isFirstDayOfMonth(DateTime(2020, 11, 2)),
         false,
       );
       expect(
-        DateUtils.isFirstDayOfMonth(DateTime(2019, 1, 5)),
+        DTU.isFirstDayOfMonth(DateTime(2019, 1, 5)),
         false,
       );
       expect(
-        DateUtils.isFirstDayOfMonth(DateTime(2018, 12, 31)),
+        DTU.isFirstDayOfMonth(DateTime(2018, 12, 31)),
         false,
       );
       expect(
-        DateUtils.isFirstDayOfMonth(DateTime(2017, 10, 0)),
+        DTU.isFirstDayOfMonth(DateTime(2017, 10, 0)),
         false,
       );
     });
@@ -830,7 +819,7 @@ void main() {
       ].forEach((date) {
         test('for $date', () {
           expect(
-            DateUtils.isLastDayOfMonth(date),
+            DTU.isLastDayOfMonth(date),
             true,
           );
         });
@@ -839,8 +828,7 @@ void main() {
 
     test('should ignore time', () {
       expect(
-        DateUtils.isLastDayOfMonth(
-            DateTime(2020, 11, 30, 23, 59, 59, 999, 999)),
+        DTU.isLastDayOfMonth(DateTime(2020, 11, 30, 23, 59, 59, 999, 999)),
         true,
       );
     });
@@ -856,7 +844,7 @@ void main() {
       ].forEach((date) {
         test('for $date', () {
           expect(
-            DateUtils.isLastDayOfMonth(date),
+            DTU.isLastDayOfMonth(date),
             false,
           );
         });
@@ -868,7 +856,7 @@ void main() {
         final date =
             _createInTimezone(DateTime(2002, 3, 31, 00, 30), regionLisbon);
 
-        final res = DateUtils.isLastDayOfMonth(date);
+        final res = DTU.isLastDayOfMonth(date);
         expect(res, true);
       });
 
@@ -876,7 +864,7 @@ void main() {
         final date =
             _createInTimezone(DateTime(2002, 3, 30, 23, 30), regionLisbon);
 
-        final res = DateUtils.isLastDayOfMonth(date);
+        final res = DTU.isLastDayOfMonth(date);
         expect(res, false);
       });
 
@@ -884,7 +872,7 @@ void main() {
         final date =
             _createInTimezone(DateTime(2021, 10, 31, 0, 30), regionLisbon);
 
-        final res = DateUtils.isLastDayOfMonth(date);
+        final res = DTU.isLastDayOfMonth(date);
         expect(res, true);
       });
 
@@ -892,7 +880,7 @@ void main() {
         final date =
             _createInTimezone(DateTime(2021, 10, 30, 23, 30), regionLisbon);
 
-        final res = DateUtils.isLastDayOfMonth(date);
+        final res = DTU.isLastDayOfMonth(date);
         expect(res, false);
       });
     });
@@ -900,13 +888,13 @@ void main() {
 
   group('firstDayOfNextMonth()', () {
     test('should return correct date time', () {
-      expect(DateUtils.firstDayOfNextMonth(DateTime(2020, 4, 9, 15, 16)),
+      expect(DTU.firstDayOfNextMonth(DateTime(2020, 4, 9, 15, 16)),
           DateTime(2020, 5, 1, 0, 0, 0, 0, 0));
     });
 
     test('should return utc if input is utc', () {
       final date = DateTime.utc(2020, 4, 9, 15, 16);
-      final res = DateUtils.firstDayOfNextMonth(date);
+      final res = DTU.firstDayOfNextMonth(date);
 
       expect(res, DateTime.utc(2020, 5, 1));
     });
@@ -914,20 +902,17 @@ void main() {
 
   group('lastDayOfMonth()', () {
     test('should return correct date time', () {
-      expect(
-          DateUtils.lastDayOfMonth(DateTime(2019, 1, 6, 23, 59, 59, 999, 999)),
+      expect(DTU.lastDayOfMonth(DateTime(2019, 1, 6, 23, 59, 59, 999, 999)),
           DateTime(2019, 1, 31, 0, 0, 0, 0, 0));
-      expect(DateUtils.lastDayOfMonth(DateTime(2020, 4, 9, 15, 16)),
+      expect(DTU.lastDayOfMonth(DateTime(2020, 4, 9, 15, 16)),
           DateTime(2020, 4, 30, 0, 0, 0, 0, 0));
-      expect(
-          DateUtils.lastDayOfMonth(
-              DateTime(2020, 12, 27, 23, 59, 59, 999, 999)),
+      expect(DTU.lastDayOfMonth(DateTime(2020, 12, 27, 23, 59, 59, 999, 999)),
           DateTime(2020, 12, 31, 0, 0, 0, 0, 0));
     });
 
     test('should return utc if input is utc', () {
       final date = DateTime.utc(2019, 1, 6, 23, 59);
-      final res = DateUtils.lastDayOfMonth(date);
+      final res = DTU.lastDayOfMonth(date);
 
       expect(res, DateTime.utc(2019, 1, 31));
     });
@@ -936,34 +921,34 @@ void main() {
       test(
           'when contains forward changeover for last month day',
           () => testDaylight(DateTime(2002, 3, 31, 00, 30),
-              DateTime(2002, 3, 31), DateUtils.lastDayOfMonth));
+              DateTime(2002, 3, 31), DTU.lastDayOfMonth));
 
       test(
           'when contains forward changeover for not last month day',
           () => testDaylight(DateTime(2002, 3, 30, 23, 30),
-              DateTime(2002, 3, 31), DateUtils.lastDayOfMonth));
+              DateTime(2002, 3, 31), DTU.lastDayOfMonth));
 
       test(
           'when contains backward changeover for last month day',
           () => testDaylight(DateTime(2021, 10, 31, 0, 30),
-              DateTime(2021, 10, 31), DateUtils.lastDayOfMonth));
+              DateTime(2021, 10, 31), DTU.lastDayOfMonth));
 
       test(
           'when contains backward changeover for not last month day',
           () => testDaylight(DateTime(2021, 10, 30, 23, 30),
-              DateTime(2021, 10, 31), DateUtils.lastDayOfMonth));
+              DateTime(2021, 10, 31), DTU.lastDayOfMonth));
     });
   });
 
   group('firstDayOfYear()', () {
     test('should return correct date time', () {
-      expect(DateUtils.firstDayOfYear(DateTime(2020, 4, 9, 15, 16)),
+      expect(DTU.firstDayOfYear(DateTime(2020, 4, 9, 15, 16)),
           DateTime(2020, 1, 1, 0, 0, 0, 0, 0));
     });
 
     test('should return utc if input is utc', () {
       final date = DateTime.utc(2020, 4, 9, 15, 16);
-      final res = DateUtils.firstDayOfYear(date);
+      final res = DTU.firstDayOfYear(date);
 
       expect(res, DateTime.utc(2020, 1, 1));
     });
@@ -971,13 +956,13 @@ void main() {
 
   group('firstDayOfNextYear()', () {
     test('should return correct date time', () {
-      expect(DateUtils.firstDayOfNextYear(DateTime(2020, 4, 9, 15, 16)),
+      expect(DTU.firstDayOfNextYear(DateTime(2020, 4, 9, 15, 16)),
           DateTime(2021, 1, 1, 0, 0, 0, 0, 0));
     });
 
     test('should return utc if input is utc', () {
       final date = DateTime.utc(2020, 4, 9, 15, 16);
-      final res = DateUtils.firstDayOfNextYear(date);
+      final res = DTU.firstDayOfNextYear(date);
 
       expect(res, DateTime.utc(2021, 1, 1));
     });
@@ -985,13 +970,13 @@ void main() {
 
   group('lastDayOfYear()', () {
     test('should return correct date time', () {
-      expect(DateUtils.lastDayOfYear(DateTime(2020, 4, 9, 15, 16)),
+      expect(DTU.lastDayOfYear(DateTime(2020, 4, 9, 15, 16)),
           DateTime(2020, 12, 31, 0, 0, 0, 0, 0));
     });
 
     test('should return utc if input is utc', () {
       final date = DateTime.utc(2020, 4, 9, 15, 16);
-      final res = DateUtils.lastDayOfYear(date);
+      final res = DTU.lastDayOfYear(date);
 
       expect(res, DateTime.utc(2020, 12, 31));
     });
@@ -1005,10 +990,10 @@ void main() {
       final d4 = DateTime(2020, 10, 26, 18, 02, 10);
       final d5 = DateTime(2020, 10, 26);
 
-      expect(DateUtils.isSameDay(d1, d2), true);
-      expect(DateUtils.isSameDay(d1, d3), true);
-      expect(DateUtils.isSameDay(d1, d4), true);
-      expect(DateUtils.isSameDay(d1, d5), true);
+      expect(DTU.isSameDay(d1, d2), true);
+      expect(DTU.isSameDay(d1, d3), true);
+      expect(DTU.isSameDay(d1, d4), true);
+      expect(DTU.isSameDay(d1, d5), true);
     });
 
     test('should return false if not in the same day', () {
@@ -1016,59 +1001,59 @@ void main() {
       final d2 = DateTime(2021, 10, 26, 18, 02, 59);
       final d3 = DateTime(2020, 11, 25, 18, 02, 59);
 
-      expect(DateUtils.isSameDay(d1, d2), false);
-      expect(DateUtils.isSameDay(d1, d3), false);
+      expect(DTU.isSameDay(d1, d2), false);
+      expect(DTU.isSameDay(d1, d3), false);
     });
   });
 
   group('getDayNumberInYear()', () {
     test('should return 1 for the 1 jan', () {
-      expect(DateUtils.getDayNumberInYear(DateTime(2020, 1, 1)), 1);
-      expect(DateUtils.getDayNumberInYear(DateTime(2019, 1, 1, 15)), 1);
+      expect(DTU.getDayNumberInYear(DateTime(2020, 1, 1)), 1);
+      expect(DTU.getDayNumberInYear(DateTime(2019, 1, 1, 15)), 1);
       expect(
-        DateUtils.getDayNumberInYear(
+        DTU.getDayNumberInYear(
             DateTime(2008, 1, 2).subtract(const Duration(microseconds: 1))),
         1,
       );
     });
 
     test('should return 2 for the 2 jan', () {
-      expect(DateUtils.getDayNumberInYear(DateTime(2020, 1, 2)), 2);
+      expect(DTU.getDayNumberInYear(DateTime(2020, 1, 2)), 2);
       expect(
-        DateUtils.getDayNumberInYear(
+        DTU.getDayNumberInYear(
             DateTime(2020, 1, 2).add(const Duration(microseconds: 1))),
         2,
       );
       expect(
-        DateUtils.getDayNumberInYear(
+        DTU.getDayNumberInYear(
             DateTime(2020, 1, 3).subtract(const Duration(microseconds: 1))),
         2,
       );
     });
 
     test('should return 35 for the 4 feb', () {
-      expect(DateUtils.getDayNumberInYear(DateTime(2020, 2, 4)), 35);
-      expect(DateUtils.getDayNumberInYear(DateTime(2019, 2, 4, 15)), 35);
+      expect(DTU.getDayNumberInYear(DateTime(2020, 2, 4)), 35);
+      expect(DTU.getDayNumberInYear(DateTime(2019, 2, 4, 15)), 35);
     });
 
     test('should return 62 for the 3 mar of non leap year', () {
-      expect(DateUtils.getDayNumberInYear(DateTime(2019, 3, 3)), 62);
-      expect(DateUtils.getDayNumberInYear(DateTime(2015, 3, 3, 15)), 62);
+      expect(DTU.getDayNumberInYear(DateTime(2019, 3, 3)), 62);
+      expect(DTU.getDayNumberInYear(DateTime(2015, 3, 3, 15)), 62);
     });
 
     test('should return 63 for the 3 mar of leap year', () {
-      expect(DateUtils.getDayNumberInYear(DateTime(2020, 3, 3)), 63);
-      expect(DateUtils.getDayNumberInYear(DateTime(2008, 3, 3, 15)), 63);
+      expect(DTU.getDayNumberInYear(DateTime(2020, 3, 3)), 63);
+      expect(DTU.getDayNumberInYear(DateTime(2008, 3, 3, 15)), 63);
     });
 
     test('should return 365 for the 31 dec of non leap year', () {
-      expect(DateUtils.getDayNumberInYear(DateTime(2019, 12, 31)), 365);
-      expect(DateUtils.getDayNumberInYear(DateTime(2015, 12, 31, 15)), 365);
+      expect(DTU.getDayNumberInYear(DateTime(2019, 12, 31)), 365);
+      expect(DTU.getDayNumberInYear(DateTime(2015, 12, 31, 15)), 365);
     });
 
     test('should return 63 for the 31 dec of leap year', () {
-      expect(DateUtils.getDayNumberInYear(DateTime(2020, 12, 31)), 366);
-      expect(DateUtils.getDayNumberInYear(DateTime(2008, 12, 31, 15)), 366);
+      expect(DTU.getDayNumberInYear(DateTime(2020, 12, 31)), 366);
+      expect(DTU.getDayNumberInYear(DateTime(2008, 12, 31, 15)), 366);
     });
   });
 
@@ -1082,59 +1067,59 @@ void main() {
     final sunday = DateTime(2020, 11, 8);
 
     test('should return week day by default', () {
-      expect(DateUtils.getDayNumberInWeek(monday), 1);
-      expect(DateUtils.getDayNumberInWeek(tuesday), 2);
-      expect(DateUtils.getDayNumberInWeek(wednesday), 3);
-      expect(DateUtils.getDayNumberInWeek(thursday), 4);
-      expect(DateUtils.getDayNumberInWeek(friday), 5);
-      expect(DateUtils.getDayNumberInWeek(saturday), 6);
-      expect(DateUtils.getDayNumberInWeek(sunday), 7);
+      expect(DTU.getDayNumberInWeek(monday), 1);
+      expect(DTU.getDayNumberInWeek(tuesday), 2);
+      expect(DTU.getDayNumberInWeek(wednesday), 3);
+      expect(DTU.getDayNumberInWeek(thursday), 4);
+      expect(DTU.getDayNumberInWeek(friday), 5);
+      expect(DTU.getDayNumberInWeek(saturday), 6);
+      expect(DTU.getDayNumberInWeek(sunday), 7);
     });
 
     test('should return week day with Monday as a first week day', () {
       const first = DateTime.monday;
-      expect(DateUtils.getDayNumberInWeek(monday, firstWeekday: first), 1);
-      expect(DateUtils.getDayNumberInWeek(tuesday, firstWeekday: first), 2);
-      expect(DateUtils.getDayNumberInWeek(wednesday, firstWeekday: first), 3);
-      expect(DateUtils.getDayNumberInWeek(thursday, firstWeekday: first), 4);
-      expect(DateUtils.getDayNumberInWeek(friday, firstWeekday: first), 5);
-      expect(DateUtils.getDayNumberInWeek(saturday, firstWeekday: first), 6);
-      expect(DateUtils.getDayNumberInWeek(sunday, firstWeekday: first), 7);
+      expect(DTU.getDayNumberInWeek(monday, firstWeekday: first), 1);
+      expect(DTU.getDayNumberInWeek(tuesday, firstWeekday: first), 2);
+      expect(DTU.getDayNumberInWeek(wednesday, firstWeekday: first), 3);
+      expect(DTU.getDayNumberInWeek(thursday, firstWeekday: first), 4);
+      expect(DTU.getDayNumberInWeek(friday, firstWeekday: first), 5);
+      expect(DTU.getDayNumberInWeek(saturday, firstWeekday: first), 6);
+      expect(DTU.getDayNumberInWeek(sunday, firstWeekday: first), 7);
     });
 
     test('should return correct value with Sunday as a first week day', () {
       const first = DateTime.sunday;
-      expect(DateUtils.getDayNumberInWeek(monday, firstWeekday: first), 2);
-      expect(DateUtils.getDayNumberInWeek(tuesday, firstWeekday: first), 3);
-      expect(DateUtils.getDayNumberInWeek(wednesday, firstWeekday: first), 4);
-      expect(DateUtils.getDayNumberInWeek(thursday, firstWeekday: first), 5);
-      expect(DateUtils.getDayNumberInWeek(friday, firstWeekday: first), 6);
-      expect(DateUtils.getDayNumberInWeek(saturday, firstWeekday: first), 7);
-      expect(DateUtils.getDayNumberInWeek(sunday, firstWeekday: first), 1);
+      expect(DTU.getDayNumberInWeek(monday, firstWeekday: first), 2);
+      expect(DTU.getDayNumberInWeek(tuesday, firstWeekday: first), 3);
+      expect(DTU.getDayNumberInWeek(wednesday, firstWeekday: first), 4);
+      expect(DTU.getDayNumberInWeek(thursday, firstWeekday: first), 5);
+      expect(DTU.getDayNumberInWeek(friday, firstWeekday: first), 6);
+      expect(DTU.getDayNumberInWeek(saturday, firstWeekday: first), 7);
+      expect(DTU.getDayNumberInWeek(sunday, firstWeekday: first), 1);
     });
 
     test('should return correct value with Saturday as a first week day', () {
       const first = DateTime.saturday;
-      expect(DateUtils.getDayNumberInWeek(monday, firstWeekday: first), 3);
-      expect(DateUtils.getDayNumberInWeek(tuesday, firstWeekday: first), 4);
-      expect(DateUtils.getDayNumberInWeek(wednesday, firstWeekday: first), 5);
-      expect(DateUtils.getDayNumberInWeek(thursday, firstWeekday: first), 6);
-      expect(DateUtils.getDayNumberInWeek(friday, firstWeekday: first), 7);
-      expect(DateUtils.getDayNumberInWeek(saturday, firstWeekday: first), 1);
-      expect(DateUtils.getDayNumberInWeek(sunday, firstWeekday: first), 2);
+      expect(DTU.getDayNumberInWeek(monday, firstWeekday: first), 3);
+      expect(DTU.getDayNumberInWeek(tuesday, firstWeekday: first), 4);
+      expect(DTU.getDayNumberInWeek(wednesday, firstWeekday: first), 5);
+      expect(DTU.getDayNumberInWeek(thursday, firstWeekday: first), 6);
+      expect(DTU.getDayNumberInWeek(friday, firstWeekday: first), 7);
+      expect(DTU.getDayNumberInWeek(saturday, firstWeekday: first), 1);
+      expect(DTU.getDayNumberInWeek(sunday, firstWeekday: first), 2);
     });
   });
 
   group('getDaysInYear()', () {
     [2009, 2015, 2017, 2018, 2019, 2021].forEach((year) {
       test('should return 365 for $year year', () {
-        expect(DateUtils.getDaysInYear(year), 365);
+        expect(DTU.getDaysInYear(year), 365);
       });
     });
 
     [2008, 2012, 2016, 2020].forEach((year) {
       test('should return 366 for the leap year $year', () {
-        expect(DateUtils.getDaysInYear(year), 366);
+        expect(DTU.getDaysInYear(year), 366);
       });
     });
   });
@@ -1155,7 +1140,7 @@ void main() {
       final b = item.item2;
       final expected = item.item3;
       test('should return $expected for $a and $b', () {
-        expect(DateUtils.getDaysDifference(a, b), expected);
+        expect(DTU.getDaysDifference(a, b), expected);
       });
     });
   });
@@ -1164,14 +1149,14 @@ void main() {
     [2008, 2009, 2013, 2014, 2015, 2018, 2019, 2020].forEach((year) {
       final jan1 = DateTime(year, 1, 1);
       test('should return 1 weeks for 1 jan $year', () {
-        expect(DateUtils.getWeekNumber(jan1), 1);
+        expect(DTU.getWeekNumber(jan1), 1);
       });
     });
 
     [2008, 2013, 2014, 2018, 2019, 2020].forEach((year) {
       final jan1 = DateTime(year, 1, 1);
       test('should return 1 weeks for 1 jan $year, sunday start', () {
-        expect(DateUtils.getWeekNumber(jan1, firstWeekday: DateTime.sunday), 1);
+        expect(DTU.getWeekNumber(jan1, firstWeekday: DateTime.sunday), 1);
       });
     });
 
@@ -1179,7 +1164,7 @@ void main() {
       final jan1 = DateTime(year, 1, 1);
       test('should return 53 weeks for 1 jan $year, sunday start', () {
         expect(
-          DateUtils.getWeekNumber(jan1, firstWeekday: DateTime.sunday),
+          DTU.getWeekNumber(jan1, firstWeekday: DateTime.sunday),
           53,
         );
       });
@@ -1188,14 +1173,14 @@ void main() {
     [2010, 2016].forEach((year) {
       final jan1 = DateTime(year, 1, 1);
       test('should return 53 weeks for 1 jan $year', () {
-        expect(DateUtils.getWeekNumber(jan1), 53);
+        expect(DTU.getWeekNumber(jan1), 53);
       });
     });
 
     [2011, 2012, 2017].forEach((year) {
       final jan1 = DateTime(year, 1, 1);
       test('should return 52 weeks for 1 jan $year', () {
-        expect(DateUtils.getWeekNumber(jan1), 52);
+        expect(DTU.getWeekNumber(jan1), 52);
       });
     });
 
@@ -1204,7 +1189,7 @@ void main() {
       final expected = item.item2;
       final date = DateTime(year, 3, 3);
       test('should return $expected weeks for $date', () {
-        expect(DateUtils.getWeekNumber(date), expected);
+        expect(DTU.getWeekNumber(date), expected);
       });
     });
   });
@@ -1212,20 +1197,20 @@ void main() {
   group('getLastWeekNumber()', () {
     [2009, 2015].forEach((year) {
       test('should return 53 weeks for $year', () {
-        expect(DateUtils.getLastWeekNumber(year), 53);
+        expect(DTU.getLastWeekNumber(year), 53);
       });
     });
 
     [2008, 2012, 2013, 2014, 2016, 2017].forEach((year) {
       test('should return 52 weeks for $year', () {
-        expect(DateUtils.getLastWeekNumber(year), 52);
+        expect(DTU.getLastWeekNumber(year), 52);
       });
     });
 
     [2010, 2011, 2012, 2013, 2015, 2016, 2017, 2018, 2019].forEach((year) {
       test('should return 52 weeks for $year, week from sunday', () {
         expect(
-          DateUtils.getLastWeekNumber(year, firstWeekday: DateTime.sunday),
+          DTU.getLastWeekNumber(year, firstWeekday: DateTime.sunday),
           52,
         );
       });
@@ -1234,7 +1219,7 @@ void main() {
     [2008, 2014, 2020].forEach((year) {
       test('should return 53 weeks for $year, week from sunday', () {
         expect(
-          DateUtils.getLastWeekNumber(year, firstWeekday: DateTime.sunday),
+          DTU.getLastWeekNumber(year, firstWeekday: DateTime.sunday),
           53,
         );
       });
@@ -1246,7 +1231,7 @@ void main() {
       final start = DateTime(2020, 11, 02, 18, 7);
       final end = DateTime(2020, 11, 03, 17, 3);
 
-      final res = DateUtils.generateWithDayStep(start, end);
+      final res = DTU.generateWithDayStep(start, end);
       expect(res, [DateTime(2020, 11, 02, 18, 7)]);
     });
 
@@ -1254,7 +1239,7 @@ void main() {
       final start = DateTime(2020, 11, 02, 18, 7);
       final end = start;
 
-      final res = DateUtils.generateWithDayStep(start, end);
+      final res = DTU.generateWithDayStep(start, end);
       expect(res, [DateTime(2020, 11, 02, 18, 7)]);
     });
 
@@ -1262,7 +1247,7 @@ void main() {
       final start = DateTime(2020, 11, 02, 18, 7);
       final end = DateTime(2020, 11, 04, 19, 3);
 
-      final res = DateUtils.generateWithDayStep(start, end);
+      final res = DTU.generateWithDayStep(start, end);
       expect(res, [
         DateTime(2020, 11, 02, 18, 7),
         DateTime(2020, 11, 03, 18, 7),
@@ -1274,7 +1259,7 @@ void main() {
       final start = DateTime(2020, 11, 02, 18, 7).toUtc();
       final end = DateTime(2020, 11, 04, 17, 3);
 
-      final res = DateUtils.generateWithDayStep(start, end);
+      final res = DTU.generateWithDayStep(start, end);
       expect(res, [
         DateTime(2020, 11, 02, 18, 7).toUtc(),
         DateTime(2020, 11, 03, 18, 7).toUtc(),
@@ -1285,7 +1270,7 @@ void main() {
       final start = DateTime(2020, 11, 02, 18, 7);
       final end = DateTime(2020, 11, 01, 17, 3);
 
-      final res = DateUtils.generateWithDayStep(start, end);
+      final res = DTU.generateWithDayStep(start, end);
       expect(res, <DateTime>[]);
     });
 
@@ -1293,7 +1278,7 @@ void main() {
       void testDaylightSaving(
           DateTime start, DateTime end, List<DateTime> expected) {
         DateTime tz(DateTime d) => _createInTimezone(d, regionLisbon);
-        final res = DateUtils.generateWithDayStep(tz(start), tz(end));
+        final res = DTU.generateWithDayStep(tz(start), tz(end));
         final resTz = res.map(tz);
         final expectedTz = expected.map(tz);
 
@@ -1338,38 +1323,38 @@ void main() {
     final days = [sunday, monday, tuesday, wednesday, thursday];
 
     test('should return false for $sunday, 2020, monday', () {
-      expect(DateUtils.isWeekInYear(sunday, 2020, DateTime.monday), false);
+      expect(DTU.isWeekInYear(sunday, 2020, DateTime.monday), false);
     });
 
     test('should return false for $sunday, 2019, monday', () {
-      expect(DateUtils.isWeekInYear(sunday, 2019, DateTime.monday), true);
+      expect(DTU.isWeekInYear(sunday, 2019, DateTime.monday), true);
     });
 
     days.sublist(1).forEach((date) {
       test('should return false for $date, 2019, monday', () {
-        expect(DateUtils.isWeekInYear(date, 2019, DateTime.monday), false);
+        expect(DTU.isWeekInYear(date, 2019, DateTime.monday), false);
       });
 
       test('should return true for $date, 2020, monday', () {
-        expect(DateUtils.isWeekInYear(date, 2020, DateTime.monday), true);
+        expect(DTU.isWeekInYear(date, 2020, DateTime.monday), true);
       });
     });
 
     days.forEach((date) {
       test('should return false for $date, 2019, sunday', () {
-        expect(DateUtils.isWeekInYear(date, 2019, DateTime.sunday), false);
+        expect(DTU.isWeekInYear(date, 2019, DateTime.sunday), false);
       });
 
       test('should return true for $date, 2020, sunday', () {
-        expect(DateUtils.isWeekInYear(date, 2020, DateTime.sunday), true);
+        expect(DTU.isWeekInYear(date, 2020, DateTime.sunday), true);
       });
 
       test('should return false for $date, 2020, saturday', () {
-        expect(DateUtils.isWeekInYear(date, 2020, DateTime.saturday), false);
+        expect(DTU.isWeekInYear(date, 2020, DateTime.saturday), false);
       });
 
       test('should return true for $date, 2019, saturday', () {
-        expect(DateUtils.isWeekInYear(date, 2019, DateTime.saturday), true);
+        expect(DTU.isWeekInYear(date, 2019, DateTime.saturday), true);
       });
     });
   });
@@ -1389,7 +1374,7 @@ void main() {
       final expected = item.item2;
 
       test('should return $expected for $date and $days', () {
-        expect(DateUtils.addDays(date, days), expected);
+        expect(DTU.addDays(date, days), expected);
       });
     });
   });

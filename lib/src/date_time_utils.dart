@@ -1,9 +1,13 @@
 import 'package:meta/meta.dart';
 
-/// Утилиты работы с датами.
-///
-/// См. также [Utils].
-class DateUtils {
+@Deprecated('Use DateTimeUtils or DTU')
+typedef DateUtils = DateTimeUtils;
+
+/// Shortcat for [DateTimeUtils].
+typedef DTU = DateTimeUtils;
+
+/// Utils to work with [DateTime].
+class DateTimeUtils {
   /// Check if [a] and [b] are on the same day.
   static bool isSameDay(DateTime a, DateTime b) {
     return a.year == b.year && a.month == b.month && a.day == b.day;
@@ -68,7 +72,7 @@ class DateUtils {
   /// (2020, 12, 31) -> add 2 days -> (2021, 01, 2).
   /// (2020, 12, 31) -> add 14 days -> (2021, 1, 14).
   static DateTime addDays(DateTime date, int days) =>
-      DateUtils.copyWith(date, day: date.day + days);
+      copyWith(date, day: date.day + days);
 
   /// Returns the [DateTime] resulting from adding the given number
   /// of months to this [DateTime].
@@ -81,8 +85,8 @@ class DateUtils {
   /// (2020, 12, 31) -> add 2 months -> (2021, 2, 28).
   /// (2020, 12, 31) -> add 1 month -> (2021, 1, 31).
   static DateTime addMonths(DateTime date, int months) {
-    var res = DateUtils.copyWith(date, month: date.month + months);
-    if (date.day != res.day) res = DateUtils.copyWith(res, day: 0);
+    var res = copyWith(date, month: date.month + months);
+    if (date.day != res.day) res = copyWith(res, day: 0);
     return res;
   }
 
@@ -442,5 +446,5 @@ class DateUtils {
           : DateTime(
               year, month, day, hour, minute, second, millisecond, microsecond);
 
-  DateUtils._();
+  DateTimeUtils._();
 }
