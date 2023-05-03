@@ -1,10 +1,7 @@
 import 'package:meta/meta.dart';
 import 'package:clock/clock.dart';
 
-@Deprecated('Use DateTimeUtils or DTU')
-typedef DateUtils = DateTimeUtils;
-
-/// Shortcat for [DateTimeUtils].
+/// Shortcut for [DateTimeUtils].
 typedef DTU = DateTimeUtils;
 
 /// Utils to work with [DateTime].
@@ -420,11 +417,11 @@ class DateTimeUtils {
 
   /// Returns an iterable of [DateTime] with 1 day step in given range.
   ///
-  /// [start] is the start of the rande, inclusive.
+  /// [start] is the start of the range, inclusive.
   /// [end] is the end of the range, exclusive.
   ///
-  /// If [start] equals [end], than [start] still will be included in interbale.
-  /// If [start] less than [end], than empty interable will be returned.
+  /// If [start] equals [end], than [start] still will be included in iterable.
+  /// If [start] less than [end], than empty iterable will be returned.
   ///
   /// [DateTime] in result uses [start] timezone.
   static Iterable<DateTime> generateWithDayStep(

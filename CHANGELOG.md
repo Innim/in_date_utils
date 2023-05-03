@@ -1,3 +1,7 @@
+## [1.2.0+1] - 2023-05-03
+
+* Remove deprecated `DateUtils`.
+
 ## [1.2.0] - 2023-05-03
 
 * Add `clock` dependency.

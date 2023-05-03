@@ -1521,8 +1521,8 @@ void main() {
 /// TZ database https://www.iana.org/time-zones
 /// You can find a list at https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 DateTime _createInTimezone(DateTime date, String locationName) {
-  final localion = tz.getLocation('Europe/Lisbon');
-  final tzDate = tz.TZDateTime(localion, date.year, date.month, date.day,
+  final location = tz.getLocation(locationName);
+  final tzDate = tz.TZDateTime(location, date.year, date.month, date.day,
       date.hour, date.minute, date.second, date.millisecond, date.microsecond);
   return tzDate;
 }
