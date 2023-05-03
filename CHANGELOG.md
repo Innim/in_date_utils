@@ -1,3 +1,9 @@
+## [1.2.0] - 2023-05-03
+
+* Add `clock` dependency.
+* Method `now()` - returns current time.
+* **BREAKING**: `DateTime.now()` changed to `clock.now()`.
+
 ## [1.1.0] - 2022-06-16
 
 * Rename `DateUtils` to `DateTimeUtils` (to avoid conflicts with Flutter [DateUtils](https://api.flutter.dev/flutter/material/DateUtils-class.html)).

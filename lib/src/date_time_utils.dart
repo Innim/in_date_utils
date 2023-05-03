@@ -1,4 +1,5 @@
 import 'package:meta/meta.dart';
+import 'package:clock/clock.dart';
 
 @Deprecated('Use DateTimeUtils or DTU')
 typedef DateUtils = DateTimeUtils;
@@ -8,6 +9,9 @@ typedef DTU = DateTimeUtils;
 
 /// Utils to work with [DateTime].
 class DateTimeUtils {
+  /// Returns current time.
+  static DateTime now() => clock.now();
+
   /// Check if [a] and [b] are on the same day.
   static bool isSameDay(DateTime a, DateTime b) {
     return a.year == b.year && a.month == b.month && a.day == b.day;
@@ -26,7 +30,7 @@ class DateTimeUtils {
       _date(dateTime.isUtc, dateTime.year, dateTime.month, dateTime.day + 1);
 
   /// Returns [DateTime] for the beginning of today (00:00:00).
-  static DateTime startOfToday() => startOfDay(DateTime.now());
+  static DateTime startOfToday() => startOfDay(now());
 
   /// Creates a copy of [date] but with time replaced with the new values.
   static DateTime setTime(DateTime date, int hours, int minutes,
@@ -387,8 +391,8 @@ class DateTimeUtils {
 
   /// Проверяет является ли заданная дата текущей.
   static bool isCurrentDate(DateTime date) {
-    final now = DateTime.now();
-    return isSameDay(date, now);
+    final dateNow = now();
+    return isSameDay(date, dateNow);
   }
 
   /// Returns number of days in the [month] of the [year].
