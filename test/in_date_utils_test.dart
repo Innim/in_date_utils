@@ -1112,6 +1112,114 @@ void main() {
     });
   });
 
+  group('max()', () {
+    test('should return second date if it is after the first', () {
+      final d1 = DateTime(2020, 10, 26, 10, 02, 58, 123, 456);
+      final d2 = DateTime(2020, 10, 26, 10, 02, 58, 123, 457);
+      final d3 = DateTime(2020, 10, 26, 10, 02, 58, 124, 456);
+      final d4 = DateTime(2020, 10, 26, 10, 02, 59, 123, 456);
+      final d5 = DateTime(2020, 10, 26, 10, 03, 57, 123, 456);
+      final d6 = DateTime(2020, 10, 26, 18, 02, 10, 123, 456);
+      final d7 = DateTime(2020, 10, 27, 10, 02, 58, 123, 456);
+      final d8 = DateTime(2020, 11, 26, 10, 02, 58, 123, 456);
+      final d9 = DateTime(2021, 10, 26, 10, 02, 58, 123, 456);
+
+      expect(DTU.max(d1, d2), d2);
+      expect(DTU.max(d1, d3), d3);
+      expect(DTU.max(d1, d4), d4);
+      expect(DTU.max(d1, d5), d5);
+      expect(DTU.max(d1, d6), d6);
+      expect(DTU.max(d1, d7), d7);
+      expect(DTU.max(d1, d8), d8);
+      expect(DTU.max(d1, d9), d9);
+    });
+
+    test('should return first date if it is after the second', () {
+      final d1 = DateTime(2020, 10, 26, 10, 02, 58, 123, 456);
+      final d2 = DateTime(2020, 10, 26, 10, 02, 58, 123, 455);
+      final d3 = DateTime(2020, 10, 26, 10, 02, 58, 122, 456);
+      final d4 = DateTime(2020, 10, 26, 10, 02, 57, 123, 456);
+      final d5 = DateTime(2020, 10, 26, 10, 01, 59, 123, 456);
+      final d6 = DateTime(2020, 10, 26, 08, 02, 58, 123, 456);
+      final d7 = DateTime(2020, 10, 25, 10, 02, 58, 123, 456);
+      final d8 = DateTime(2020, 09, 26, 10, 02, 58, 123, 456);
+      final d9 = DateTime(2019, 10, 26, 10, 02, 58, 123, 456);
+
+      expect(DTU.max(d1, d2), d1);
+      expect(DTU.max(d1, d3), d1);
+      expect(DTU.max(d1, d4), d1);
+      expect(DTU.max(d1, d5), d1);
+      expect(DTU.max(d1, d6), d1);
+      expect(DTU.max(d1, d7), d1);
+      expect(DTU.max(d1, d8), d1);
+      expect(DTU.max(d1, d9), d1);
+    });
+
+    test('should return either first or second date if they equals', () {
+      final d1 = DateTime(2020, 10, 26, 18, 02, 59, 123, 456);
+      final d2 = DateTime(2020, 10, 26, 18, 02, 59, 123, 456);
+
+      final res = DTU.max(d1, d2);
+
+      expect(res == d1, true);
+      expect(res == d2, true);
+    });
+  });
+
+  group('min()', () {
+    test('should return second date if it is before the first', () {
+      final d1 = DateTime(2020, 10, 26, 10, 02, 58, 123, 456);
+      final d2 = DateTime(2020, 10, 26, 10, 02, 58, 123, 455);
+      final d3 = DateTime(2020, 10, 26, 10, 02, 58, 122, 456);
+      final d4 = DateTime(2020, 10, 26, 10, 02, 57, 123, 456);
+      final d5 = DateTime(2020, 10, 26, 10, 01, 59, 123, 456);
+      final d6 = DateTime(2020, 10, 26, 08, 02, 58, 123, 456);
+      final d7 = DateTime(2020, 10, 25, 10, 02, 58, 123, 456);
+      final d8 = DateTime(2020, 09, 26, 10, 02, 58, 123, 456);
+      final d9 = DateTime(2019, 10, 26, 10, 02, 58, 123, 456);
+
+      expect(DTU.min(d1, d2), d2);
+      expect(DTU.min(d1, d3), d3);
+      expect(DTU.min(d1, d4), d4);
+      expect(DTU.min(d1, d5), d5);
+      expect(DTU.min(d1, d6), d6);
+      expect(DTU.min(d1, d7), d7);
+      expect(DTU.min(d1, d8), d8);
+      expect(DTU.min(d1, d9), d9);
+    });
+
+    test('should return first date if it is before the second', () {
+      final d1 = DateTime(2020, 10, 26, 10, 02, 58, 123, 456);
+      final d2 = DateTime(2020, 10, 26, 10, 02, 58, 123, 457);
+      final d3 = DateTime(2020, 10, 26, 10, 02, 58, 124, 456);
+      final d4 = DateTime(2020, 10, 26, 10, 02, 59, 123, 456);
+      final d5 = DateTime(2020, 10, 26, 10, 03, 57, 123, 456);
+      final d6 = DateTime(2020, 10, 26, 18, 02, 10, 123, 456);
+      final d7 = DateTime(2020, 10, 27, 10, 02, 58, 123, 456);
+      final d8 = DateTime(2020, 11, 26, 10, 02, 58, 123, 456);
+      final d9 = DateTime(2021, 10, 26, 10, 02, 58, 123, 456);
+
+      expect(DTU.min(d1, d2), d1);
+      expect(DTU.min(d1, d3), d1);
+      expect(DTU.min(d1, d4), d1);
+      expect(DTU.min(d1, d5), d1);
+      expect(DTU.min(d1, d6), d1);
+      expect(DTU.min(d1, d7), d1);
+      expect(DTU.min(d1, d8), d1);
+      expect(DTU.min(d1, d9), d1);
+    });
+
+    test('should return either first or second date if they equals', () {
+      final d1 = DateTime(2020, 10, 26, 18, 02, 59, 123, 456);
+      final d2 = DateTime(2020, 10, 26, 18, 02, 59, 123, 456);
+
+      final res = DTU.min(d1, d2);
+
+      expect(res == d1, true);
+      expect(res == d2, true);
+    });
+  });
+
   group('getDayNumberInYear()', () {
     test('should return 1 for the 1 jan', () {
       expect(DTU.getDayNumberInYear(DateTime(2020, 1, 1)), 1);

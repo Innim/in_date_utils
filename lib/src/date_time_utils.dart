@@ -14,6 +14,12 @@ class DateTimeUtils {
     return a.year == b.year && a.month == b.month && a.day == b.day;
   }
 
+  /// Returns the latest of two dates.
+  static DateTime max(DateTime a, DateTime b) => a.isAfter(b) ? a : b;
+
+  /// Returns the earliest of two dates.
+  static DateTime min(DateTime a, DateTime b) => a.isBefore(b) ? a : b;
+
   /// Returns [DateTime] for the beginning of the day (00:00:00).
   ///
   /// (2020, 4, 9, 16, 50) -> (2020, 4, 9, 0, 0)

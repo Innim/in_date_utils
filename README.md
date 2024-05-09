@@ -49,6 +49,11 @@ void main() {
 
 * `isSameDay()` - checks if two `DateTime` instances are on the same day.
 
+#### Max/min
+
+* `max()` - returns the latest of two dates.
+* `min()` - returns the earliest of two dates.
+
 ### Checks
 
 #### Week 
