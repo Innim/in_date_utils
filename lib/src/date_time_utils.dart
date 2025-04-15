@@ -20,6 +20,11 @@ class DateTimeUtils {
   /// Returns the earliest of two dates.
   static DateTime min(DateTime a, DateTime b) => a.isBefore(b) ? a : b;
 
+  /// Checks if [date] is before [now] minus [duration].
+  static bool isExpired(DateTime date, [Duration duration = Duration.zero]) {
+    return date.isBefore(now().subtract(duration));
+  }
+
   /// Returns [DateTime] for the beginning of the day (00:00:00).
   ///
   /// (2020, 4, 9, 16, 50) -> (2020, 4, 9, 0, 0)

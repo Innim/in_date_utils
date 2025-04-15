@@ -1,3 +1,7 @@
+## [1.2.2]
+
+* Method `isExpired()` - checks if provided `DateTime` is in the past. You can provide optional `Duration` to check if it is before specific period.
+
 ## [1.2.1]
 
 * Method `max()` - returns the latest of two dates.

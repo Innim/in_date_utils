@@ -1220,6 +1220,236 @@ void main() {
     });
   });
 
+  group('isExpired()', () {
+    final now = DateTime(2025, 04, 12, 18, 03, 58, 123);
+
+    test('should return true if date is before now', () async {
+      await withClock(
+        Clock.fixed(now),
+        () async {
+          final dates = [
+            DateTime(2024, 04, 12, 18, 03, 58, 123),
+            DateTime(2025, 03, 12, 18, 03, 58, 123),
+            DateTime(2025, 04, 11, 18, 03, 58, 123),
+            DateTime(2025, 04, 12, 17, 03, 58, 123),
+            DateTime(2025, 04, 12, 18, 02, 58, 123),
+            DateTime(2025, 04, 12, 18, 03, 57, 123),
+            DateTime(2025, 04, 12, 18, 03, 58, 122),
+          ];
+
+          expect(dates.length, 7);
+          for (final date in dates) {
+            expect(DTU.isExpired(date), true, reason: '    Date: $date');
+          }
+        },
+      );
+    });
+
+    test('should return false if date is after now', () async {
+      await withClock(
+        Clock.fixed(now),
+        () async {
+          final dates = [
+            DateTime(2026, 04, 12, 18, 03, 58, 123),
+            DateTime(2025, 05, 12, 18, 03, 58, 123),
+            DateTime(2025, 04, 13, 18, 03, 58, 123),
+            DateTime(2025, 04, 12, 19, 03, 58, 123),
+            DateTime(2025, 04, 12, 18, 04, 58, 123),
+            DateTime(2025, 04, 12, 18, 03, 59, 123),
+            DateTime(2025, 04, 12, 18, 03, 58, 124),
+          ];
+
+          expect(dates.length, 7);
+          for (final date in dates) {
+            expect(DTU.isExpired(date), false, reason: '    Date: $date');
+          }
+        },
+      );
+    });
+
+    test('should return false if date is now', () async {
+      await withClock(
+        Clock.fixed(now),
+        () async {
+          expect(DTU.isExpired(now), false);
+        },
+      );
+    });
+
+    test('should return true if date is before now minus duration', () async {
+      await withClock(
+        Clock.fixed(now),
+        () async {
+          const duration = Duration(days: 1, hours: 3, minutes: 2, seconds: 5);
+          final dates = [
+            DateTime(2024, 04, 11, 15, 01, 53, 123),
+            DateTime(2025, 03, 11, 15, 01, 53, 123),
+            DateTime(2025, 04, 10, 15, 01, 53, 123),
+            DateTime(2025, 04, 11, 14, 01, 53, 123),
+            DateTime(2025, 04, 11, 15, 00, 53, 123),
+            DateTime(2025, 04, 11, 15, 01, 52, 123),
+            DateTime(2025, 04, 11, 15, 01, 53, 122),
+          ];
+
+          expect(dates.length, 7);
+          for (final date in dates) {
+            expect(
+              DTU.isExpired(date, duration),
+              true,
+              reason: '    Date: $date',
+            );
+          }
+        },
+      );
+    });
+
+    test('should return false if date is after now minus duration', () async {
+      await withClock(
+        Clock.fixed(now),
+        () async {
+          const duration = Duration(days: 1, hours: 3, minutes: 2, seconds: 5);
+          final dates = [
+            DateTime(2026, 04, 11, 15, 01, 53, 123),
+            DateTime(2025, 05, 11, 15, 01, 53, 123),
+            DateTime(2025, 04, 12, 15, 01, 53, 123),
+            DateTime(2025, 04, 11, 16, 01, 53, 123),
+            DateTime(2025, 04, 11, 15, 02, 53, 123),
+            DateTime(2025, 04, 11, 15, 01, 54, 123),
+            DateTime(2025, 04, 11, 15, 01, 53, 124),
+          ];
+
+          expect(dates.length, 7);
+          for (final date in dates) {
+            expect(
+              DTU.isExpired(date, duration),
+              false,
+              reason: '    Date: $date',
+            );
+          }
+        },
+      );
+    });
+
+    test('should return false if date is now minus duration', () async {
+      await withClock(
+        Clock.fixed(now),
+        () async {
+          const duration = Duration(days: 1, hours: 3, minutes: 2, seconds: 5);
+          final date = DateTime(2025, 04, 11, 15, 01, 53, 123);
+          expect(DTU.isExpired(date, duration), false);
+        },
+      );
+    });
+
+    test('should return false for now if has any duration', () async {
+      await withClock(
+        Clock.fixed(now),
+        () async {
+          const durations = [
+            Duration(days: 1),
+            Duration(hours: 1),
+            Duration(minutes: 1),
+            Duration(seconds: 1),
+            Duration(milliseconds: 1),
+            Duration(microseconds: 1),
+          ];
+
+          expect(durations.length, 6);
+          for (final duration in durations) {
+            expect(
+              DTU.isExpired(now, duration),
+              false,
+              reason: 'Duration: $duration',
+            );
+          }
+        },
+      );
+    });
+
+    test('should return false for future dates', () async {
+      await withClock(
+        Clock.fixed(now),
+        () async {
+          final futureDate = DateTime(2025, 04, 12, 19, 03, 58, 123);
+
+          expect(now.isBefore(futureDate), true,
+              reason: 'Invalid test data.\n'
+                  'Now        : $now\n'
+                  'Future date: $futureDate');
+          expect(DTU.isExpired(futureDate), false);
+        },
+      );
+    });
+
+    test('should return false for future dates with duration', () async {
+      await withClock(
+        Clock.fixed(now),
+        () async {
+          const duration = Duration(days: 1, hours: 3, minutes: 2, seconds: 5);
+          final futureDate = DateTime(2025, 04, 12, 19, 03, 58, 123);
+
+          expect(now.isBefore(futureDate), true,
+              reason: 'Invalid test data.\n'
+                  'Now        : $now\n'
+                  'Future date: $futureDate');
+          expect(DTU.isExpired(futureDate, duration), false);
+        },
+      );
+    });
+
+    test(
+      'should return true for past dates when duration is negative',
+      () async {
+        await withClock(
+          Clock.fixed(now),
+          () async {
+            const duration =
+                Duration(days: -1, hours: -3, minutes: -2, seconds: -5);
+            final pastDate = DateTime(2025, 04, 12, 15, 01, 53, 123);
+
+            expect(now.isAfter(pastDate), true,
+                reason: 'Invalid test data.\n'
+                    'Now        : $now\n'
+                    'Past date  : $pastDate');
+            expect(DTU.isExpired(pastDate, duration), true);
+          },
+        );
+      },
+    );
+
+    test(
+      'should return false for future dates after duration when duration is negative',
+      () async {
+        await withClock(
+          Clock.fixed(now),
+          () async {
+            const duration =
+                Duration(days: -1, hours: -3, minutes: -2, seconds: -5);
+            final date = DateTime(2025, 05, 12, 18, 03, 58, 123);
+
+            expect(DTU.isExpired(date, duration), false);
+          },
+        );
+      },
+    );
+
+    test(
+      'should return true for future dates before duration when duration is negative',
+      () async {
+        await withClock(
+          Clock.fixed(now),
+          () async {
+            const duration =
+                Duration(days: -1, hours: -3, minutes: -2, seconds: -5);
+            final date = DateTime(2025, 04, 13, 18, 03, 58, 123);
+
+            expect(DTU.isExpired(date, duration), true);
+          },
+        );
+      },
+    );
+  });
+
   group('getDayNumberInYear()', () {
     test('should return 1 for the 1 jan', () {
       expect(DTU.getDayNumberInYear(DateTime(2020, 1, 1)), 1);

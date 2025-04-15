@@ -54,6 +54,10 @@ void main() {
 * `max()` - returns the latest of two dates.
 * `min()` - returns the earliest of two dates.
 
+#### Is in range
+
+* `isExpired()` - checks if provided `DateTime` is in the past. You can provide optional `Duration` to check if it is before specific period.
+
 ### Checks
 
 #### Week 
