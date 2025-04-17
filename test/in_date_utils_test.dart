@@ -1589,6 +1589,28 @@ void main() {
     });
   });
 
+  group('getMonthsDifference()', () {
+    [
+      Tuple3(DateTime(2025, 04, 12, 16, 50), DateTime(2025, 04, 12, 16, 50), 0),
+      Tuple3(DateTime(2025, 04, 12, 16, 50), DateTime(2025, 04, 30, 23, 59), 0),
+      Tuple3(DateTime(2025, 04, 12, 16, 50), DateTime(2025, 05, 12, 10, 0), 1),
+      Tuple3(DateTime(2025, 04, 12), DateTime(2025, 05, 01), 1),
+      Tuple3(DateTime(2025, 03, 01), DateTime(2025, 04, 01), 1),
+      Tuple3(DateTime(2025, 04, 12), DateTime(2025, 01, 31), 3),
+      Tuple3(DateTime(2024, 04, 12), DateTime(2025, 04, 12), 12),
+      Tuple3(DateTime(2024, 11, 19), DateTime(2025, 04, 12), 5),
+      Tuple3(DateTime(2023, 02, 19), DateTime(2025, 04, 12), 26),
+      Tuple3(DateTime(2025, 04, 12), DateTime(2024, 11, 19), 5),
+    ].forEach((item) {
+      final a = item.item1;
+      final b = item.item2;
+      final expected = item.item3;
+      test('should return $expected for $a and $b', () {
+        expect(DTU.getMonthsDifference(a, b), expected);
+      });
+    });
+  });
+
   group('getWeekNumber()', () {
     [2008, 2009, 2013, 2014, 2015, 2018, 2019, 2020].forEach((year) {
       final jan1 = DateTime(year, 1, 1);

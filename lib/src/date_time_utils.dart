@@ -231,6 +231,24 @@ class DateTimeUtils {
     return diff.inHours ~/ 24;
   }
 
+  /// Returns count of months between two dates.
+  ///
+  /// Day (and time) will be ignored, so for the dates
+  /// (2020, 11, 18) and (2020, 12, 01)
+  /// result will be 1.
+  ///
+  /// This method is *NOT* for getting a number of
+  /// full months between two dates.
+  ///
+  /// Result will always be positive.
+  static int getMonthsDifference(DateTime a, DateTime b) {
+    final straight = a.isBefore(b);
+    final start = straight ? a : b;
+    final end = straight ? b : a;
+
+    return (end.year - start.year) * 12 + end.month - start.month;
+  }
+
   /// Checks if [day] is in the first day of a week.
   ///
   /// You can define first weekday (Monday, Sunday or Saturday) with

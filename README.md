@@ -101,7 +101,11 @@ void main() {
 * `getDayNumberInWeek()` - returns number of the day in week.
 * `getWeekNumber()` - returns number of the week in year.
 * `getLastWeekNumber()` - returns number of the last week in year.
+
+### Difference
+
 * `getDaysDifference()` - returns count of days between two dates.
+* `getMonthsDifference()` - returns count of months between two dates.
 
 ### Generation
 

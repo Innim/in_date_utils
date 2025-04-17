@@ -1,3 +1,7 @@
+## [1.2.3]
+
+* Method `getMonthsDifference()` - returns count of months between two dates.
+
 ## [1.2.2]
 
 * Method `isExpired()` - checks if provided `DateTime` is in the past. You can provide optional `Duration` to check if it is before specific period.
