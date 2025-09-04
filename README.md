@@ -57,6 +57,7 @@ void main() {
 #### Is in range
 
 * `isExpired()` - checks if provided `DateTime` is in the past. You can provide optional `Duration` to check if it is before specific period.
+* `isExpiredOrNull()` - same as `isExpired()`, but also returns true if provided `DateTime` is null.
 
 ### Checks
 

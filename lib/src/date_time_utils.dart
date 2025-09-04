@@ -22,7 +22,20 @@ class DateTimeUtils {
 
   /// Checks if [date] is before [now] minus [duration].
   static bool isExpired(DateTime date, [Duration duration = Duration.zero]) {
-    return date.isBefore(now().subtract(duration));
+    var test = now();
+    if (duration != Duration.zero) {
+      test = test.subtract(duration);
+    }
+    return date.isBefore(test);
+  }
+
+  /// Checks if [date] is null or before [now] minus [duration].
+  static bool isExpiredOrNull(
+    DateTime? date, [
+    Duration duration = Duration.zero,
+  ]) {
+    if (date == null) return true;
+    return isExpired(date, duration);
   }
 
   /// Returns [DateTime] for the beginning of the day (00:00:00).

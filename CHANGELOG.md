@@ -1,3 +1,7 @@
+## [1.2.4]
+
+* Method `isExpiredOrNull()` - same as `isExpired()`, but also returns true if provided `DateTime` is null.
+
 ## [1.2.3]
 
 * Method `getMonthsDifference()` - returns count of months between two dates.

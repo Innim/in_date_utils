@@ -5,6 +5,8 @@ import 'package:timezone/standalone.dart' as tz;
 
 void main() {
   tz.initializeTimeZones();
+  // 31 Mar 2002 - 01:00:00 forward 1 hour to 02:00:00
+  // 27 Oct 2002 - 02:00:00 backward 1 hour to 01:00:00
   const regionLisbon = 'Europe/Lisbon';
 
   void testDaylight(
@@ -1220,7 +1222,7 @@ void main() {
     });
   });
 
-  group('isExpired()', () {
+  group('isExpired()/isExpiredOrNull()', () {
     final now = DateTime(2025, 04, 12, 18, 03, 58, 123);
 
     test('should return true if date is before now', () async {
@@ -1239,7 +1241,9 @@ void main() {
 
           expect(dates.length, 7);
           for (final date in dates) {
-            expect(DTU.isExpired(date), true, reason: '    Date: $date');
+            final reason = '    Date: $date';
+            expect(DTU.isExpired(date), true, reason: reason);
+            expect(DTU.isExpiredOrNull(date), true, reason: reason);
           }
         },
       );
@@ -1261,7 +1265,9 @@ void main() {
 
           expect(dates.length, 7);
           for (final date in dates) {
-            expect(DTU.isExpired(date), false, reason: '    Date: $date');
+            final reason = '    Date: $date';
+            expect(DTU.isExpired(date), false, reason: reason);
+            expect(DTU.isExpiredOrNull(date), false, reason: reason);
           }
         },
       );
@@ -1272,6 +1278,7 @@ void main() {
         Clock.fixed(now),
         () async {
           expect(DTU.isExpired(now), false);
+          expect(DTU.isExpiredOrNull(now), false);
         },
       );
     });
@@ -1293,11 +1300,9 @@ void main() {
 
           expect(dates.length, 7);
           for (final date in dates) {
-            expect(
-              DTU.isExpired(date, duration),
-              true,
-              reason: '    Date: $date',
-            );
+            final reason = '    Date: $date';
+            expect(DTU.isExpired(date, duration), true, reason: reason);
+            expect(DTU.isExpiredOrNull(date, duration), true, reason: reason);
           }
         },
       );
@@ -1320,11 +1325,9 @@ void main() {
 
           expect(dates.length, 7);
           for (final date in dates) {
-            expect(
-              DTU.isExpired(date, duration),
-              false,
-              reason: '    Date: $date',
-            );
+            final reason = '    Date: $date';
+            expect(DTU.isExpired(date, duration), false, reason: reason);
+            expect(DTU.isExpiredOrNull(date, duration), false, reason: reason);
           }
         },
       );
@@ -1337,6 +1340,7 @@ void main() {
           const duration = Duration(days: 1, hours: 3, minutes: 2, seconds: 5);
           final date = DateTime(2025, 04, 11, 15, 01, 53, 123);
           expect(DTU.isExpired(date, duration), false);
+          expect(DTU.isExpiredOrNull(date, duration), false);
         },
       );
     });
@@ -1356,11 +1360,9 @@ void main() {
 
           expect(durations.length, 6);
           for (final duration in durations) {
-            expect(
-              DTU.isExpired(now, duration),
-              false,
-              reason: 'Duration: $duration',
-            );
+            final reason = 'Duration: $duration';
+            expect(DTU.isExpired(now, duration), false, reason: reason);
+            expect(DTU.isExpiredOrNull(now, duration), false, reason: reason);
           }
         },
       );
@@ -1377,6 +1379,7 @@ void main() {
                   'Now        : $now\n'
                   'Future date: $futureDate');
           expect(DTU.isExpired(futureDate), false);
+          expect(DTU.isExpiredOrNull(futureDate), false);
         },
       );
     });
@@ -1393,6 +1396,7 @@ void main() {
                   'Now        : $now\n'
                   'Future date: $futureDate');
           expect(DTU.isExpired(futureDate, duration), false);
+          expect(DTU.isExpiredOrNull(futureDate, duration), false);
         },
       );
     });
@@ -1412,6 +1416,7 @@ void main() {
                     'Now        : $now\n'
                     'Past date  : $pastDate');
             expect(DTU.isExpired(pastDate, duration), true);
+            expect(DTU.isExpiredOrNull(pastDate, duration), true);
           },
         );
       },
@@ -1428,6 +1433,7 @@ void main() {
             final date = DateTime(2025, 05, 12, 18, 03, 58, 123);
 
             expect(DTU.isExpired(date, duration), false);
+            expect(DTU.isExpiredOrNull(date, duration), false);
           },
         );
       },
@@ -1444,10 +1450,52 @@ void main() {
             final date = DateTime(2025, 04, 13, 18, 03, 58, 123);
 
             expect(DTU.isExpired(date, duration), true);
+            expect(DTU.isExpiredOrNull(date, duration), true);
           },
         );
       },
     );
+  });
+
+  group('isExpiredOrNull()', () {
+    final now = DateTime(2025, 04, 12, 18, 03, 58, 123);
+
+    test('should return true if date is null', () async {
+      await withClock(
+        Clock.fixed(now),
+        () async {
+          expect(DTU.isExpiredOrNull(null), true);
+        },
+      );
+    });
+
+    test('should return true if date is null for any duration', () async {
+      await withClock(
+        Clock.fixed(now),
+        () async {
+          const durations = [
+            Duration(days: 1),
+            Duration(hours: 1),
+            Duration(minutes: 1),
+            Duration(seconds: 1),
+            Duration(milliseconds: 1),
+            Duration(microseconds: 1),
+            Duration(days: -1),
+            Duration(hours: -1),
+            Duration(minutes: -1),
+            Duration(seconds: -1),
+            Duration(milliseconds: -1),
+            Duration(microseconds: -1),
+          ];
+
+          expect(durations.length, 12);
+          for (final duration in durations) {
+            final reason = 'Duration: $duration';
+            expect(DTU.isExpiredOrNull(null, duration), true, reason: reason);
+          }
+        },
+      );
+    });
   });
 
   group('getDayNumberInYear()', () {
