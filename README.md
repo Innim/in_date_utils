@@ -1,7 +1,7 @@
 # in_date_utils
 
 [![pub package](https://img.shields.io/pub/v/in_date_utils)](https://pub.dartlang.org/packages/in_date_utils)
-![Tests](https://github.com/Innim/in_date_utils/workflows/Tests/badge.svg?branch=main)
+[![Analyze & Test](https://github.com/Innim/in_date_utils/actions/workflows/dart.yml/badge.svg?branch=main)](https://github.com/Innim/in_date_utils/actions/workflows/dart.yml)
 
 Another utils for `DateTime`.
 
