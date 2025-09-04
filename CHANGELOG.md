@@ -1,3 +1,7 @@
+## [1.2.4+1]
+
+* Readme: Updated badge for Analyze & Test.
+
 ## [1.2.4]
 
 * Method `isExpiredOrNull()` - same as `isExpired()`, but also returns true if provided `DateTime` is null.
