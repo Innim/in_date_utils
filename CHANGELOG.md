@@ -1,6 +1,7 @@
 ## [1.2.4]
 
 * Method `isExpiredOrNull()` - same as `isExpired()`, but also returns true if provided `DateTime` is null.
+* **Fixed**: Method `generateWithDayStep()` can return invalid dates for daylight saving changeover in some cases.
 
 ## [1.2.3]
 

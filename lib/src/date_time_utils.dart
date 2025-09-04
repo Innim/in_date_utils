@@ -467,13 +467,17 @@ class DateTimeUtils {
   ///
   /// [DateTime] in result uses [start] timezone.
   static Iterable<DateTime> generateWithDayStep(
-      DateTime start, DateTime end) sync* {
+    DateTime start,
+    DateTime end,
+  ) sync* {
     if (end.isBefore(start)) return;
 
     var date = start;
+    var i = 1;
     do {
       yield date;
-      date = nextDay(date);
+      date = copyWith(start, day: start.day + i);
+      i++;
     } while (date.isBefore(end));
   }
 

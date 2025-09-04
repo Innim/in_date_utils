@@ -3,19 +3,27 @@ import 'package:test/test.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/standalone.dart' as tz;
 
+// to properly run timezone and daylight saving related tests you need run tests in specific timezone
+// because the result will be different, based on the rules of that timezone
+const _kTimeZoneLocation = 'Europe/Ljubljana';
+// DST began:
+// 2002: 31 March, 02:00 → 03:00
+// 2021: 28 March, 02:00 → 03:00
+// DST ended:
+// 2002: 27 October, 03:00 → 02:00
+// 2021: 31 October, 03:00 → 02:00
+
 void main() {
   tz.initializeTimeZones();
-  // 31 Mar 2002 - 01:00:00 forward 1 hour to 02:00:00
-  // 27 Oct 2002 - 02:00:00 backward 1 hour to 01:00:00
-  const regionLisbon = 'Europe/Lisbon';
 
   void testDaylight(
-      DateTime date, DateTime expected, DateTime Function(DateTime date) act) {
-    final res = act(_createInTimezone(date, regionLisbon));
-    final resTz = _createInTimezone(res, regionLisbon);
-    final expectedTz = _createInTimezone(expected, regionLisbon);
-
-    expect(resTz, expectedTz);
+    DateTime date,
+    DateTime expected,
+    DateTime Function(DateTime date) act,
+  ) {
+    _verifyTimezone();
+    final res = act(date);
+    expect(res, expected);
   }
 
   group('getDaysInMonth()', () {
@@ -102,13 +110,19 @@ void main() {
     group('should consider daylight saving', () {
       test(
           'when contains forward changeover',
-          () => testDaylight(DateTime(2021, 3, 28, 00, 30),
-              DateTime(2021, 3, 29), DTU.startOfNextDay));
+          () => testDaylight(
+                DateTime(2021, 3, 28, 00, 30),
+                DateTime(2021, 3, 29),
+                DTU.startOfNextDay,
+              ));
 
       test(
           'when contains backward changeover',
-          () => testDaylight(DateTime(2021, 10, 30, 01, 30),
-              DateTime(2021, 10, 31), DTU.startOfNextDay));
+          () => testDaylight(
+                DateTime(2021, 10, 30, 02, 30), // TODO maybe next day?
+                DateTime(2021, 10, 31),
+                DTU.startOfNextDay,
+              ));
     });
   });
 
@@ -203,13 +217,13 @@ void main() {
     group('should consider daylight saving', () {
       test(
           'when contains forward changeover',
-          () => testDaylight(DateTime(2021, 3, 28, 00, 30),
-              DateTime(2021, 3, 29, 00, 30), DTU.nextDay));
+          () => testDaylight(DateTime(2021, 3, 28, 01, 30),
+              DateTime(2021, 3, 29, 01, 30), DTU.nextDay));
 
       test(
           'when contains backward changeover',
-          () => testDaylight(DateTime(2021, 10, 30, 02, 30),
-              DateTime(2021, 10, 31, 02, 30), DTU.nextDay));
+          () => testDaylight(DateTime(2021, 10, 30, 03, 30),
+              DateTime(2021, 10, 31, 03, 30), DTU.nextDay));
     });
   });
 
@@ -231,13 +245,13 @@ void main() {
     group('should consider daylight saving', () {
       test(
           'when contains forward changeover',
-          () => testDaylight(DateTime(2021, 3, 29, 00, 30),
-              DateTime(2021, 3, 28, 00, 30), DTU.previousDay));
+          () => testDaylight(DateTime(2021, 3, 29, 01, 30),
+              DateTime(2021, 3, 28, 01, 30), DTU.previousDay));
 
       test(
           'when contains backward changeover',
-          () => testDaylight(DateTime(2021, 10, 31, 01, 30),
-              DateTime(2021, 10, 30, 01, 30), DTU.previousDay));
+          () => testDaylight(DateTime(2021, 10, 31, 02, 30),
+              DateTime(2021, 10, 30, 02, 30), DTU.previousDay));
     });
   });
 
@@ -855,32 +869,28 @@ void main() {
 
     group('should consider daylight saving', () {
       test('when contains forward changeover for last month day', () {
-        final date =
-            _createInTimezone(DateTime(2002, 3, 31, 00, 30), regionLisbon);
+        final date = DateTime(2002, 3, 31, 00, 30);
 
         final res = DTU.isLastDayOfMonth(date);
         expect(res, true);
       });
 
       test('when contains forward changeover for not last month day', () {
-        final date =
-            _createInTimezone(DateTime(2002, 3, 30, 23, 30), regionLisbon);
+        final date = DateTime(2002, 3, 30, 23, 30);
 
         final res = DTU.isLastDayOfMonth(date);
         expect(res, false);
       });
 
       test('when contains backward changeover for last month day', () {
-        final date =
-            _createInTimezone(DateTime(2021, 10, 31, 0, 30), regionLisbon);
+        final date = DateTime(2021, 10, 31, 0, 30);
 
         final res = DTU.isLastDayOfMonth(date);
         expect(res, true);
       });
 
       test('when contains backward changeover for not last month day', () {
-        final date =
-            _createInTimezone(DateTime(2021, 10, 30, 23, 30), regionLisbon);
+        final date = DateTime(2021, 10, 30, 23, 30);
 
         final res = DTU.isLastDayOfMonth(date);
         expect(res, false);
@@ -1790,39 +1800,45 @@ void main() {
 
     group('should consider daylight saving', () {
       void testDaylightSaving(
-          DateTime start, DateTime end, List<DateTime> expected) {
-        DateTime tz(DateTime d) => _createInTimezone(d, regionLisbon);
-        final res = DTU.generateWithDayStep(tz(start), tz(end));
-        final resTz = res.map(tz);
-        final expectedTz = expected.map(tz);
+        DateTime start,
+        DateTime end,
+        List<DateTime> expected,
+      ) {
+        final res = DTU.generateWithDayStep(start, end);
 
-        expect(resTz, expectedTz);
+        _verifyTimezone();
+        expect(
+          res,
+          expected,
+          reason: 'Date range: $start - $end. '
+              'Current time zone: ${_currentTimeZone()}}',
+        );
       }
 
       test(
           'when contains forward changeover',
           () => testDaylightSaving(
-                DateTime(2002, 3, 29, 01, 30),
-                DateTime(2002, 4, 2, 02, 30),
+                DateTime(2002, 3, 29, 02, 30),
+                DateTime(2002, 4, 2, 03, 30),
                 [
-                  DateTime(2002, 3, 29, 01, 30),
-                  DateTime(2002, 3, 30, 01, 30),
-                  DateTime(2002, 3, 31, 01, 30),
-                  DateTime(2002, 4, 01, 01, 30),
-                  DateTime(2002, 4, 02, 01, 30),
+                  DateTime(2002, 3, 29, 02, 30),
+                  DateTime(2002, 3, 30, 02, 30),
+                  DateTime(2002, 3, 31, 02, 30),
+                  DateTime(2002, 4, 01, 02, 30),
+                  DateTime(2002, 4, 02, 02, 30),
                 ],
               ));
 
       test(
           'when contains backward changeover',
           () => testDaylightSaving(
-                DateTime(2021, 10, 30, 01, 30),
-                DateTime(2021, 11, 2, 02, 30),
+                DateTime(2021, 10, 30, 02, 30),
+                DateTime(2021, 11, 2, 03, 30),
                 [
-                  DateTime(2021, 10, 30, 01, 30),
-                  DateTime(2021, 10, 31, 01, 30),
-                  DateTime(2021, 11, 01, 01, 30),
-                  DateTime(2021, 11, 02, 01, 30),
+                  DateTime(2021, 10, 30, 02, 30),
+                  DateTime(2021, 10, 31, 02, 30),
+                  DateTime(2021, 11, 01, 02, 30),
+                  DateTime(2021, 11, 02, 02, 30),
                 ],
               ));
     });
@@ -1924,15 +1940,21 @@ void main() {
   });
 }
 
-/// [locationName] should be value from the database represents
-/// a national region where all clocks keeping local time have agreed since 1970.
-/// TZ database https://www.iana.org/time-zones
-/// You can find a list at https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
-DateTime _createInTimezone(DateTime date, String locationName) {
-  final location = tz.getLocation(locationName);
-  final tzDate = tz.TZDateTime(location, date.year, date.month, date.day,
-      date.hour, date.minute, date.second, date.millisecond, date.microsecond);
-  return tzDate;
+void _verifyTimezone() {
+  final location = tz.getLocation(_kTimeZoneLocation);
+  expect(
+    DTU.now().timeZoneName,
+    location.currentTimeZone.abbreviation,
+    reason: 'You should run this test in the $_kTimeZoneLocation timezone. '
+        'Use next command to set timezone in tests:\nTZ=$_kTimeZoneLocation dart test',
+  );
+}
+
+String _currentTimeZone() {
+  final d = DateTime.now();
+  return '${d.timeZoneName} (UTC${d.timeZoneOffset.isNegative ? '-' : '+'}'
+      '${d.timeZoneOffset.inHours.toString().padLeft(2, '0')}:'
+      '${(d.timeZoneOffset.inMinutes % 60).toString().padLeft(2, '0')})';
 }
 
 class Tuple2<T1, T2> {
