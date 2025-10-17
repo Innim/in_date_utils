@@ -1,4 +1,5 @@
 import 'package:in_date_utils/in_date_utils.dart';
+import 'package:in_date_utils/src/week_numbering.dart';
 import 'package:test/test.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/standalone.dart' as tz;
@@ -1670,82 +1671,383 @@ void main() {
   });
 
   group('getWeekNumber()', () {
-    [2008, 2009, 2013, 2014, 2015, 2018, 2019, 2020].forEach((year) {
-      final jan1 = DateTime(year, 1, 1);
-      test('should return 1 weeks for 1 jan $year', () {
-        expect(DTU.getWeekNumber(jan1), 1);
+    group('isoWithFirstWeekday', () {
+      [2008, 2009, 2013, 2014, 2015, 2018, 2019, 2020].forEach((year) {
+        final jan1 = DateTime(year, 1, 1);
+        test('should return 1 weeks for 1 jan $year', () {
+          expect(DTU.getWeekNumber(jan1), 1);
+        });
+      });
+
+      [2008, 2013, 2014, 2018, 2019, 2020].forEach((year) {
+        final jan1 = DateTime(year, 1, 1);
+        test('should return 1 weeks for 1 jan $year, sunday start', () {
+          expect(DTU.getWeekNumber(jan1, firstWeekday: DateTime.sunday), 1);
+        });
+      });
+
+      [2009, 2015].forEach((year) {
+        final jan1 = DateTime(year, 1, 1);
+        test('should return 53 weeks for 1 jan $year, sunday start', () {
+          expect(
+            DTU.getWeekNumber(jan1, firstWeekday: DateTime.sunday),
+            53,
+          );
+        });
+      });
+
+      [2010, 2016].forEach((year) {
+        final jan1 = DateTime(year, 1, 1);
+        test('should return 53 weeks for 1 jan $year', () {
+          expect(DTU.getWeekNumber(jan1), 53);
+        });
+      });
+
+      [2011, 2012, 2017].forEach((year) {
+        final jan1 = DateTime(year, 1, 1);
+        test('should return 52 weeks for 1 jan $year', () {
+          expect(DTU.getWeekNumber(jan1), 52);
+        });
+      });
+
+      [Tuple2(2016, 9), Tuple2(2020, 10)].forEach((item) {
+        final year = item.item1;
+        final expected = item.item2;
+        final date = DateTime(year, 3, 3);
+        test('should return $expected weeks for $date', () {
+          expect(DTU.getWeekNumber(date), expected);
+        });
       });
     });
 
-    [2008, 2013, 2014, 2018, 2019, 2020].forEach((year) {
-      final jan1 = DateTime(year, 1, 1);
-      test('should return 1 weeks for 1 jan $year, sunday start', () {
-        expect(DTU.getWeekNumber(jan1, firstWeekday: DateTime.sunday), 1);
-      });
-    });
+    group('iso', () {
+      [2008, 2009, 2013, 2014, 2015, 2018, 2019, 2020].forEach((year) {
+        final jan1 = DateTime(year, 1, 1);
+        test('should return 1 weeks for 1 jan $year', () {
+          final res = DTU.getWeekNumber(
+            jan1,
+            weekNumbering: WeekNumbering.iso,
+          );
 
-    [2009, 2015].forEach((year) {
-      final jan1 = DateTime(year, 1, 1);
-      test('should return 53 weeks for 1 jan $year, sunday start', () {
-        expect(
-          DTU.getWeekNumber(jan1, firstWeekday: DateTime.sunday),
-          53,
+          expect(res, 1);
+        });
+      });
+
+      [2008, 2009, 2013, 2014, 2015, 2018, 2019, 2020].forEach((year) {
+        final jan1 = DateTime(year, 1, 1);
+        test('should return 1 weeks for 1 jan $year, sunday start', () {
+          final res = DTU.getWeekNumber(
+            jan1,
+            weekNumbering: WeekNumbering.iso,
+            firstWeekday: DateTime.sunday,
+          );
+
+          expect(res, 1);
+        });
+      });
+
+      [2010, 2016].forEach((year) {
+        final jan1 = DateTime(year, 1, 1);
+
+        final res = DTU.getWeekNumber(
+          jan1,
+          weekNumbering: WeekNumbering.iso,
         );
+
+        test('should return 53 weeks for 1 jan $year', () {
+          expect(res, 53);
+        });
+      });
+
+      [2011, 2012, 2017].forEach((year) {
+        final jan1 = DateTime(year, 1, 1);
+        test('should return 52 weeks for 1 jan $year', () {
+          final res = DTU.getWeekNumber(
+            jan1,
+            weekNumbering: WeekNumbering.iso,
+          );
+
+          expect(res, 52);
+        });
+      });
+
+      [Tuple2(2016, 9), Tuple2(2020, 10)].forEach((item) {
+        final year = item.item1;
+        final expected = item.item2;
+        final date = DateTime(year, 3, 3);
+        test('should return $expected weeks for $date', () {
+          final res = DTU.getWeekNumber(
+            date,
+            weekNumbering: WeekNumbering.iso,
+          );
+
+          expect(res, expected);
+        });
       });
     });
 
-    [2010, 2016].forEach((year) {
-      final jan1 = DateTime(year, 1, 1);
-      test('should return 53 weeks for 1 jan $year', () {
-        expect(DTU.getWeekNumber(jan1), 53);
-      });
-    });
+    group('jan1AsFirstWeek', () {
+      const years = [
+        2008,
+        2009,
+        2010,
+        2013,
+        2014,
+        2015,
+        2016,
+        2018,
+        2019,
+        2020
+      ];
 
-    [2011, 2012, 2017].forEach((year) {
-      final jan1 = DateTime(year, 1, 1);
-      test('should return 52 weeks for 1 jan $year', () {
-        expect(DTU.getWeekNumber(jan1), 52);
-      });
-    });
+      years.forEach((year) {
+        final jan1 = DateTime(year, 1, 1);
+        test('should return 1 weeks for 1 jan $year', () {
+          final res = DTU.getWeekNumber(
+            jan1,
+            weekNumbering: WeekNumbering.jan1AsFirstWeek,
+          );
 
-    [Tuple2(2016, 9), Tuple2(2020, 10)].forEach((item) {
-      final year = item.item1;
-      final expected = item.item2;
-      final date = DateTime(year, 3, 3);
-      test('should return $expected weeks for $date', () {
-        expect(DTU.getWeekNumber(date), expected);
+          expect(res, 1);
+        });
+      });
+
+      years.forEach((year) {
+        final jan1 = DateTime(year, 1, 1);
+        test('should return 1 weeks for 1 jan $year, sunday start', () {
+          final res = DTU.getWeekNumber(
+            jan1,
+            weekNumbering: WeekNumbering.jan1AsFirstWeek,
+            firstWeekday: DateTime.sunday,
+          );
+
+          expect(res, 1);
+        });
+      });
+
+      [2013, 2016, 2020, 2021, 2022, 2026].forEach((year) {
+        final dec31 = DateTime(year, 12, 31);
+
+        final res = DTU.getWeekNumber(
+          dec31,
+          weekNumbering: WeekNumbering.jan1AsFirstWeek,
+        );
+
+        test('should return 53 for 31 dec $year', () {
+          expect(res, 53);
+        });
+      });
+
+      [2028].forEach((year) {
+        final dec31 = DateTime(year, 12, 31);
+
+        final res = DTU.getWeekNumber(
+          dec31,
+          weekNumbering: WeekNumbering.jan1AsFirstWeek,
+        );
+
+        test('should return 53 for 31 dec $year', () {
+          expect(res, 53);
+        });
+      });
+
+      [2028].forEach((year) {
+        final dec31 = DateTime(year, 12, 31);
+
+        final res = DTU.getWeekNumber(
+          dec31,
+          weekNumbering: WeekNumbering.jan1AsFirstWeek,
+          firstWeekday: DateTime.sunday,
+        );
+
+        test('should return 54 for 31 dec $year, sunday start', () {
+          expect(res, 54);
+        });
+      });
+
+      [
+        Tuple2(2013, 9),
+        Tuple2(2016, 10),
+        Tuple2(2017, 10),
+        Tuple2(2018, 9),
+        Tuple2(2020, 10),
+      ].forEach((item) {
+        final year = item.item1;
+        final expected = item.item2;
+        final date = DateTime(year, 3, 3);
+        test('should return $expected weeks for $date', () {
+          final res = DTU.getWeekNumber(
+            date,
+            weekNumbering: WeekNumbering.jan1AsFirstWeek,
+          );
+
+          expect(res, expected);
+        });
+      });
+
+      [
+        Tuple2(2013, 10),
+        Tuple2(2016, 10),
+        Tuple2(2017, 9),
+        Tuple2(2018, 9),
+        Tuple2(2020, 10),
+      ].forEach((item) {
+        final year = item.item1;
+        final expected = item.item2;
+        final date = DateTime(year, 3, 3);
+        test('should return $expected weeks for $date', () {
+          final res = DTU.getWeekNumber(
+            date,
+            weekNumbering: WeekNumbering.jan1AsFirstWeek,
+            firstWeekday: DateTime.sunday,
+          );
+
+          expect(res, expected);
+        });
       });
     });
   });
 
   group('getLastWeekNumber()', () {
-    [2009, 2015].forEach((year) {
-      test('should return 53 weeks for $year', () {
-        expect(DTU.getLastWeekNumber(year), 53);
+    group('isoWithFirstWeekday', () {
+      [2009, 2015].forEach((year) {
+        test('should return 53 weeks for $year', () {
+          expect(DTU.getLastWeekNumber(year), 53);
+        });
+      });
+
+      [2008, 2012, 2013, 2014, 2016, 2017].forEach((year) {
+        test('should return 52 weeks for $year', () {
+          expect(DTU.getLastWeekNumber(year), 52);
+        });
+      });
+
+      [2010, 2011, 2012, 2013, 2015, 2016, 2017, 2018, 2019].forEach((year) {
+        test('should return 52 weeks for $year, week from sunday', () {
+          expect(
+            DTU.getLastWeekNumber(year, firstWeekday: DateTime.sunday),
+            52,
+          );
+        });
+      });
+
+      [2008, 2014, 2020].forEach((year) {
+        test('should return 53 weeks for $year, week from sunday', () {
+          expect(
+            DTU.getLastWeekNumber(year, firstWeekday: DateTime.sunday),
+            53,
+          );
+        });
       });
     });
 
-    [2008, 2012, 2013, 2014, 2016, 2017].forEach((year) {
-      test('should return 52 weeks for $year', () {
-        expect(DTU.getLastWeekNumber(year), 52);
+    group('iso', () {
+      const weekNumbering = WeekNumbering.iso;
+
+      const yearsWith53Weeks = [2009, 2015, 2020];
+      const yearsWith52Weeks = [
+        2008,
+        2010,
+        2011,
+        2012,
+        2013,
+        2014,
+        2016,
+        2017,
+        2018,
+        2019
+      ];
+
+      yearsWith53Weeks.forEach((year) {
+        test('should return 53 weeks for $year', () {
+          final res = DTU.getLastWeekNumber(
+            year,
+            weekNumbering: weekNumbering,
+          );
+
+          expect(res, 53);
+        });
+      });
+
+      yearsWith52Weeks.forEach((year) {
+        test('should return 52 weeks for $year', () {
+          final res = DTU.getLastWeekNumber(
+            year,
+            weekNumbering: weekNumbering,
+          );
+
+          expect(res, 52);
+        });
+      });
+
+      yearsWith53Weeks.forEach((year) {
+        test('should return 53 weeks for $year, week from sunday', () {
+          final res = DTU.getLastWeekNumber(
+            year,
+            weekNumbering: weekNumbering,
+            firstWeekday: DateTime.sunday,
+          );
+          expect(res, 53);
+        });
+      });
+
+      yearsWith52Weeks.forEach((year) {
+        test('should return 52 weeks for $year, week from sunday', () {
+          final res = DTU.getLastWeekNumber(
+            year,
+            weekNumbering: weekNumbering,
+            firstWeekday: DateTime.sunday,
+          );
+          expect(res, 52);
+        });
       });
     });
 
-    [2010, 2011, 2012, 2013, 2015, 2016, 2017, 2018, 2019].forEach((year) {
-      test('should return 52 weeks for $year, week from sunday', () {
-        expect(
-          DTU.getLastWeekNumber(year, firstWeekday: DateTime.sunday),
-          52,
-        );
-      });
-    });
+    group('jan1AsFirstWeek', () {
+      const weekNumbering = WeekNumbering.jan1AsFirstWeek;
 
-    [2008, 2014, 2020].forEach((year) {
-      test('should return 53 weeks for $year, week from sunday', () {
-        expect(
-          DTU.getLastWeekNumber(year, firstWeekday: DateTime.sunday),
-          53,
-        );
+      [2008, 2009, 2013, 2014, 2015, 2016, 2017, 2028].forEach((year) {
+        test('should return 53 weeks for $year', () {
+          final res = DTU.getLastWeekNumber(
+            year,
+            weekNumbering: weekNumbering,
+          );
+
+          expect(res, 53);
+        });
+      });
+
+      [2012].forEach((year) {
+        test('should return 54 weeks for $year', () {
+          final res = DTU.getLastWeekNumber(
+            year,
+            weekNumbering: weekNumbering,
+          );
+
+          expect(res, 54);
+        });
+      });
+
+      [2008, 2009, 2012, 2013, 2014, 2015, 2016, 2017].forEach((year) {
+        test('should return 53 weeks for $year, week from sunday', () {
+          final res = DTU.getLastWeekNumber(
+            year,
+            weekNumbering: weekNumbering,
+            firstWeekday: DateTime.sunday,
+          );
+          expect(res, 53);
+        });
+      });
+
+      [2028].forEach((year) {
+        test('should return 54 weeks for $year, week from sunday', () {
+          final res = DTU.getLastWeekNumber(
+            year,
+            weekNumbering: weekNumbering,
+            firstWeekday: DateTime.sunday,
+          );
+          expect(res, 54);
+        });
       });
     });
   });

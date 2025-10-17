@@ -1,3 +1,4 @@
+import 'package:in_date_utils/src/week_numbering.dart';
 import 'package:meta/meta.dart';
 import 'package:clock/clock.dart';
 
@@ -146,26 +147,60 @@ class DateTimeUtils {
 
   /// Returns week number in year.
   ///
-  /// The first week of the year is the week that contains
-  /// 4 or more days of that year (='First 4-day week').
+  /// The week number is calculated according to the selected
+  /// [weekNumbering] strategy:
   ///
-  /// So if week contains less than 4 days - it's in another year.
+  /// - For [WeekNumbering.iso], uses strict ISO 8601 week numbering.
+  /// - For [WeekNumbering.isoWithFirstWeekday], the first week of the year
+  /// is the week that contains 4 or more days of that year (='First 4-day week').
+  /// - For [WeekNumbering.jan1AsFirstWeek], week 1 always contains January 1.
   ///
-  /// The highest week number in a year is either 52 or 53.
+  /// For [WeekNumbering.iso] and [WeekNumbering.isoWithFirstWeekday]
+  /// the first week of the year may not contain January 1. So the week number
+  /// for January 1 can be the last week of the previous year.
+  ///
+  /// The highest week number in a year is either 52 or 53 for
+  /// [WeekNumbering.iso]/[WeekNumbering.isoWithFirstWeekday]
+  /// and 53 or 54 for [WeekNumbering.jan1AsFirstWeek].
   ///
   /// You can define first weekday (Monday, Sunday or Saturday) with
   /// parameter [firstWeekday]. It should be one of the constant values
-  /// [DateTime.monday], ..., [DateTime.sunday].
+  /// [DateTime.monday], ..., [DateTime.sunday]
+  /// (this parameter is ignored for [WeekNumbering.iso]).
   ///
   /// By default it's [DateTime.monday].
-  static int getWeekNumber(DateTime date, {int? firstWeekday}) {
+  static int getWeekNumber(
+    DateTime date, {
+    int? firstWeekday,
+    WeekNumbering weekNumbering = WeekNumbering.isoWithFirstWeekday,
+  }) {
+    assert(firstWeekday == null || firstWeekday > 0 && firstWeekday < 8);
+
+    switch (weekNumbering) {
+      case WeekNumbering.iso:
+        return _getIsoWeekNumber(date, DateTime.monday);
+      case WeekNumbering.isoWithFirstWeekday:
+        return _getIsoWeekNumber(date, firstWeekday);
+      case WeekNumbering.jan1AsFirstWeek:
+        final jan1 = DateTime(date.year, 1, 1);
+        final startOfTheFirstWeek =
+            firstDayOfWeek(jan1, firstWeekday: firstWeekday);
+        return _getWeekNumberFrom(startOfTheFirstWeek, date, firstWeekday);
+    }
+  }
+
+  /// Returns week number in year according to ISO 8601.
+  /// @see [getWeekNumber]
+  static int getWeekNumberIso8601(DateTime date) =>
+      getWeekNumber(date, weekNumbering: WeekNumbering.iso);
+
+  static int _getIsoWeekNumber(DateTime date, int? firstWeekday) {
     assert(firstWeekday == null || firstWeekday > 0 && firstWeekday < 8);
 
     if (isWeekInYear(date, date.year, firstWeekday)) {
       final startOfTheFirstWeek =
           firstDayOfFirstWeek(date.year, firstWeekday: firstWeekday);
-      final diffInDays = getDaysDifference(date, startOfTheFirstWeek);
-      return (diffInDays / DateTime.daysPerWeek).floor() + 1;
+      return _getWeekNumberFrom(startOfTheFirstWeek, date, firstWeekday);
     } else if (date.month == DateTime.december) {
       // first of the next year
       return 1;
@@ -176,26 +211,59 @@ class DateTimeUtils {
     }
   }
 
+  static int _getWeekNumberFrom(
+    DateTime start,
+    DateTime date,
+    int? firstWeekday,
+  ) {
+    final diffInDays = getDaysDifference(date, start);
+    return (diffInDays ~/ DateTime.daysPerWeek) + 1;
+  }
+
   /// Returns number of the last week in [year].
+  ///
   ///
   /// You can define first weekday (Monday, Sunday or Saturday) with
   /// parameter [firstWeekday]. It should be one of the constant values
-  /// [DateTime.monday], ..., [DateTime.sunday].
+  /// [DateTime.monday], ..., [DateTime.sunday]
+  /// (this parameter is ignored for [WeekNumbering.iso]).
   ///
   /// By default it's [DateTime.monday].
   ///
   /// See [getWeekNumber].
-  static int getLastWeekNumber(int year, {int? firstWeekday}) {
+  static int getLastWeekNumber(
+    int year, {
+    int? firstWeekday,
+    WeekNumbering weekNumbering = WeekNumbering.isoWithFirstWeekday,
+  }) {
     assert(firstWeekday == null || firstWeekday > 0 && firstWeekday < 8);
 
-    final start = firstDayOfFirstWeek(year, firstWeekday: firstWeekday);
-    final end = firstDayOfWeek(DateTime(year, DateTime.december, 31),
-        firstWeekday: firstWeekday);
-    final diffInDays = getDaysDifference(end, start);
-    var res = diffInDays ~/ DateTime.daysPerWeek;
-    if (isWeekInYear(end, year, firstWeekday)) res++;
-    return res;
+    final dec31 = DateTime(year, DateTime.december, 31);
+    switch (weekNumbering) {
+      case WeekNumbering.iso:
+      case WeekNumbering.isoWithFirstWeekday:
+        final weekday =
+            weekNumbering == WeekNumbering.iso ? DateTime.monday : firstWeekday;
+
+        final start = firstDayOfFirstWeek(year, firstWeekday: weekday);
+        final end = firstDayOfWeek(dec31, firstWeekday: weekday);
+        final diffInDays = getDaysDifference(end, start);
+        var res = diffInDays ~/ DateTime.daysPerWeek;
+        if (isWeekInYear(end, year, weekday)) res++;
+        return res;
+      case WeekNumbering.jan1AsFirstWeek:
+        return getWeekNumber(
+          dec31,
+          firstWeekday: firstWeekday,
+          weekNumbering: weekNumbering,
+        );
+    }
   }
+
+  /// Returns number of the last week in [year] according to ISO 8601.
+  /// @see [getLastWeekNumber]
+  static int getLastWeekNumberIso8601(int year) =>
+      getLastWeekNumber(year, weekNumbering: WeekNumbering.iso);
 
   /// Returns number of the day in week (starting with 1).
   ///

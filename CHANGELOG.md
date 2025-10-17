@@ -1,3 +1,9 @@
+## [1.3.0]
+
+* Week numbering strategies with `WeekNumbering` enum: `iso`, `isoWithFirstWeekday` (default), `jan1AsFirstWeek`.
+* Method `getWeekNumber()` — added `weekNumbering` parameter; helper `getWeekNumberIso8601()`.
+* Method `getLastWeekNumber()` — added `weekNumbering` parameter; helper `getLastWeekNumberIso8601()`.
+
 ## [1.2.4+1]
 
 * Readme: Updated badge for Analyze & Test.

@@ -103,6 +103,14 @@ void main() {
 * `getWeekNumber()` - returns number of the week in year.
 * `getLastWeekNumber()` - returns number of the last week in year.
 
+#### Week numbering options
+
+Week numbers can be calculated using different strategies via `WeekNumbering`:
+
+- `WeekNumbering.iso` — strict ISO 8601 (weeks start on Monday, ignores `firstWeekday`).
+- `WeekNumbering.isoWithFirstWeekday` — ISO-like with configurable `firstWeekday` (default behavior).
+- `WeekNumbering.jan1AsFirstWeek` — week 1 always contains January 1 (uses `firstWeekday`).
+
 ### Difference
 
 * `getDaysDifference()` - returns count of days between two dates.
